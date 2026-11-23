@@ -1,0 +1,27 @@
+-- Seed Malizia catalog
+insert into public.products (id,name,category,variants,sort) values
+('obsession','Obsession','roses','[{"l":"One size","p":250,"from":false}]'::jsonb,0),
+('crimson-heart','The Crimson Heart','roses','[{"l":"Small","p":100,"from":false},{"l":"Medium","p":150,"from":false},{"l":"Large","p":250,"from":false}]'::jsonb,1),
+('romantic-crimson','Romantic Crimson Bouquet','roses','[{"l":"15 roses","p":30,"from":false},{"l":"30 roses","p":60,"from":false},{"l":"100 roses","p":200,"from":false}]'::jsonb,2),
+('classic-red','Classic Red Rose Bouquet','roses','[{"l":"50 roses","p":100,"from":false},{"l":"100 roses","p":200,"from":false}]'::jsonb,3),
+('crimson-cloud','Crimson Cloud','roses','[{"l":"One size","p":80,"from":false}]'::jsonb,4),
+('pink-heaven','Pink Heaven','roses','[{"l":"One size","p":200,"from":false}]'::jsonb,5),
+('white-roses','White Roses','roses','[{"l":"One size","p":100,"from":false}]'::jsonb,6),
+('white-eucalyptus','White Roses with Eucalyptus','roses','[{"l":"One size","p":100,"from":false}]'::jsonb,7),
+('sweeter','The Sweeter the Better','mixed','[{"l":"One size","p":400,"from":false}]'::jsonb,8),
+('dreamy','Dreamy Fairytale','mixed','[{"l":"Starting size","p":75,"from":true}]'::jsonb,9),
+('sweet-blooms','Sweet Blooms','mixed','[{"l":"Starting size","p":50,"from":true}]'::jsonb,10),
+('joy','Joy','mixed','[{"l":"One size","p":50,"from":false}]'::jsonb,11),
+('blushing-love','Blushing Love','mixed','[{"l":"One size","p":50,"from":false}]'::jsonb,12),
+('soft-petals','Soft Petals','mixed','[{"l":"One size","p":50,"from":false}]'::jsonb,13),
+('purple-heaven','Purple Heaven — Mini','mixed','[{"l":"Mini","p":25,"from":false}]'::jsonb,14),
+('blush-basket','Malizia Blush Basket','gifts','[{"l":"One size","p":50,"from":false}]'::jsonb,15),
+('baby-boy','Baby Boy Bloom','gifts','[{"l":"One size","p":100,"from":false}]'::jsonb,16),
+('sansevieria','Sansevieria','plants','[{"l":"One size","p":50,"from":false}]'::jsonb,17),
+('orchid','Phalaenopsis Orchid','plants','[{"l":"One size","p":45,"from":false}]'::jsonb,18),
+('anthurium','Anthurium','plants','[{"l":"One size","p":60,"from":false}]'::jsonb,19),
+('guzmania','Guzmania','plants','[{"l":"One size","p":35,"from":false}]'::jsonb,20),
+('bonsai','Bonsai','plants','[{"l":"Mini","p":20,"from":false},{"l":"Small","p":30,"from":false},{"l":"Medium","p":40,"from":false},{"l":"Large","p":50,"from":false}]'::jsonb,21),
+('dracaena','Dracaena Marginata','plants','[{"l":"One size","p":50,"from":false}]'::jsonb,22),
+('bamboo','Spiral Lucky Bamboo','plants','[{"l":"50 cm stems","p":50,"from":false},{"l":"80 cm stems","p":60,"from":false}]'::jsonb,23)
+on conflict (id) do update set name=excluded.name, category=excluded.category, variants=excluded.variants, sort=excluded.sort;
