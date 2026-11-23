@@ -33,7 +33,7 @@ create table if not exists public.orders (
   updated_at timestamptz not null default now(),
   source text not null default 'website',      -- website | whatsapp | instagram | phone | walk-in
   status text not null default 'new'
-    check (status in ('new','preparing','out_for_delivery','delivered','cancelled')),
+    check (status in ('new','preparing','ready','out_for_delivery','delivered','cancelled')),
   items jsonb not null,                          -- [{id,vi,q,name,label,price,from}]
   subtotal numeric(10,2) not null default 0,
   delivery_fee numeric(10,2) not null default 0,

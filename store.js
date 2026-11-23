@@ -147,7 +147,7 @@
             const sub = items.reduce((a, x) => a + x.price * x.q, 0);
             const fee = pick([3, 4, 5, 5, 6, 0]);
             const age = d;
-            let status = age >= 2 ? (rnd() < .06 ? "cancelled" : "delivered") : age === 1 ? pick(["delivered", "delivered", "out_for_delivery"]) : age === 0 ? (i === 0 ? "delivered" : i === 1 ? "preparing" : pick(["new", "preparing", "out_for_delivery", "delivered"])) : "new";
+            let status = age >= 2 ? (rnd() < .06 ? "cancelled" : "delivered") : age === 1 ? pick(["delivered", "delivered", "delivered", "out_for_delivery"]) : age === 0 ? (i === 0 ? "delivered" : i === 1 ? "new" : i === 2 ? "ready" : pick(["new", "ready", "out_for_delivery", "delivered"])) : "new";
             const cust = pick(names), rec = pick(names);
             const id = "seed-" + num;
             num++;
@@ -161,7 +161,7 @@
               recipient_name: rec, recipient_phone: "+961 " + (3 + Math.floor(rnd() * 5)) + " " + String(100000 + Math.floor(rnd() * 899999)),
               address: pick(areas) + ", Bldg " + (1 + Math.floor(rnd() * 40)) + ", Floor " + (1 + Math.floor(rnd() * 9)),
               delivery_date: deliv.toISOString().slice(0, 10), delivery_slot: pick(slots), card_message: pick(msgs),
-              driver: status === "out_for_delivery" || status === "delivered" ? pick(["Ahmad", "Elie"]) : null, notes: null
+              driver: status === "out_for_delivery" || status === "delivered" ? pick(["Ahmad", "Elie"]) : status === "ready" && rnd() < .5 ? pick(["Ahmad", "Elie"]) : null, notes: null
             }, patch[id] || {}));
             const o = out[out.length - 1]; o.total = (+o.subtotal) + (+o.delivery_fee || 0);
           }

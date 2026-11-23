@@ -128,6 +128,50 @@ main{padding:26px 34px 60px;min-width:0}
 .oc .nx{margin-top:10px;width:100%;padding:8px;border-radius:10px;background:var(--bg);font-size:.8rem;font-weight:500}
 .oc .nx:hover{background:var(--blush)}
 
+/* order lists */
+.s-ready{color:#a0731c;background:#fbf1de}
+.steps button.on.s-ready{background:var(--prep)}
+.ct.b{background:var(--prep)!important}
+.bigcount{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:18px 22px;margin-bottom:16px}
+.bigcount>div:first-child{display:flex;align-items:baseline;gap:12px}
+.bigcount>div:first-child b{font-family:var(--serif);font-weight:400;font-size:3rem;line-height:1;color:var(--rose)}
+.bigcount>div:first-child span{font-size:1.05rem}
+.bigcount .mini{display:flex;gap:18px;color:var(--muted);font-size:.9rem;flex-wrap:wrap}
+.bigcount .mini b{color:var(--ink);font-weight:600}
+.bigcount .mini .red,.bigcount .mini .red b{color:var(--new)}
+.ogroup{margin-bottom:22px}
+.oglbl{font-size:.75rem;letter-spacing:.16em;text-transform:uppercase;font-weight:600;margin:0 4px 10px;display:flex;align-items:center;gap:8px;color:var(--muted);background:none!important}
+.oglbl span{background:var(--ink);color:#fff;border-radius:99px;padding:1px 8px;font-size:.7rem;letter-spacing:0}
+.oglbl small{font-weight:400;letter-spacing:.04em;text-transform:none;font-size:.8rem}
+.oglbl.red{color:var(--new)}.oglbl.red span{background:var(--new)}
+.oglbl.s-ready span{background:var(--prep)}.oglbl.s-out_for_delivery span{background:var(--out)}.oglbl.s-delivered span{background:var(--done)}
+.orow{display:grid;grid-template-columns:70px 1fr auto auto;gap:18px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px 16px;margin-bottom:8px;cursor:pointer;transition:box-shadow .2s,opacity .25s,transform .25s}
+.orow:hover{box-shadow:0 8px 24px rgba(43,35,38,.07)}
+.orow.leaving{opacity:0;transform:translateX(30px)}
+.orow.fresh{animation:fresh 2.4s ease}
+.orow .on{font-weight:600;font-size:.9rem;display:flex;flex-direction:column;gap:4px;align-items:flex-start}
+.orow .nb{font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;background:var(--rose);color:#fff;border-radius:6px;padding:2px 6px}
+.orow h4{font-family:var(--serif);font-weight:400;font-size:1.15rem;line-height:1.2}
+.orow h4 .ph{font-family:var(--sans);font-size:.8rem;color:var(--muted);margin-left:6px;text-decoration:none}
+.orow .it{color:var(--ink);font-size:.9rem;margin-top:2px}
+.orow .meta{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:8px;font-size:.78rem}
+.orow .when{background:var(--bg);padding:3px 9px;border-radius:6px;font-weight:500}
+.orow .when.late{background:#fbe9ec;color:var(--new)}
+.orow .tag{background:var(--lilac);padding:3px 8px;border-radius:6px}
+.orow .src{color:var(--muted);text-transform:capitalize}
+.orow .addr{color:var(--muted)}
+.orow .addr a{color:var(--rose)}
+.orow .oa{text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:5px}
+.orow .amt{font-weight:600;font-size:1.05rem}
+.donebtn{padding:12px 20px;border-radius:12px;background:var(--rose);color:#fff;font-weight:600;font-size:.9rem;white-space:nowrap;transition:background .2s,transform .1s}
+.donebtn:hover{background:var(--ink)}
+.donebtn:active{transform:scale(.97)}
+.donebtn.b{background:var(--out)}.donebtn.g{background:var(--done)}
+.dact{display:flex;gap:8px;align-items:center}
+.dact input{width:120px;padding:9px 10px;font-size:.9rem}
+.drv{font-size:.85rem;color:var(--muted);white-space:nowrap}
+.routes{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:18px;font-size:.88rem}
+
 /* tables */
 table{width:100%;border-collapse:collapse}
 th{font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:500;text-align:left;padding:10px 12px;border-bottom:1px solid var(--line)}
@@ -202,6 +246,14 @@ tr:last-child td{border-bottom:0}
 .tabbar{display:none}
 @media (max-width:1100px){.kpis{grid-template-columns:repeat(2,1fr)}.pipe{grid-template-columns:repeat(3,1fr)}.grid2{grid-template-columns:1fr}}
 @media (max-width:820px){
+  .orow{grid-template-columns:auto 1fr auto;gap:6px 12px;padding:14px}
+  .orow .on{grid-row:1;grid-column:1}
+  .orow .om{grid-row:1;grid-column:2}
+  .orow .oa{grid-row:1;grid-column:3}
+  .orow>.donebtn,.orow>.dact{grid-column:1/-1;width:100%;justify-content:center}
+  .orow>.dact input{flex:1;width:auto}
+  .orow>.dact .donebtn{flex:1}
+  .bigcount>div:first-child b{font-size:2.4rem}
   .app{grid-template-columns:1fr}
   .side{display:none}
   main{padding:18px 14px 100px}
@@ -293,9 +345,9 @@ const imgFor = id=>CAT[id]?`../img/${(CAT[id].v[0].img||CAT[id].img)}.webp`:"";
 const digits = s=>String(s||"").replace(/[^\d]/g,"");
 const waLink = (phone,text)=>`https://wa.me/${digits(phone)}?text=${encodeURIComponent(text||"")}`;
 
-const ST = {new:"New",preparing:"Preparing",out_for_delivery:"Out for delivery",delivered:"Delivered",cancelled:"Cancelled"};
-const FLOW = ["new","preparing","out_for_delivery","delivered"];
-const NEXT = {new:"Start preparing",preparing:"Send out for delivery",out_for_delivery:"Mark delivered"};
+const ST = {new:"To prepare",preparing:"To prepare",ready:"Ready",out_for_delivery:"With driver",delivered:"Delivered",cancelled:"Cancelled"};
+const FLOW = ["new","ready","out_for_delivery","delivered"];
+
 const SLOTS = ["Morning (9–12)","Afternoon (12–4)","Evening (4–8)","Pick up from the shop"];
 const PAY = ["Cash on delivery","Whish","OMT","Card","Bank transfer"];
 const SOURCES = ["website","whatsapp","instagram","phone","walk-in"];
@@ -312,12 +364,13 @@ const ICON = {
  print:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 9V3h12v6M6 18H4v-7h16v7h-2M6 14h12v7H6z"/></svg>',
  x:'<svg width="16" height="16" viewBox="0 0 16 16" stroke="currentColor" stroke-width="1.6"><path d="M3 3l10 10M13 3L3 13"/></svg>',
  search:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>',
+ money:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2.5" y="6" width="19" height="12" rx="2"/><circle cx="12" cy="12" r="2.6"/><path d="M6 9.5v5M18 9.5v5"/></svg>',
  dl:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3v12M7 10l5 5 5-5M4 20h16"/></svg>'
 };
-const TABS=[["overview","Overview","home"],["orders","Orders","orders"],["deliveries","Deliveries","truck"],["products","Products","flower"],["customers","Customers","people"]];
+const TABS=[["overview","Overview","home"],["orders","Orders","orders"],["delivery","Delivery","truck"],["finances","Finances","money"],["products","Products","flower"],["customers","Customers","people"]];
 
 let ORD=[], PROD=[], tab="overview", openId=null;
-let F={range:"upcoming",q:"",showCancelled:false}, DEL={date:today()}, CUSQ="";
+let F={q:""}, DEL={range:"today",q:"",showAll:false}, FIN={period:"month",allUnpaid:false}, CUSQ="";
 
 /* ============== BOOT ============== */
 async function boot(){
@@ -346,145 +399,185 @@ addEventListener("hashchange",()=>{const t=location.hash.slice(1);if(TABS.some(x
 
 /* ============== NAV ============== */
 function renderNav(){
-  const nNew=ORD.filter(o=>o.status==="new").length;
-  $("#navlist").innerHTML=TABS.map(([k,t,i])=>`<button class="nav ${tab===k?"on":""}" data-tab="${k}">${ICON[i]}${t}${k==="orders"&&nNew?`<span class="ct">${nNew}</span>`:""}</button>`).join("");
-  $("#tabbar").innerHTML=TABS.map(([k,t,i])=>`<button class="${tab===k?"on":""}" data-tab="${k}">${ICON[i]}${t}${k==="orders"&&nNew?`<span class="ct">${nNew}</span>`:""}</button>`).join("");
+  const nNew=ORD.filter(o=>o.status==="new"||o.status==="preparing").length, nRdy=ORD.filter(o=>o.status==="ready").length;
+  const badge=k=>k==="orders"&&nNew?`<span class="ct">${nNew}</span>`:k==="delivery"&&nRdy?`<span class="ct b">${nRdy}</span>`:"";
+  $("#navlist").innerHTML=TABS.map(([k,t,i])=>`<button class="nav ${tab===k?"on":""}" data-tab="${k}">${ICON[i]}${t}${badge(k)}</button>`).join("");
+  $("#tabbar").innerHTML=TABS.filter(x=>x[0]!=="customers").map(([k,t,i])=>`<button class="${tab===k?"on":""}" data-tab="${k}">${ICON[i]}${t}${badge(k)}</button>`).join("");
   document.title=(nNew?`(${nNew}) `:"")+"Malizia — Owner Dashboard";
 }
 document.addEventListener("click",e=>{const b=e.target.closest("[data-tab]");if(b){tab=b.dataset.tab;location.hash=tab;render();scrollTo(0,0)}});
 
 function render(fresh=[]){
   renderNav();
-  const v={overview,orders:ordersView,deliveries,products:productsView,customers}[tab]();
+  const v={overview,orders:ordersView,delivery:deliveryView,finances,products:productsView,customers}[tab]();
   $("#view").innerHTML=v;
-  fresh.forEach(id=>{const el=document.querySelector(`.oc[data-id="${id}"]`);el&&el.classList.add("fresh")});
-  if(tab==="overview") wireChart();
+  fresh.forEach(id=>{const el=document.querySelector(`.orow[data-id="${id}"]`);el&&el.classList.add("fresh")});
+  if(tab==="finances") wireFinChart();
   if(tab==="orders") wireBoard();
+  if(tab==="delivery") wireDelivery();
   if(openId) renderDrawer();
 }
 const head=(title,sub,extra="")=>`<div class="top"><div><h1>${title}</h1><div class="sub">${sub}</div></div><div class="actions">${extra}<button class="btn p" data-act="new">${ICON.plus}New order</button></div></div>`;
 const live=o=>o.status!=="cancelled";
 
 /* ============== OVERVIEW ============== */
+const TODO = o=>o.status==="new"||o.status==="preparing";
+const sumT = a=>a.reduce((s,o)=>s+(+o.total||0),0);
 function overview(){
-  const t=today(), mStart=t.slice(0,8)+"01";
-  const lmD=new Date(); lmD.setDate(1); lmD.setMonth(lmD.getMonth()-1); const lmStart=ymd(lmD), lmEnd=addDays(mStart,-1);
-  const lmSameDay=addDays(lmStart,new Date().getDate()-1);
-  const created=d=>ORD.filter(o=>localDay(o.created_at)===d&&live(o));
-  const inRange=(a,b)=>ORD.filter(o=>{const d=localDay(o.created_at);return d>=a&&d<=b&&live(o)});
-  const sum=a=>a.reduce((s,o)=>s+(+o.total||0),0);
-  const tod=created(t), yest=created(addDays(t,-1));
-  const month=inRange(mStart,t), lastM=inRange(lmStart,lmSameDay>lmEnd?lmEnd:lmSameDay);
-  const avg=month.length?sum(month)/month.length:0;
+  const t=today();
+  const tod=ORD.filter(o=>localDay(o.created_at)===t&&live(o));
+  const todo=ORD.filter(TODO), ready=ORD.filter(o=>o.status==="ready"), withD=ORD.filter(o=>o.status==="out_for_delivery");
+  const delToday=ORD.filter(o=>o.status==="delivered"&&localDay(o.updated_at||o.created_at)===t);
+  const dueToday=ORD.filter(o=>o.delivery_date===t&&live(o));
   const unpaid=ORD.filter(o=>live(o)&&!o.paid);
-  const delta=(a,b)=>{if(!b)return"";const p=Math.round((a-b)/b*100);return `<span class="${p>=0?"up":"dn"}">${p>=0?"▲":"▼"} ${Math.abs(p)}%</span> vs last month`};
-  const cnt=s=>ORD.filter(o=>o.status===s).length;
-  const delToday=ORD.filter(o=>o.delivery_date===t&&live(o));
-  const doneToday=delToday.filter(o=>o.status==="delivered").length;
-  // top products (30d)
   const since=addDays(t,-29), tp={};
   ORD.filter(o=>live(o)&&localDay(o.created_at)>=since).forEach(o=>(o.items||[]).forEach(i=>{const k=i.id;tp[k]=tp[k]||{id:k,name:i.name,q:0,r:0};tp[k].q+=+i.q||1;tp[k].r+=(+i.price||0)*(+i.q||1)}));
-  const top=Object.values(tp).sort((a,b)=>b.r-a.r).slice(0,6), maxR=top[0]?.r||1;
-  const src={}; ORD.filter(o=>live(o)&&localDay(o.created_at)>=since).forEach(o=>src[o.source]=(src[o.source]||0)+1);
-  const srcT=Object.values(src).reduce((a,b)=>a+b,0)||1;
-  const bySlot={}; delToday.forEach(o=>(bySlot[o.delivery_slot||"No time set"]=bySlot[o.delivery_slot||"No time set"]||[]).push(o));
+  const top=Object.values(tp).sort((a,b)=>b.q-a.q).slice(0,5), maxQ=top[0]?.q||1;
   const hr=new Date().getHours(), hi=hr<12?"Good morning":hr<18?"Good afternoon":"Good evening";
-  return head(`${hi} 🌸`,`${new Date().toLocaleDateString("en-GB",{weekday:"long",day:"numeric",month:"long"})} · ${cnt("new")} new ${cnt("new")===1?"order":"orders"} waiting`,`<button class="btn" data-act="csv">${ICON.dl}Export</button>`)+`
-  <div class="kpis">
-    <div class="kpi"><div class="l">Orders today</div><div class="v">${tod.length}</div><div class="d">${yest.length} yesterday</div></div>
-    <div class="kpi"><div class="l">Revenue today</div><div class="v">${money(sum(tod))}</div><div class="d">${money(sum(yest))} yesterday</div></div>
-    <div class="kpi"><div class="l">Revenue this month</div><div class="v">${money(sum(month))}</div><div class="d">${month.length} orders · ${delta(sum(month),sum(lastM))||"first month"}</div></div>
-    <div class="kpi"><div class="l">Unpaid</div><div class="v">${money(sum(unpaid))}</div><div class="d">${unpaid.length} ${unpaid.length===1?"order":"orders"} · avg order ${money(avg)}</div></div>
-  </div>
+  const bySlot={}; dueToday.forEach(o=>(bySlot[o.delivery_slot||"No time set"]=bySlot[o.delivery_slot||"No time set"]||[]).push(o));
+  return head(`${hi} 🌸`,new Date().toLocaleDateString("en-GB",{weekday:"long",day:"numeric",month:"long"}))+`
   <div class="pipe">
-    ${["new","preparing","out_for_delivery","delivered"].map(s=>`<div class="pip s-${s}" data-goto="${s}"><div>${ST[s]}<small>${s==="delivered"?"today":"right now"}</small></div><b>${s==="delivered"?doneToday:cnt(s)}</b></div>`).join("")}
-    <div class="pip" style="background:var(--peach)" data-tab="deliveries"><div>Deliveries<small>today</small></div><b>${delToday.length}</b></div>
+    <div class="pip s-new" data-tab="orders"><div>Left to process<small>tap to prepare</small></div><b>${todo.length}</b></div>
+    <div class="pip s-ready" data-tab="delivery"><div>Ready<small>waiting for driver</small></div><b>${ready.length}</b></div>
+    <div class="pip s-out_for_delivery" data-tab="delivery"><div>With driver<small>on the way</small></div><b>${withD.length}</b></div>
+    <div class="pip s-delivered" data-tab="delivery"><div>Delivered<small>today</small></div><b>${delToday.length}</b></div>
+    <div class="pip" style="background:var(--lilac)" data-tab="finances"><div>Unpaid<small>${unpaid.length} orders</small></div><b>${money(sumT(unpaid))}</b></div>
+  </div>
+  <div class="kpis" style="grid-template-columns:repeat(3,1fr)">
+    <div class="kpi"><div class="l">New orders today</div><div class="v">${tod.length}</div><div class="d">${tod.filter(o=>o.source==="website").length} from the website</div></div>
+    <div class="kpi" data-tab="finances" style="cursor:pointer"><div class="l">Sales today</div><div class="v">${money(sumT(tod))}</div><div class="d">See Finances →</div></div>
+    <div class="kpi"><div class="l">Deliveries today</div><div class="v">${dueToday.length}</div><div class="d">${dueToday.filter(o=>o.status==="delivered").length} done</div></div>
   </div>
   <div class="grid2">
-    <div class="panel"><h3>Revenue <small>last 30 days</small></h3><div class="chart" id="chart"></div></div>
-    <div class="panel"><h3>Today’s deliveries <small>${doneToday}/${delToday.length} done</small></h3>
-      ${delToday.length?Object.entries(bySlot).sort().map(([sl,os])=>`<div class="slotlbl">${esc(sl)}</div><div class="rows">${os.map(o=>`<div class="row" data-open="${o.id}" style="cursor:pointer"><div class="grow"><b>${esc(o.recipient_name||o.customer_name||"—")}</b><small>${esc((o.address||"").split(",")[0])} · ${esc(itemsShort(o))}</small></div><span class="pill s-${o.status}">${ST[o.status]}</span></div>`).join("")}</div>`).join(""):`<div class="empty">No deliveries scheduled today.</div>`}
+    <div class="panel"><h3>Today’s schedule <small>${dueToday.length} orders</small></h3>
+      ${dueToday.length?Object.entries(bySlot).sort().map(([sl,os])=>`<div class="slotlbl">${esc(sl)}</div><div class="rows">${os.map(o=>`<div class="row" data-open="${o.id}" style="cursor:pointer"><div class="grow"><b>#${o.number} · ${esc(o.recipient_name||o.customer_name||"—")}</b><small>${esc(itemsShort(o))}</small></div><span class="pill s-${o.status}">${ST[o.status]}</span></div>`).join("")}</div>`).join(""):`<div class="empty">Nothing due today.</div>`}
     </div>
-  </div>
-  <div class="grid2">
-    <div class="panel"><h3>Best sellers <small>last 30 days</small></h3><div class="rows">${top.length?top.map(p=>`<div class="row"><div class="th"><img src="${imgFor(p.id)}" alt=""></div><div class="grow"><b>${esc(p.name)}</b><div class="bar"><i style="width:${Math.round(p.r/maxR*100)}%"></i></div></div><div class="end">${money(p.r)}<small>${p.q} sold</small></div></div>`).join(""):`<div class="empty">No sales yet.</div>`}</div></div>
-    <div class="panel"><h3>Where orders come from <small>last 30 days</small></h3><div class="rows">${Object.entries(src).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`<div class="row"><div class="grow"><b style="text-transform:capitalize">${esc(k)}</b><div class="bar"><i style="width:${Math.round(v/srcT*100)}%"></i></div></div><div class="end">${v}<small>${Math.round(v/srcT*100)}%</small></div></div>`).join("")||`<div class="empty">No orders yet.</div>`}</div>
-    ${unpaid.length?`<h3 style="margin-top:18px">Waiting for payment <small>${money(sum(unpaid))}</small></h3><div class="rows">${unpaid.slice(0,5).map(o=>`<div class="row" data-open="${o.id}" style="cursor:pointer"><div class="grow"><b>#${o.number} · ${esc(o.customer_name||"—")}</b><small>${niceDate(o.delivery_date)} · ${ST[o.status]}</small></div><div class="end">${money(o.total)}</div></div>`).join("")}</div>`:""}
-    </div>
+    <div class="panel"><h3>Best sellers <small>last 30 days</small></h3><div class="rows">${top.length?top.map(p=>`<div class="row"><div class="th"><img src="${imgFor(p.id)}" alt=""></div><div class="grow"><b>${esc(p.name)}</b><div class="bar"><i style="width:${Math.round(p.q/maxQ*100)}%"></i></div></div><div class="end">${p.q}<small>sold</small></div></div>`).join(""):`<div class="empty">No sales yet.</div>`}</div></div>
   </div>`;
 }
-function wireChart(){
-  const el=$("#chart"); if(!el) return; const t=today(), days=[...Array(30)].map((_,i)=>addDays(t,i-29));
-  const vals=days.map(d=>ORD.filter(o=>live(o)&&localDay(o.created_at)===d).reduce((s,o)=>s+(+o.total||0),0));
-  const cnts=days.map(d=>ORD.filter(o=>live(o)&&localDay(o.created_at)===d).length);
-  const W=el.clientWidth||600,H=200,max=Math.max(50,...vals)*1.15,bw=W/30;
+const itemsShort=o=>(o.items||[]).map(i=>`${i.q>1?i.q+"× ":""}${i.name}${i.label&&i.label!=="One size"?" ("+i.label+")":""}`).join(", ");
+const matchQ=(o,q)=>!q||[o.number,S.ref(o.id),o.customer_name,o.customer_phone,o.recipient_name,o.recipient_phone,o.address,itemsShort(o)].join(" ").toLowerCase().includes(q.toLowerCase());
+const isPickup=o=>!o.address||/pick/i.test(o.delivery_slot||"");
+
+/* ============== ORDERS (to process) ============== */
+function ordersView(){
+  const t=today(); let todo=ORD.filter(TODO).filter(o=>matchQ(o,F.q));
+  const late=todo.filter(o=>o.delivery_date&&o.delivery_date<t), due=todo.filter(o=>o.delivery_date===t), tom=todo.filter(o=>o.delivery_date===addDays(t,1));
+  const later=todo.filter(o=>!o.delivery_date||o.delivery_date>addDays(t,1));
+  const slotIdx=o=>{const i=SLOTS.indexOf(o.delivery_slot);return i<0?9:i};
+  const sortF=(a,b)=>(a.delivery_date||"9")<(b.delivery_date||"9")?-1:(a.delivery_date||"9")>(b.delivery_date||"9")?1:slotIdx(a)-slotIdx(b);
+  const row=o=>`<div class="orow" data-id="${o.id}" data-open="${o.id}">
+    <div class="on">#${o.number}${o.status==="new"?'<span class="nb">New</span>':""}</div>
+    <div class="om"><h4>${esc(o.recipient_name||o.customer_name||"—")}</h4><div class="it">${esc(itemsShort(o))}</div>
+      <div class="meta"><span class="when ${o.delivery_date&&o.delivery_date<t?"late":""}">${niceDate(o.delivery_date)}${o.delivery_slot?" · "+esc(o.delivery_slot.split(" (")[0]):""}</span>${isPickup(o)?'<span class="tag">Pick-up</span>':""}${o.card_message?'<span class="tag">✉︎ Card</span>':""}<span class="src">${esc(o.source)} · ${timeAgo(o.created_at)}</span></div></div>
+    <div class="oa"><div class="amt">${money(o.total)}</div><span class="${o.paid?"paid":"unpaid"}">${o.paid?"Paid":"Unpaid"}</span></div>
+    <button class="donebtn" data-done="${o.id}">✓ Done</button></div>`;
+  const grp=(title,list,cls="")=>list.length?`<div class="ogroup"><div class="oglbl ${cls}">${title} <span>${list.length}</span></div>${list.sort(sortF).map(row).join("")}</div>`:"";
+  return head("Orders","Everything that still needs to be prepared. Press <b>Done</b> when an order is ready — it moves to Delivery.")+`
+  <div class="bigcount"><div><b>${ORD.filter(TODO).length}</b><span>${ORD.filter(TODO).length===1?"order":"orders"} left to process</span></div>
+    <div class="mini"><span class="${late.length?"red":""}"><b>${late.length}</b> late</span><span><b>${due.length}</b> due today</span><span><b>${tom.length}</b> tomorrow</span></div></div>
+  <div class="toolbar"><div class="search">${ICON.search}<input id="q" placeholder="Search name, phone, #order…" value="${esc(F.q)}"></div></div>
+  ${todo.length?grp("Late",late,"red")+grp("Due today",due)+grp("Tomorrow",tom)+grp("Later",later):`<div class="panel"><div class="empty" style="padding:50px 0"><div style="font-size:2rem">🌸</div><b class="serif" style="font-size:1.5rem;display:block;margin:8px 0">All caught up</b>${F.q?"No orders match your search.":"No orders left to process."}</div></div>`}`;
+}
+function wireBoard(){const q=$("#q"); if(q){q.oninput=()=>{F.q=q.value;const pos=q.selectionStart;render();const n=$("#q");n.focus();n.setSelectionRange(pos,pos)}}}
+async function setStatus(id,s,quiet){const o=ORD.find(x=>x.id===id);if(!o||o.status===s)return;const prev=o.status,prevU=o.updated_at;o.status=s;o.updated_at=new Date().toISOString();render();
+  try{await S.updateOrder(id,{status:s});if(!quiet)toast(`#${o.number} → ${ST[s]}`,s==="ready"?"Moved to Delivery":"",()=>{openId=id;renderDrawer()})}catch(e){o.status=prev;o.updated_at=prevU;render();alertErr(e)}}
+
+/* ============== DELIVERY ============== */
+function deliveryView(){
+  const t=today();
+  const byDate=(x,y)=>(x.delivery_date||"9")<(y.delivery_date||"9")?-1:(x.delivery_date||"9")>(y.delivery_date||"9")?1:SLOTS.indexOf(x.delivery_slot)-SLOTS.indexOf(y.delivery_slot);
+  const ready=ORD.filter(o=>o.status==="ready"&&matchQ(o,DEL.q)).sort(byDate), withD=ORD.filter(o=>o.status==="out_for_delivery"&&matchQ(o,DEL.q)).sort(byDate);
+  const doneAll=ORD.filter(o=>o.status==="delivered"&&matchQ(o,DEL.q)).sort((a,b)=>new Date(b.updated_at||b.created_at)-new Date(a.updated_at||a.created_at));
+  const doneToday=doneAll.filter(o=>localDay(o.updated_at||o.created_at)===t);
+  const done=DEL.showAll?doneAll.slice(0,100):doneToday;
+  const drivers=[...new Set(ORD.map(o=>o.driver).filter(Boolean))];
+  const byDriver={}; ready.concat(withD).filter(o=>!isPickup(o)).forEach(o=>{const k=o.driver||"Unassigned";(byDriver[k]=byDriver[k]||[]).push(o)});
+  const addr=o=>isPickup(o)?'<span class="tag">Pick-up at the shop</span>':`${esc(o.address)} · <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(o.address)}" target="_blank" rel="noopener">Map ↗</a>`;
+  const drow=(o,stage)=>`<div class="orow drow" data-open="${o.id}">
+    <div class="on">#${o.number}</div>
+    <div class="om"><h4>${esc(o.recipient_name||"—")} <a class="ph" href="tel:${esc(o.recipient_phone||"")}">${esc(o.recipient_phone||"")}</a></h4><div class="it">${esc(itemsShort(o))}</div>
+      <div class="meta"><span class="when">${niceDate(o.delivery_date)}${o.delivery_slot&&!isPickup(o)?" · "+esc(o.delivery_slot.split(" (")[0]):""}</span><span class="addr">${addr(o)}</span></div></div>
+    <div class="oa"><div class="amt">${money(o.total)}</div><span class="${o.paid?"paid":"unpaid"}">${o.paid?"Paid":"Collect"}</span></div>
+    ${stage==="ready"?(isPickup(o)?`<button class="donebtn g" data-to="delivered" data-oid="${o.id}">✓ Collected</button>`:`<div class="dact"><input list="drivers" placeholder="Driver" value="${esc(o.driver||"")}" data-driver="${o.id}"><button class="donebtn b" data-to="out_for_delivery" data-oid="${o.id}">Driver took it →</button></div>`)
+     :stage==="out"?`<div class="dact"><span class="drv">🚗 ${esc(o.driver||"Driver")}</span><button class="donebtn g" data-to="delivered" data-oid="${o.id}">✓ Delivered</button></div>`
+     :`<div class="dact"><span class="drv">${o.driver?"🚗 "+esc(o.driver)+" · ":""}${timeAgo(o.updated_at||o.created_at)}</span></div>`}
+  </div>`;
+  const sec=(title,sub,list,stage,cls)=>`<div class="ogroup"><div class="oglbl ${cls}">${title} <span>${list.length}</span><small>${sub}</small></div>${list.length?list.map(o=>drow(o,stage)).join(""):`<div class="empty" style="padding:18px 0">${stage==="ready"?"Nothing waiting — orders appear here when you press Done.":stage==="out"?"No orders on the road.":"No deliveries yet."}</div>`}</div>`;
+  return head("Delivery","Orders you marked Done. Hand them to the driver, then confirm when they’re delivered.",`<button class="btn" data-act="printday">${ICON.print}Print sheet</button>`)+`
+  <div class="bigcount"><div><b>${ready.length}</b><span>ready for pickup</span></div><div class="mini"><span><b>${withD.length}</b> with driver</span><span><b>${doneToday.length}</b> delivered today</span></div></div>
+  <div class="toolbar"><div class="search">${ICON.search}<input id="dq" placeholder="Search…" value="${esc(DEL.q)}"></div></div>
+  ${Object.keys(byDriver).length?`<div class="routes"><span class="muted">Send stops to a driver on WhatsApp:</span>${Object.entries(byDriver).map(([k,os])=>`<button class="btn wa sm" data-route="${esc(k)}">${ICON.wa}${esc(k)} · ${os.length}</button>`).join("")}</div>`:""}
+  ${sec("Ready","waiting for the driver",ready,"ready","s-ready")}
+  ${sec("With driver","on the way",withD,"out","s-out_for_delivery")}
+  ${sec("Delivered",DEL.showAll?"most recent first":"today",done,"done","s-delivered")}
+  ${doneAll.length>doneToday.length?`<button class="btn sm" data-act="togdone">${DEL.showAll?"Show today only":"Show past deliveries"}</button>`:""}
+  <datalist id="drivers">${drivers.map(x=>`<option value="${esc(x)}">`).join("")}</datalist>`;
+}
+function wireDelivery(){const q=$("#dq"); if(q){q.oninput=()=>{DEL.q=q.value;const pos=q.selectionStart;render();const n=$("#dq");n.focus();n.setSelectionRange(pos,pos)}}}
+
+/* ============== FINANCES ============== */
+function finRange(){
+  const t=today(), p=FIN.period, m0=t.slice(0,8)+"01";
+  const lm=new Date(m0+"T12:00:00"); lm.setMonth(lm.getMonth()-1);
+  if(p==="today") return [t,t,"Today"];
+  if(p==="7d") return [addDays(t,-6),t,"Last 7 days"];
+  if(p==="month") return [m0,t,new Date().toLocaleDateString("en-GB",{month:"long",year:"numeric"})];
+  if(p==="last") return [ymd(lm),addDays(m0,-1),lm.toLocaleDateString("en-GB",{month:"long",year:"numeric"})];
+  return ["0000-00-00","9999-99-99","All time"];
+}
+function finances(){
+  const [a,b,label]=finRange(); const t=today();
+  const inR=o=>{const d=localDay(o.created_at);return d>=a&&d<=b};
+  const L=ORD.filter(o=>live(o)&&inR(o)), C=ORD.filter(o=>o.status==="cancelled"&&inR(o));
+  const rev=sumT(L), paid=sumT(L.filter(o=>o.paid)), due=sumT(L.filter(o=>!o.paid)), fees=L.reduce((s,o)=>s+(+o.delivery_fee||0),0);
+  const avg=L.length?rev/L.length:0;
+  const pm={}; L.filter(o=>o.paid).forEach(o=>{const k=o.payment_method||"Not recorded";pm[k]=(pm[k]||0)+(+o.total||0)}); const pmMax=Math.max(1,...Object.values(pm));
+  const cat={}; const cn={roses:"Roses",mixed:"Mixed bouquets",gifts:"Boxes & baskets",plants:"Plants"};
+  L.forEach(o=>(o.items||[]).forEach(i=>{const c=CAT[i.id]?cn[CAT[i.id].cat[0]]:"Custom";cat[c]=(cat[c]||0)+(+i.price||0)*(+i.q||1)})); const catMax=Math.max(1,...Object.values(cat));
+  const unpaidAll=ORD.filter(o=>live(o)&&!o.paid).sort((x,y)=>(x.delivery_date||"")<(y.delivery_date||"")?-1:1);
+  const months=[...Array(6)].map((_,i)=>{const d=new Date();d.setDate(1);d.setMonth(d.getMonth()-i);const k=ymd(d).slice(0,7);const os=ORD.filter(o=>live(o)&&localDay(o.created_at).slice(0,7)===k);
+    return {k,name:d.toLocaleDateString("en-GB",{month:"long",year:"numeric"}),n:os.length,rev:sumT(os),paid:sumT(os.filter(o=>o.paid)),due:sumT(os.filter(o=>!o.paid)),canc:ORD.filter(o=>o.status==="cancelled"&&localDay(o.created_at).slice(0,7)===k).length}});
+  return head("Finances",`${label} · sales are counted on the day the order was placed`,`<button class="btn" data-act="csv">${ICON.dl}Export</button>`)+`
+  <div class="toolbar"><div class="seg">${[["today","Today"],["7d","7 days"],["month","This month"],["last","Last month"],["all","All time"]].map(([k,l])=>`<button class="${FIN.period===k?"on":""}" data-period="${k}">${l}</button>`).join("")}</div></div>
+  <div class="kpis">
+    <div class="kpi"><div class="l">Total sales</div><div class="v">${money(rev)}</div><div class="d">${L.length} orders · avg ${money(avg)}</div></div>
+    <div class="kpi"><div class="l">Collected</div><div class="v" style="color:var(--done)">${money(paid)}</div><div class="d">${L.filter(o=>o.paid).length} paid orders</div></div>
+    <div class="kpi"><div class="l">Still to collect</div><div class="v" style="color:var(--new)">${money(due)}</div><div class="d">${L.filter(o=>!o.paid).length} unpaid orders</div></div>
+    <div class="kpi"><div class="l">Delivery fees</div><div class="v">${money(fees)}</div><div class="d">${money(rev-fees)} from flowers & plants${C.length?" · "+C.length+" cancelled":""}</div></div>
+  </div>
+  <div class="panel" style="margin-bottom:14px"><h3>Sales <small>${FIN.period==="all"?"by month":FIN.period==="today"?"last 7 days":"by day"}</small></h3><div class="chart" id="chart"></div></div>
+  <div class="grid2">
+    <div class="panel"><h3>Waiting for payment <small>${money(sumT(unpaidAll))} · all dates</small></h3><div class="rows">${unpaidAll.length?unpaidAll.slice(0,FIN.allUnpaid?999:8).map(o=>`<div class="row"><div class="grow" data-open="${o.id}" style="cursor:pointer"><b>#${o.number} · ${esc(o.customer_name||"—")}</b><small>${niceDate(o.delivery_date)} · ${ST[o.status]}${o.customer_phone?" · "+esc(o.customer_phone):""}</small></div><div class="end">${money(o.total)}</div><button class="btn sm" data-markpaid="${o.id}">Mark paid</button></div>`).join(""):`<div class="empty">Everyone has paid 🌸</div>`}</div>
+      ${unpaidAll.length>8?`<button class="btn sm" data-act="togunpaid" style="margin-top:10px">${FIN.allUnpaid?"Show less":"Show all "+unpaidAll.length}</button>`:""}</div>
+    <div class="panel"><h3>How customers paid <small>${label}</small></h3><div class="rows">${Object.entries(pm).sort((x,y)=>y[1]-x[1]).map(([k,v])=>`<div class="row"><div class="grow"><b>${esc(k)}</b><div class="bar"><i style="width:${Math.round(v/pmMax*100)}%"></i></div></div><div class="end">${money(v)}</div></div>`).join("")||`<div class="empty">No payments yet.</div>`}</div>
+      <h3 style="margin-top:18px">Sales by category <small>${label}</small></h3><div class="rows">${Object.entries(cat).sort((x,y)=>y[1]-x[1]).map(([k,v])=>`<div class="row"><div class="grow"><b>${esc(k)}</b><div class="bar"><i style="width:${Math.round(v/catMax*100)}%"></i></div></div><div class="end">${money(v)}</div></div>`).join("")||`<div class="empty">No sales yet.</div>`}</div></div>
+  </div>
+  <div class="panel"><h3>Monthly summary <small>last 6 months</small></h3><div class="tablewrap"><table><thead><tr><th>Month</th><th>Orders</th><th>Sales</th><th>Collected</th><th>To collect</th><th>Cancelled</th></tr></thead><tbody>
+    ${months.map(m=>`<tr><td><b style="font-weight:500">${m.name}</b></td><td>${m.n}</td><td><b style="font-weight:500">${money(m.rev)}</b></td><td style="color:var(--done)">${money(m.paid)}</td><td style="color:${m.due?"var(--new)":"inherit"}">${money(m.due)}</td><td>${m.canc}</td></tr>`).join("")}
+  </tbody></table></div></div>`;
+}
+function wireFinChart(){
+  const el=$("#chart"); if(!el) return; const t=today(); let labels=[],vals=[],cnts=[],fmtL;
+  if(FIN.period==="all"){
+    const first=ORD.reduce((m,o)=>localDay(o.created_at)<m?localDay(o.created_at):m,t).slice(0,7);
+    let d=new Date(first+"-01T12:00:00"); const end=t.slice(0,7);
+    while(ymd(d).slice(0,7)<=end){const k=ymd(d).slice(0,7);const os=ORD.filter(o=>live(o)&&localDay(o.created_at).slice(0,7)===k);labels.push(k);vals.push(sumT(os));cnts.push(os.length);d.setMonth(d.getMonth()+1)}
+    fmtL=k=>new Date(k+"-01T12:00").toLocaleDateString("en-GB",{month:"short"});
+  } else {
+    let [a,b]=finRange(); if(FIN.period==="today")a=addDays(t,-6);
+    for(let d=a;d<=b;d=addDays(d,1)){const os=ORD.filter(o=>live(o)&&localDay(o.created_at)===d);labels.push(d);vals.push(sumT(os));cnts.push(os.length)}
+    fmtL=d=>d===t?"Today":new Date(d+"T12:00").toLocaleDateString("en-GB",{day:"numeric",month:"short"});
+  }
+  const n=labels.length, W=el.clientWidth||600,H=200,max=Math.max(50,...vals)*1.15,bw=W/n;
   const nice=Math.pow(10,Math.floor(Math.log10(max)));const step=Math.ceil(max/4/nice)*nice;
   let g=""; for(let v=step;v<max;v+=step){const y=H-v/max*H;g+=`<line x1="0" x2="${W}" y1="${y}" y2="${y}" stroke="rgba(43,35,38,.07)"/><text x="0" y="${y-4}" font-size="10" fill="#8a7c7f">$${v}</text>`}
-  const bars=vals.map((v,i)=>{const h=Math.max(v?3:0,v/max*H);return `<rect data-i="${i}" x="${i*bw+bw*.18}" y="${H-h}" width="${bw*.64}" height="${h}" rx="4" fill="${i===29?"#c06c7b":"#f1c7cf"}"/>`}).join("");
-  const lbl=[0,7,14,21,29].map(i=>`<text x="${i*bw+bw/2}" y="${H+16}" font-size="10" fill="#8a7c7f" text-anchor="middle">${i===29?"Today":new Date(days[i]+"T12:00").toLocaleDateString("en-GB",{day:"numeric",month:"short"})}</text>`).join("");
+  const bars=vals.map((v,i)=>{const h=Math.max(v?3:0,v/max*H);return `<rect x="${i*bw+bw*.18}" y="${H-h}" width="${bw*.64}" height="${h}" rx="4" fill="${i===n-1?"#c06c7b":"#f1c7cf"}"/>`}).join("");
+  const every=Math.max(1,Math.ceil(n/6)); const lbl=labels.map((l,i)=>(i%every===0||i===n-1)&&!(i!==n-1&&n-1-i<every/2)?`<text x="${i*bw+bw/2}" y="${H+16}" font-size="10" fill="#8a7c7f" text-anchor="middle">${fmtL(l)}</text>`:"").join("");
   el.innerHTML=`<svg viewBox="0 0 ${W} ${H+20}" preserveAspectRatio="none">${g}${bars}${lbl}<rect x="0" y="0" width="${W}" height="${H}" fill="transparent" id="hit"/></svg><div class="tip" id="tip"></div>`;
   const tip=$("#tip"); const hit=el.querySelector("#hit");
-  hit.addEventListener("mousemove",e=>{const r=el.getBoundingClientRect();const i=Math.min(29,Math.max(0,Math.floor((e.clientX-r.left)/r.width*30)));tip.style.left=(i+.5)/30*r.width+"px";tip.style.top=(H-vals[i]/max*H)+"px";tip.innerHTML=`${niceDate(days[i])}: <b>${money(vals[i])}</b> · ${cnts[i]} orders`;tip.style.opacity=1});
+  hit.addEventListener("mousemove",e=>{const r=el.getBoundingClientRect();const i=Math.min(n-1,Math.max(0,Math.floor((e.clientX-r.left)/r.width*n)));tip.style.left=(i+.5)/n*r.width+"px";tip.style.top=(H-vals[i]/max*H)+"px";tip.innerHTML=`${FIN.period==="all"?fmtL(labels[i]):niceDate(labels[i])}: <b>${money(vals[i])}</b> · ${cnts[i]} orders`;tip.style.opacity=1});
   hit.addEventListener("mouseleave",()=>tip.style.opacity=0);
-}
-const itemsShort=o=>(o.items||[]).map(i=>`${i.q>1?i.q+"× ":""}${i.name}${i.label&&i.label!=="One size"?" ("+i.label+")":""}`).join(", ");
-
-/* ============== ORDERS BOARD ============== */
-function filtered(){
-  const t=today(); let a=ORD.slice();
-  const r=F.range;
-  if(r==="today") a=a.filter(o=>o.delivery_date===t);
-  else if(r==="tomorrow") a=a.filter(o=>o.delivery_date===addDays(t,1));
-  else if(r==="week") a=a.filter(o=>o.delivery_date>=t&&o.delivery_date<=addDays(t,6));
-  else if(r==="upcoming") a=a.filter(o=>o.status!=="delivered"&&o.status!=="cancelled"||o.delivery_date>=t||localDay(o.updated_at||o.created_at)===t);
-  if(F.q){const q=F.q.toLowerCase();a=a.filter(o=>[o.number,S.ref(o.id),o.customer_name,o.customer_phone,o.recipient_name,o.recipient_phone,o.address,itemsShort(o)].join(" ").toLowerCase().includes(q))}
-  return a;
-}
-function ordersView(){
-  const a=filtered(); const t=today();
-  const ranges=[["upcoming","Active"],["today","Delivering today"],["tomorrow","Tomorrow"],["week","Next 7 days"],["all","All orders"]];
-  const card=o=>{const late=o.status!=="delivered"&&o.status!=="cancelled"&&o.delivery_date&&o.delivery_date<t;return `<div class="oc" data-id="${o.id}" data-open="${o.id}" draggable="true">
-    <div class="t"><b>#${o.number}</b><span class="src">${esc(o.source)} · ${timeAgo(o.created_at)}</span></div>
-    <h4>${esc(o.recipient_name||o.customer_name||"—")}</h4><div class="it">${esc(itemsShort(o))}</div>
-    <div class="b"><span class="when ${late?"late":""}">${late?"Late · ":""}${niceDate(o.delivery_date)}${o.delivery_slot?" · "+esc(o.delivery_slot.split(" (")[0]):""}</span><span><span class="${o.paid?"paid":"unpaid"}">${o.paid?"Paid":"Unpaid"}</span> <span class="amt">${money(o.total)}</span></span></div>
-    ${NEXT[o.status]?`<button class="nx" data-adv="${o.id}">${NEXT[o.status]} →</button>`:""}</div>`};
-  const cols=FLOW.map(s=>{const os=a.filter(o=>o.status===s).sort((x,y)=>(x.delivery_date||"9")>(y.delivery_date||"9")?1:-1);return `<div class="col" data-col="${s}"><div class="colh"><span class="pill s-${s}">${ST[s]}</span><span>${os.length} · ${money(os.reduce((q,o)=>q+(+o.total||0),0))}</span></div>${os.map(card).join("")||`<div class="empty">Nothing here</div>`}</div>`}).join("");
-  const canc=a.filter(o=>o.status==="cancelled");
-  return head("Orders",`${a.filter(o=>o.status!=="cancelled").length} orders · drag a card or use its button to move it along`,`<button class="btn" data-act="csv">${ICON.dl}Export</button>`)+`
-  <div class="toolbar"><div class="seg">${ranges.map(([k,l])=>`<button class="${F.range===k?"on":""}" data-range="${k}">${l}</button>`).join("")}</div>
-  <div class="search">${ICON.search}<input id="q" placeholder="Search name, phone, #order…" value="${esc(F.q)}"></div></div>
-  <div class="board">${cols}</div>
-  ${canc.length?`<div style="margin-top:18px"><button class="btn sm" data-act="togcanc">${F.showCancelled?"Hide":"Show"} ${canc.length} cancelled</button>${F.showCancelled?`<div class="board" style="margin-top:12px;grid-template-columns:repeat(auto-fill,minmax(240px,1fr))">${canc.map(card).join("")}</div>`:""}</div>`:""}`;
-}
-function wireBoard(){
-  const q=$("#q"); if(q){q.oninput=()=>{F.q=q.value;const pos=q.selectionStart;render();const n=$("#q");n.focus();n.setSelectionRange(pos,pos)}}
-  $$(".oc").forEach(c=>c.addEventListener("dragstart",e=>e.dataTransfer.setData("text/plain",c.dataset.id)));
-  $$(".col").forEach(col=>{col.addEventListener("dragover",e=>{e.preventDefault();col.classList.add("drop")});col.addEventListener("dragleave",()=>col.classList.remove("drop"));
-    col.addEventListener("drop",e=>{e.preventDefault();col.classList.remove("drop");const id=e.dataTransfer.getData("text/plain");setStatus(id,col.dataset.col)})});
-}
-async function setStatus(id,s){const o=ORD.find(x=>x.id===id);if(!o||o.status===s)return;const prev=o.status;o.status=s;render();
-  try{await S.updateOrder(id,{status:s});toast(`#${o.number} → ${ST[s]}`, o.customer_phone&&s!=="cancelled"?"Tap to message the customer":"",()=>{openId=id;renderDrawer(true)})}catch(e){o.status=prev;render();alertErr(e)}}
-
-/* ============== DELIVERIES ============== */
-function deliveries(){
-  const d=DEL.date; const list=ORD.filter(o=>o.delivery_date===d&&live(o));
-  const drivers=[...new Set(ORD.map(o=>o.driver).filter(Boolean))];
-  const groups={}; list.forEach(o=>(groups[o.delivery_slot||"No time set"]=groups[o.delivery_slot||"No time set"]||[]).push(o));
-  const order=SLOTS.concat(["No time set"]);
-  const byDriver={}; list.filter(o=>o.status!=="delivered").forEach(o=>{const k=o.driver||"Unassigned";(byDriver[k]=byDriver[k]||[]).push(o)});
-  return head("Deliveries",`${niceDate(d)} · ${list.length} ${list.length===1?"delivery":"deliveries"} · ${list.filter(o=>o.status==="delivered").length} done`,`<button class="btn" data-act="printday">${ICON.print}Print day sheet</button>`)+`
-  <div class="toolbar"><div class="seg"><button data-dday="-1">‹ Prev</button><button class="${d===today()?"on":""}" data-dday="0">Today</button><button class="${d===addDays(today(),1)?"on":""}" data-dday="1t">Tomorrow</button><button data-dday="1">Next ›</button></div>
-  <input type="date" id="ddate" value="${d}" style="width:auto;border-radius:99px;padding:8px 14px"></div>
-  ${Object.keys(byDriver).length?`<div class="panel" style="margin-bottom:14px"><h3>Send routes to drivers <small>opens WhatsApp with the list</small></h3><div class="actions" style="margin-top:10px">${Object.entries(byDriver).map(([k,os])=>`<button class="btn wa sm" data-route="${esc(k)}">${ICON.wa}${esc(k)} · ${os.length} stops</button>`).join("")}</div></div>`:""}
-  ${list.length?order.filter(s=>groups[s]).map(s=>`<div class="panel" style="margin-bottom:14px"><h3>${esc(s)} <small>${groups[s].length} stops</small></h3><div class="tablewrap"><table><thead><tr><th>Order</th><th>Recipient</th><th>Address</th><th>Items</th><th>Driver</th><th>Status</th></tr></thead><tbody>
-    ${groups[s].map(o=>`<tr><td><button data-open="${o.id}" style="font-weight:600;text-decoration:underline">#${o.number}</button><br><span class="${o.paid?"paid":"unpaid"}">${o.paid?"Paid":money(o.total)+" due"}</span></td>
-      <td><b style="font-weight:500">${esc(o.recipient_name||"—")}</b><br><a class="muted" href="tel:${esc(o.recipient_phone||"")}">${esc(o.recipient_phone||"")}</a></td>
-      <td style="max-width:240px">${esc(o.address||"Pick-up")}<br>${o.address?`<a class="muted" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(o.address)}" target="_blank" rel="noopener">Open map ↗</a>`:""}</td>
-      <td style="max-width:220px">${esc(itemsShort(o))}${o.card_message?`<br><span class="muted">✉︎ card</span>`:""}</td>
-      <td><input list="drivers" value="${esc(o.driver||"")}" data-driver="${o.id}" placeholder="Name" style="width:120px;padding:7px 10px"></td>
-      <td><select data-st="${o.id}" style="width:auto;padding:7px 10px">${Object.keys(ST).map(k=>`<option value="${k}" ${o.status===k?"selected":""}>${ST[k]}</option>`).join("")}</select></td></tr>`).join("")}
-  </tbody></table></div></div>`).join(""):`<div class="panel"><div class="empty">No deliveries on ${niceDate(d).toLowerCase()}.</div></div>`}
-  <datalist id="drivers">${drivers.map(x=>`<option value="${esc(x)}">`).join("")}</datalist>`;
 }
 
 /* ============== PRODUCTS ============== */
@@ -535,7 +628,7 @@ function renderDrawer(focusWA){
   const T=msgTemplates(o); const suggest=o.status==="out_for_delivery"?"Out for delivery":o.status==="delivered"?"Delivered":!o.paid&&o.status!=="new"?"Payment reminder":"Confirm order";
   $("#drawer").innerHTML=`<div class="dh"><div><h2>Order #${o.number}</h2><small class="muted">${esc(o.source)} · placed ${timeAgo(o.created_at)}${o.source==="website"?" · ref "+S.ref(o.id):""}</small></div><div style="display:flex;gap:8px;align-items:center"><span class="saved" id="saved">Saved ✓</span><button class="x" id="dclose">${ICON.x}</button></div></div>
   <div class="db">
-    <div class="sec"><h5>Status ${o.status==="cancelled"?'<span class="pill s-cancelled">Cancelled</span>':""}</h5><div class="steps">${FLOW.map(s=>`<button class="s-${s} ${o.status===s?"on":""}" data-setst="${s}">${ST[s]}</button>`).join("")}</div></div>
+    <div class="sec"><h5>Status ${o.status==="cancelled"?'<span class="pill s-cancelled">Cancelled</span>':""}</h5><div class="steps">${FLOW.map(s=>`<button class="s-${s} ${(o.status===s||(s==="new"&&o.status==="preparing"))?"on":""}" data-setst="${s}">${ST[s]}</button>`).join("")}</div></div>
     <div class="sec"><h5>Items</h5><div class="lines">${(o.items||[]).map(i=>`<div class="ln"><span>${i.q}× ${esc(i.name)} <small>${esc(i.label&&i.label!=="One size"?i.label:"")}${i.from?" · from price":""}</small></span><span>${money(i.price*i.q)}</span></div>`).join("")}
       <div class="ln"><span>Subtotal</span><span>${money(o.subtotal)}</span></div>
       <div class="ln" style="align-items:center"><span>Delivery fee</span><input type="number" min="0" step="0.5" value="${+o.delivery_fee||0}" data-f="delivery_fee" style="width:100px;padding:6px 10px"></div>
@@ -625,22 +718,26 @@ function closeModal(){$("#modal").classList.remove("on");if(!$("#drawer").classL
 
 /* ============== GLOBAL ACTIONS ============== */
 document.addEventListener("click",async e=>{
-  const adv=e.target.closest("[data-adv]"); if(adv){e.stopPropagation();const o=ORD.find(x=>x.id===adv.dataset.adv);setStatus(o.id,FLOW[FLOW.indexOf(o.status)+1]);return}
-  const op=e.target.closest("[data-open]"); if(op&&!e.target.closest("input,select,a")){openId=op.dataset.open;renderDrawer();return}
-  const gt=e.target.closest("[data-goto]"); if(gt){tab="orders";F.range="upcoming";location.hash="orders";render();return}
-  const rg=e.target.closest("[data-range]"); if(rg){F.range=rg.dataset.range;render();return}
+  const dn=e.target.closest("[data-done]"); if(dn){e.stopPropagation();const row=dn.closest(".orow");row&&row.classList.add("leaving");setTimeout(()=>setStatus(dn.dataset.done,"ready"),row?260:0);return}
+  const to=e.target.closest("[data-to]"); if(to){e.stopPropagation();const o=ORD.find(x=>x.id===to.dataset.oid);
+    if(to.dataset.to==="out_for_delivery"){const inp=document.querySelector(`[data-driver="${o.id}"]`);const dv=inp?inp.value.trim():"";if(dv&&dv!==o.driver){o.driver=dv;try{await S.updateOrder(o.id,{driver:dv})}catch(err){}}}
+    setStatus(o.id,to.dataset.to);return}
+  const pr=e.target.closest("[data-period]"); if(pr){FIN.period=pr.dataset.period;render();return}
+  const drg=e.target.closest("[data-drange]"); if(drg){DEL.range=drg.dataset.drange;render();return}
+  const mp=e.target.closest("[data-markpaid]"); if(mp){const o=ORD.find(x=>x.id===mp.dataset.markpaid);saveField(o,"paid",true,true);toast(`#${o.number} marked paid`);return}
+  const op=e.target.closest("[data-open]"); if(op&&!e.target.closest("input,select,a,button")){openId=op.dataset.open;renderDrawer();return}
   const ss=e.target.closest("[data-setst]"); if(ss){await setStatus(openId,ss.dataset.setst);renderDrawer();return}
   const av=e.target.closest("[data-avail]"); if(av){const p=PROD.find(x=>x.id===av.dataset.avail);p.available=!p.available;render();try{await S.updateProduct(p.id,{available:p.available});toast(p.available?`${p.name} is back on the website`:`${p.name} marked sold out`)}catch(err){p.available=!p.available;render();alertErr(err)}return}
-  const dd=e.target.closest("[data-dday]"); if(dd){const v=dd.dataset.dday;DEL.date=v==="0"?today():v==="1t"?addDays(today(),1):addDays(DEL.date,+v);render();return}
   const rt=e.target.closest("[data-route]"); if(rt){sendRoute(rt.dataset.route);return}
   const cu=e.target.closest("[data-cust]"); if(cu){F.q=cu.dataset.cust;F.range="all";tab="orders";location.hash="orders";render();return}
   const a=e.target.closest("[data-act]"); if(!a)return; const act=a.dataset.act;
   if(act==="new")openNew();
   if(act==="csv")exportCSV();
-  if(act==="togcanc"){F.showCancelled=!F.showCancelled;render()}
+  if(act==="togdone"){DEL.showAll=!DEL.showAll;render()}
+  if(act==="togunpaid"){FIN.allUnpaid=!FIN.allUnpaid;render()}
   if(act==="printcard")printCard(ORD.find(x=>x.id===openId));
   if(act==="printslip")printSlips([ORD.find(x=>x.id===openId)]);
-  if(act==="printday")printSlips(ORD.filter(o=>o.delivery_date===DEL.date&&live(o)),true);
+  if(act==="printday")printSlips(ORD.filter(o=>(o.status==="ready"||o.status==="out_for_delivery")),true);
   if(act==="cancel"){const o=ORD.find(x=>x.id===openId);if(confirmBox(`Cancel order #${o.number}?`)){await setStatus(o.id,"cancelled");renderDrawer()}}
   if(act==="delete"){const o=ORD.find(x=>x.id===openId);if(confirmBox(`Delete order #${o.number} permanently? This can’t be undone.`)){try{await S.deleteOrder(o.id);ORD=ORD.filter(x=>x.id!==o.id);closeDrawer();render();toast("Order deleted")}catch(err){alertErr(err)}}}
 });
@@ -656,8 +753,8 @@ const confirmBox=msg=>{try{return window.confirm(msg)}catch(e){return true}};
 function alertErr(e){toast("Couldn’t save",e.message||String(e))}
 
 function sendRoute(driver){
-  const os=ORD.filter(o=>o.delivery_date===DEL.date&&live(o)&&o.status!=="delivered"&&(o.driver||"Unassigned")===driver).sort((a,b)=>SLOTS.indexOf(a.delivery_slot)-SLOTS.indexOf(b.delivery_slot));
-  const txt=`🌸 Malizia deliveries — ${niceDate(DEL.date)}\n\n`+os.map((o,i)=>`${i+1}. #${o.number} · ${o.delivery_slot||""}\n${o.recipient_name||""} ${o.recipient_phone||""}\n${o.address||"Pick-up"}\n${o.address?"https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(o.address):""}\n${itemsShort(o)}${o.paid?"":"\n💵 Collect "+money(o.total)}`).join("\n\n");
+  const os=ORD.filter(o=>(o.status==="ready"||o.status==="out_for_delivery")&&!isPickup(o)&&(o.driver||"Unassigned")===driver).sort((x,y)=>(x.delivery_date||"")<(y.delivery_date||"")?-1:SLOTS.indexOf(x.delivery_slot)-SLOTS.indexOf(y.delivery_slot));
+  const txt=`🌸 Malizia deliveries${driver!=="Unassigned"?" for "+driver:""}\n\n`+os.map((o,i)=>`${i+1}. #${o.number} · ${niceDate(o.delivery_date)} ${o.delivery_slot||""}\n${o.recipient_name||""} ${o.recipient_phone||""}\n${o.address}\nhttps://www.google.com/maps/search/?api=1&query=${encodeURIComponent(o.address)}\n${itemsShort(o)}${o.paid?"":"\n💵 Collect "+money(o.total)}`).join("\n\n");
   const a=document.createElement("a");a.href=`https://wa.me/?text=${encodeURIComponent(txt)}`;a.target="_blank";a.rel="noopener";document.body.appendChild(a);a.click();a.remove();
 }
 function exportCSV(){
