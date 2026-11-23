@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Malizia Flowers — Pastel Edition</title>
+<meta name="description" content="Malizia Flowers — hand-tied bouquets, signature rose boxes and living plants. Order online, send it with a card.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --noir:#110a0c; --noir2:#1b1013; --wine:#4a0a14; --crimson:#9b1022; --rose:#c8475a;
+  --blush:#f3dfd9; --blush2:#ead0c8; --ivory:#f7f2ec; --cream:#efe8df; --gold:#c9a66b; --gold2:#e5cd9c;
+  --sage:#1f2a20; --sage2:#2d3b2c; --leaf:#8fa27a;
+  --ink:#1c1416; --muted:#7b6a6c;
+  --serif:'Bodoni Moda', 'Didot', Georgia, serif; --sans:'Jost', system-ui, sans-serif;
+  --ease:cubic-bezier(.2,.7,.1,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:var(--sans);background:var(--ivory);color:var(--ink);overflow-x:hidden;font-weight:400;line-height:1.5}
+body.locked{overflow:hidden}
+img{display:block;max-width:100%}
+button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--crimson);color:#fff}
+.serif{font-family:var(--serif)}
+em,.it{font-style:italic;font-family:var(--serif)}
+.kicker{font-size:.72rem;letter-spacing:.32em;text-transform:uppercase;font-weight:500}
+.wrap{width:min(1320px,92vw);margin:0 auto}
+
+/* ============ LOADER ============ */
+#loader{position:fixed;inset:0;z-index:999;background:var(--noir);display:grid;place-items:center;color:var(--ivory);transition:clip-path 1.2s var(--ease)}
+#loader.done{clip-path:inset(0 0 100% 0)}
+#loader .lw{display:flex;gap:.04em;font-family:var(--serif);font-size:clamp(2.6rem,9vw,6.5rem);letter-spacing:.12em;overflow:hidden}
+#loader .lw span{display:inline-block;transform:translateY(110%);animation:rise 1s var(--ease) forwards}
+#loader .bar{position:absolute;left:50%;bottom:16vh;width:min(260px,60vw);height:1px;background:rgba(255,255,255,.15);transform:translateX(-50%);overflow:hidden}
+#loader .bar i{position:absolute;inset:0;background:var(--gold);transform:scaleX(0);transform-origin:left;animation:fill 1.6s .2s var(--ease) forwards}
+#loader small{position:absolute;bottom:calc(16vh + 18px);left:50%;transform:translateX(-50%);color:var(--gold2);opacity:.8}
+@keyframes rise{to{transform:none}}
+@keyframes fill{to{transform:scaleX(1)}}
+
+/* ============ NAV ============ */
+.nav{position:fixed;top:0;left:0;right:0;z-index:60;display:flex;align-items:center;justify-content:space-between;padding:18px 4vw;color:var(--ivory);transition:background .5s,color .5s,padding .5s,backdrop-filter .5s}
+.nav.solid{background:rgba(247,242,236,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);color:var(--ink);padding:12px 4vw;box-shadow:0 1px 0 rgba(0,0,0,.06)}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--serif);font-size:1.35rem;letter-spacing:.28em}
+.brand svg{width:30px;height:30px}
+.nav ul{display:flex;gap:34px;list-style:none;font-size:.8rem;letter-spacing:.18em;text-transform:uppercase}
+.nav ul a{position:relative;padding:4px 0}
+.nav ul a::after{content:"";position:absolute;left:0;bottom:0;height:1px;width:100%;background:currentColor;transform:scaleX(0);transform-origin:right;transition:transform .5s var(--ease)}
+.nav ul a:hover::after{transform:scaleX(1);transform-origin:left}
+.nav .right{display:flex;align-items:center;gap:14px}
+.bagbtn{display:flex;align-items:center;gap:8px;font-size:.8rem;letter-spacing:.18em;text-transform:uppercase;padding:10px 16px;border:1px solid currentColor;border-radius:99px;transition:background .3s,color .3s}
+.bagbtn:hover{background:var(--crimson);border-color:var(--crimson);color:#fff}
+.bagbtn b{display:inline-grid;place-items:center;min-width:20px;height:20px;border-radius:99px;background:var(--crimson);color:#fff;font-size:.7rem;letter-spacing:0;font-weight:600}
+.bagbtn.bump{animation:bump .5s}
+@keyframes bump{40%{transform:scale(1.15)}}
+.menubtn{display:none;width:40px;height:40px;position:relative}
+.menubtn i{position:absolute;left:9px;right:9px;height:1.5px;background:currentColor;transition:.4s}
+.menubtn i:nth-child(1){top:15px}.menubtn i:nth-child(2){top:23px}
+body.menu-open .menubtn i:nth-child(1){top:19px;transform:rotate(45deg)}
+body.menu-open .menubtn i:nth-child(2){top:19px;transform:rotate(-45deg)}
+.mmenu{position:fixed;inset:0;z-index:55;background:var(--noir);color:var(--ivory);display:flex;flex-direction:column;justify-content:center;padding:0 8vw;clip-path:circle(0% at 92% 4%);transition:clip-path .9s var(--ease)}
+body.menu-open .mmenu{clip-path:circle(150% at 92% 4%)}
+.mmenu a{font-family:var(--serif);font-size:2.6rem;line-height:1.35;display:block}
+.mmenu a em{color:var(--rose)}
+.mmenu p{margin-top:40px;color:var(--gold2)}
+
+/* ============ HERO ============ */
+.hero{position:relative;min-height:100svh;background:radial-gradient(120% 80% at 70% 60%,#3d0912 0%,#1a0b0e 45%,var(--noir) 75%);color:var(--ivory);overflow:hidden;display:flex;align-items:center}
+#petals{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:3}
+.hero .ghost{position:absolute;left:50%;top:50%;transform:translate(-50%,-56%);font-family:var(--serif);font-size:clamp(7rem,30vw,30rem);letter-spacing:-.02em;line-height:.8;color:transparent;-webkit-text-stroke:1px rgba(201,166,107,.18);white-space:nowrap;z-index:1;user-select:none}
+.hero .grid{position:relative;z-index:4;width:min(1000px,92vw);margin:0 auto;display:flex;justify-content:center;text-align:center;padding-top:90px}
+.hero .htext{display:flex;flex-direction:column;align-items:center}
+.hero .ghost{transform:translate(-50%,-50%)!important}
+.hero h1{font-family:var(--serif);font-weight:400;font-size:clamp(3.1rem,7.4vw,7.6rem);line-height:.95;letter-spacing:-.02em}
+.hero h1 em{color:var(--rose);font-weight:400}
+.hero h1 .ln{display:block;overflow:hidden;padding-bottom:.06em}
+.hero h1 .ln>span{display:inline-block}
+.hero .lede{max-width:520px;margin:28px 0 36px;color:rgba(247,242,236,.72);font-size:1.05rem;font-weight:300}
+.hero .kicker{color:var(--gold2);display:flex;align-items:center;gap:14px;margin-bottom:26px}
+.hero .kicker::before,.hero .kicker::after{content:"";width:40px;height:1px;background:var(--gold)}
+.btns{display:flex;gap:12px;flex-wrap:wrap}
+.hero .btns{justify-content:center}
+.btn{white-space:nowrap;display:inline-flex;align-items:center;gap:12px;padding:16px 28px;border-radius:99px;font-size:.8rem;letter-spacing:.2em;text-transform:uppercase;font-weight:500;position:relative;overflow:hidden;isolation:isolate;transition:color .45s}
+.btn::before{content:"";position:absolute;inset:0;border-radius:inherit;transform:translateY(101%);transition:transform .55s var(--ease);z-index:-1}
+.btn:hover::before{transform:none}
+.btn.fill{background:var(--crimson);color:#fff}.btn.fill::before{background:var(--ivory)}.btn.fill:hover{color:var(--crimson)}
+.btn.line{border:1px solid rgba(247,242,236,.4)}.btn.line::before{background:var(--ivory)}.btn.line:hover{color:var(--noir)}
+.btn.dark{background:var(--noir);color:var(--ivory)}.btn.dark::before{background:var(--crimson)}
+.btn svg{width:16px;height:16px}
+.hero .stage{position:relative;height:min(78vh,760px);display:grid;place-items:center}
+.hero .halo{position:absolute;width:78%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(201,71,90,.45),rgba(155,16,34,.15) 45%,transparent 70%);filter:blur(10px)}
+.hero .ring{position:absolute;width:84%;aspect-ratio:1;border-radius:50%;border:1px solid rgba(201,166,107,.25)}
+.hero .ring.r2{width:64%;border-style:dashed;border-color:rgba(201,166,107,.18);animation:spin 60s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.hero .obs{position:relative;width:min(88%,560px);filter:drop-shadow(0 50px 60px rgba(0,0,0,.6));will-change:transform}
+.hero .tag{position:absolute;right:0;bottom:10%;background:rgba(17,10,12,.55);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(201,166,107,.3);border-radius:18px;padding:16px 18px;display:flex;gap:16px;align-items:center;z-index:5}
+.hero .tag .t1{font-family:var(--serif);font-size:1.2rem}
+.hero .tag .t2{color:var(--gold2);font-size:.85rem}
+.hero .tag button{width:42px;height:42px;border-radius:50%;background:var(--ivory);color:var(--noir);display:grid;place-items:center;transition:transform .3s,background .3s}
+.hero .tag button:hover{transform:rotate(90deg);background:var(--gold2)}
+.hero .tag2{position:absolute;left:2%;top:16%;font-size:.72rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gold2);writing-mode:vertical-rl;transform:rotate(180deg);opacity:.7}
+.scrollcue{position:absolute;left:50%;bottom:26px;z-index:5;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:10px;color:rgba(247,242,236,.6);font-size:.65rem;letter-spacing:.3em;text-transform:uppercase}
+.scrollcue i{width:1px;height:44px;background:linear-gradient(var(--gold),transparent);animation:cue 2s infinite}
+@keyframes cue{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* ============ MARQUEE ============ */
+.marquee{background:var(--crimson);color:var(--ivory);overflow:hidden;padding:20px 0;white-space:nowrap;position:relative;z-index:2}
+.marquee .track{display:inline-flex;animation:mq 38s linear infinite}
+.marquee span{font-family:var(--serif);font-size:clamp(1.4rem,3vw,2.4rem);padding:0 28px;display:inline-flex;align-items:center;gap:56px}
+.marquee span::after{content:"✿";font-size:.7em;color:var(--gold2)}
+@keyframes mq{to{transform:translateX(-50%)}}
+
+/* ============ SECTION HEADS ============ */
+section{position:relative}
+.head{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;margin-bottom:48px;flex-wrap:wrap}
+.head h2{font-family:var(--serif);font-weight:400;font-size:clamp(2.4rem,5.6vw,5rem);line-height:1;letter-spacing:-.02em}
+.head h2 em{color:var(--crimson)}
+.head p{max-width:380px;color:var(--muted)}
+.head .kicker{color:var(--crimson);margin-bottom:18px;display:block}
+
+/* ============ OCCASIONS ============ */
+.occ{padding:120px 0 90px;background:var(--ivory)}
+.occ-row{display:grid;grid-template-columns:repeat(6,1fr);gap:18px}
+.occ-card{position:relative;border-radius:200px 200px 22px 22px;overflow:hidden;aspect-ratio:3/4.4;background:var(--c,#efe2dc);display:flex;flex-direction:column;justify-content:flex-end;padding:18px;text-align:left;transition:transform .6s var(--ease)}
+.occ-card img{position:absolute;left:50%;top:44%;width:92%;transform:translate(-50%,-50%);transition:transform .9s var(--ease);filter:drop-shadow(0 18px 22px rgba(60,10,20,.25))}
+.occ-card:hover{transform:translateY(-8px)}
+.occ-card:hover img{transform:translate(-50%,-54%) scale(1.06) rotate(-2deg)}
+.occ-card b{font-family:var(--serif);font-weight:400;font-size:1.45rem;line-height:1.05;position:relative}
+.occ-card small{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;opacity:.65;position:relative;margin-top:4px}
+.occ-card.dk{color:var(--ivory)}
+
+/* ============ SIGNATURE (horizontal) ============ */
+.sig{background:var(--noir);color:var(--ivory);overflow:hidden}
+.sig .pinwrap{min-height:100svh;display:flex;flex-direction:column;justify-content:center;padding:110px 0 70px}
+.sig .head{width:min(1320px,92vw);margin:0 auto 40px}
+.sig .head h2 em{color:var(--rose)}
+.sig .head p{color:rgba(247,242,236,.6)}
+.sig .head .kicker{color:var(--gold2)}
+.hscroll{display:flex;gap:3vw;padding:0 4vw;will-change:transform}
+.scard{flex:0 0 auto;width:min(78vw,520px);display:grid;grid-template-rows:auto auto;gap:18px;cursor:pointer}
+.scard .ph{position:relative;aspect-ratio:4/4.6;border-radius:28px;overflow:hidden;background:radial-gradient(circle at 50% 45%,#3a1219,#170b0e 70%)}
+.scard .ph img{position:absolute;inset:6%;width:88%;height:88%;object-fit:contain;transition:transform 1.1s var(--ease);filter:drop-shadow(0 30px 40px rgba(0,0,0,.55))}
+.scard:hover .ph img{transform:scale(1.06) rotate(1.5deg)}
+.scard .ph .no{position:absolute;left:22px;top:18px;font-family:var(--serif);font-size:1rem;color:var(--gold2)}
+.scard .ph .pp{position:absolute;right:18px;top:16px;padding:8px 14px;border-radius:99px;background:rgba(247,242,236,.1);backdrop-filter:blur(8px);font-size:.85rem}
+.scard h3{font-family:var(--serif);font-weight:400;font-size:2rem;line-height:1}
+.scard p{color:rgba(247,242,236,.6);font-size:.95rem;max-width:440px}
+.scard.light .ph{background:radial-gradient(circle at 50% 45%,#f6ebe6,#e8d6cf 75%)}
+
+/* ============ SHOP ============ */
+.shop{padding:130px 0 110px;background:var(--ivory)}
+.filters{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:38px;align-items:center;position:sticky;top:64px;z-index:20;padding:12px 0;background:linear-gradient(var(--ivory) 80%,rgba(247,242,236,0))}
+.chips{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;padding-bottom:2px}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:0 0 auto;padding:11px 18px;border-radius:99px;border:1px solid rgba(28,20,22,.15);font-size:.82rem;letter-spacing:.06em;transition:.3s;white-space:nowrap}
+.chip:hover{border-color:var(--ink)}
+.chip.on{background:var(--ink);color:var(--ivory);border-color:var(--ink)}
+.chip.occ-on{background:var(--crimson);border-color:var(--crimson);color:#fff}
+.sortsel{appearance:none;-webkit-appearance:none;padding:11px 38px 11px 18px;border-radius:99px;border:1px solid rgba(28,20,22,.15);background:transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6' fill='%231c1416'/%3E%3C/svg%3E") no-repeat right 16px center;font:inherit;font-size:.82rem;color:var(--ink)}
+.occnote{display:none;margin:-22px 0 26px;font-size:.9rem;color:var(--muted)}
+.occnote.show{display:block}
+.occnote button{text-decoration:underline;color:var(--crimson)}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:34px 22px}
+.card{position:relative;cursor:pointer;opacity:1;transition:opacity .5s,transform .5s}
+.card.hide{display:none}
+.card .ph{position:relative;aspect-ratio:4/5;border-radius:22px;overflow:hidden;background:var(--cream)}
+.card .ph img{width:100%;height:100%;object-fit:cover;mix-blend-mode:multiply;transition:transform 1.2s var(--ease),opacity .6s}
+.card .ph img.alt{position:absolute;inset:0;opacity:0}
+.card:hover .ph img{transform:scale(1.07)}
+.card:hover .ph img.alt{opacity:1}
+.card .badge{position:absolute;left:14px;top:14px;padding:6px 12px;border-radius:99px;background:rgba(247,242,236,.85);backdrop-filter:blur(6px);font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;font-weight:500}
+.card .badge.red{background:var(--crimson);color:#fff}
+.card .quick{position:absolute;right:14px;bottom:14px;width:46px;height:46px;border-radius:50%;background:var(--ink);color:var(--ivory);display:grid;place-items:center;transform:translateY(12px) scale(.8);opacity:0;transition:.45s var(--ease)}
+.card:hover .quick,.card .quick:focus{opacity:1;transform:none}
+.card .quick:hover{background:var(--crimson)}
+.card .meta{display:flex;justify-content:space-between;gap:10px;padding:16px 4px 0;align-items:baseline}
+.card h3{font-family:var(--serif);font-weight:400;font-size:1.3rem;line-height:1.15}
+.card .sub{font-size:.8rem;color:var(--muted);margin-top:3px}
+.card .price{font-weight:500;white-space:nowrap}
+.card .price small{font-weight:400;color:var(--muted);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;margin-right:3px}
+.empty{display:none;text-align:center;padding:60px 0;color:var(--muted)}
+
+/* ============ GREEN ROOM ============ */
+.green{background:radial-gradient(100% 80% at 30% 40%,#33452f,var(--sage) 60%,#121a12);color:#eef1e8;padding:140px 0 120px;overflow:hidden}
+.green .head .kicker{color:var(--leaf)}
+.green .head h2 em{color:#c9d8b4}
+.green .head p{color:rgba(238,241,232,.65)}
+.gstage{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin:10px 0 70px}
+.pcard{position:relative;border-radius:26px;background:radial-gradient(circle at 50% 38%,rgba(201,216,180,.16),rgba(255,255,255,.03) 65%);border:1px solid rgba(238,241,232,.12);padding:22px 20px 20px;display:flex;flex-direction:column;cursor:pointer;transition:transform .6s var(--ease),border-color .4s}
+.pcard:hover{transform:translateY(-6px);border-color:rgba(201,216,180,.45)}
+.pcard .pi{height:280px;display:grid;place-items:end center;margin-bottom:16px}
+.pcard img{max-height:280px;max-width:100%;width:auto;object-fit:contain;filter:drop-shadow(0 24px 24px rgba(0,0,0,.45));transition:transform 1s var(--ease)}
+.pcard:hover img{transform:translateY(-10px) rotate(-2deg)}
+.pcard h3{font-family:var(--serif);font-weight:400;font-size:1.35rem;line-height:1.1}
+.pcard .ps{font-size:.8rem;color:rgba(238,241,232,.6);margin:4px 0 10px}
+.pcard .pw{font-size:.8rem;color:var(--leaf);display:flex;gap:6px;align-items:flex-start;margin-bottom:16px}
+.pcard .pw svg{flex:0 0 14px;height:14px;margin-top:3px}
+.pcard .pb{display:flex;justify-content:space-between;align-items:center;margin-top:auto}
+.pcard .pp{font-weight:500;font-size:1.05rem}
+.pcard .pp small{font-weight:400;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(238,241,232,.6);margin-right:4px}
+.pcard .padd{padding:10px 16px;border-radius:99px;background:#eef1e8;color:var(--sage);font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;font-weight:500;transition:background .3s,color .3s}
+.pcard .padd:hover{background:var(--leaf);color:#fff}
+.pcard .sz{position:absolute;right:16px;top:16px;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;padding:6px 10px;border-radius:99px;background:rgba(238,241,232,.12)}
+.care{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.care div{border:1px solid rgba(238,241,232,.15);border-radius:20px;padding:22px}
+.care b{font-family:var(--serif);font-weight:400;font-size:1.2rem;display:block;margin:10px 0 4px}
+.care p{font-size:.88rem;color:rgba(238,241,232,.65)}
+.care svg{width:26px;height:26px;color:var(--leaf)}
+
+/* ============ PROMISE ============ */
+.promise{padding:130px 0;background:var(--blush)}
+.manifesto{font-family:var(--serif);font-size:clamp(2rem,4.6vw,4.2rem);line-height:1.12;letter-spacing:-.01em;max-width:1100px}
+.manifesto .w{opacity:.14;transition:opacity .4s}
+.manifesto .w.lit{opacity:1}
+.manifesto em{color:var(--crimson)}
+.def{margin-top:50px;display:flex;gap:30px;align-items:baseline;color:var(--muted);flex-wrap:wrap}
+.def b{font-family:var(--serif);font-size:1.6rem;color:var(--ink);font-weight:400}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:90px}
+.step{background:var(--ivory);border-radius:26px;padding:34px 30px 30px;position:relative;overflow:hidden}
+.step .n{font-family:var(--serif);font-size:4.5rem;line-height:1;color:var(--blush2)}
+.step h4{font-family:var(--serif);font-weight:400;font-size:1.55rem;margin:14px 0 8px}
+.step p{color:var(--muted);font-size:.95rem}
+
+/* ============ INSTAGRAM ============ */
+.insta{padding:120px 0 0;background:var(--ivory);overflow:hidden}
+.insta .head h2 a{border-bottom:1px solid currentColor}
+.igrow{display:flex;gap:14px;animation:mq 60s linear infinite;width:max-content}
+.igrow a{flex:0 0 auto;width:clamp(180px,20vw,280px);aspect-ratio:1;border-radius:18px;overflow:hidden;background:var(--cream);position:relative}
+.igrow img{width:100%;height:100%;object-fit:cover;mix-blend-mode:multiply;transition:transform .8s var(--ease)}
+.igrow a:hover img{transform:scale(1.08)}
+.igrow:hover{animation-play-state:paused}
+
+/* ============ FOOTER ============ */
+footer{background:var(--noir);color:var(--ivory);padding:110px 0 30px;margin-top:120px;overflow:hidden}
+.fbig{font-family:var(--serif);font-size:clamp(5rem,22vw,22rem);line-height:.8;letter-spacing:-.03em;text-align:center;background:linear-gradient(180deg,var(--ivory),rgba(201,166,107,.35));-webkit-background-clip:text;background-clip:text;color:transparent;margin:60px 0 40px}
+.fcols{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:30px}
+.fcols h5{font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold2);margin-bottom:16px;font-weight:500}
+.fcols a,.fcols p{display:block;color:rgba(247,242,236,.7);margin-bottom:8px;font-size:.95rem}
+.fcols a:hover{color:var(--ivory)}
+.fcols .fcta{color:var(--ivory);margin:0;font-family:var(--serif);font-size:clamp(1.8rem,3.2vw,2.8rem);line-height:1.1;max-width:480px}
+.fbot{display:flex;justify-content:space-between;border-top:1px solid rgba(247,242,236,.12);padding-top:24px;font-size:.8rem;color:rgba(247,242,236,.45);flex-wrap:wrap;gap:10px}
+
+/* ============ MODAL ============ */
+.veil{position:fixed;inset:0;background:rgba(17,10,12,.55);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);z-index:80;opacity:0;pointer-events:none;transition:opacity .5s}
+.veil.on{opacity:1;pointer-events:auto}
+.modal{position:fixed;z-index:90;left:50%;top:50%;width:min(1040px,94vw);max-height:92svh;background:var(--ivory);border-radius:30px;overflow:hidden;display:grid;grid-template-columns:1.05fr 1fr;transform:translate(-50%,-46%) scale(.96);opacity:0;pointer-events:none;transition:.6s var(--ease)}
+.modal.on{opacity:1;pointer-events:auto;transform:translate(-50%,-50%)}
+.modal .mimg{background:var(--cream);position:relative;min-height:0}
+.modal .mimg img{width:100%;height:100%;object-fit:cover;mix-blend-mode:multiply;transition:opacity .4s}
+.modal .mbody{padding:44px 40px 34px;overflow:auto;display:flex;flex-direction:column}
+.modal .x{position:absolute;right:16px;top:16px;z-index:3;width:44px;height:44px;border-radius:50%;background:var(--ivory);display:grid;place-items:center;box-shadow:0 4px 14px rgba(0,0,0,.1);transition:transform .4s}
+.modal .x:hover{transform:rotate(90deg)}
+.modal .kicker{color:var(--crimson)}
+.modal h3{font-family:var(--serif);font-weight:400;font-size:clamp(2rem,3.4vw,2.9rem);line-height:1.02;margin:12px 0 10px}
+.modal .mp{font-size:1.35rem;font-weight:500;margin-bottom:18px}
+.modal .mp small{font-size:.75rem;color:var(--muted);font-weight:400;letter-spacing:.12em;text-transform:uppercase}
+.modal .md{color:var(--muted);margin-bottom:22px}
+.vlabel{font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;margin-bottom:10px;font-weight:500}
+.vars{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
+.vars button{padding:11px 16px;border-radius:14px;border:1px solid rgba(28,20,22,.16);font-size:.88rem;text-align:left;transition:.3s}
+.vars button small{display:block;color:var(--muted);font-size:.75rem}
+.vars button.on{border-color:var(--ink);background:var(--ink);color:var(--ivory)}
+.vars button.on small{color:var(--blush2)}
+.carebox{display:flex;gap:12px;padding:14px 16px;border-radius:16px;background:#e9eee3;color:#2d3b2c;font-size:.88rem;margin-bottom:22px;align-items:flex-start}
+.carebox svg{flex:0 0 22px;height:22px}
+.mrow{display:flex;gap:12px;margin-top:auto;padding-top:8px}
+.qty{display:flex;align-items:center;border:1px solid rgba(28,20,22,.16);border-radius:99px}
+.qty button{width:44px;height:52px;font-size:1.2rem}
+.qty span{min-width:22px;text-align:center}
+.mrow .btn{flex:1;justify-content:center}
+.perks{display:flex;gap:18px;margin-top:18px;font-size:.78rem;color:var(--muted);flex-wrap:wrap}
+.perks span::before{content:"✿ ";color:var(--crimson)}
+
+/* ============ BAG DRAWER ============ */
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(480px,100vw);background:var(--ivory);z-index:95;transform:translateX(105%);transition:transform .7s var(--ease);display:flex;flex-direction:column}
+.drawer.on{transform:none}
+.dhead{display:flex;justify-content:space-between;align-items:center;padding:24px 26px;border-bottom:1px solid rgba(28,20,22,.08)}
+.dhead h3{font-family:var(--serif);font-weight:400;font-size:1.9rem}
+.dhead h3 sup{font-family:var(--sans);font-size:.8rem;color:var(--crimson)}
+.dbody{flex:1;overflow:auto;padding:10px 26px 26px}
+.bline{display:grid;grid-template-columns:78px 1fr auto;gap:14px;padding:16px 0;border-bottom:1px solid rgba(28,20,22,.07);align-items:center}
+.bline .th{width:78px;height:92px;border-radius:14px;overflow:hidden;background:var(--cream)}
+.bline .th img{width:100%;height:100%;object-fit:cover;mix-blend-mode:multiply}
+.bline b{font-family:var(--serif);font-weight:400;font-size:1.1rem;display:block;line-height:1.15}
+.bline small{color:var(--muted);font-size:.8rem}
+.bline .lq{display:flex;align-items:center;gap:10px;margin-top:8px;font-size:.9rem}
+.bline .lq button{width:28px;height:28px;border-radius:50%;border:1px solid rgba(28,20,22,.16)}
+.bline .rm{font-size:.75rem;color:var(--muted);text-decoration:underline;margin-left:6px}
+.bline .lp{font-weight:500}
+.dempty{text-align:center;padding:70px 10px;color:var(--muted)}
+.dempty .serif{font-size:1.8rem;color:var(--ink);margin-bottom:8px}
+.form{margin-top:24px;display:grid;gap:12px}
+.form h4{font-family:var(--serif);font-weight:400;font-size:1.35rem;margin-top:10px}
+.form label{font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;font-weight:500;display:grid;gap:6px}
+.form input,.form select,.form textarea{font:inherit;font-size:16px;letter-spacing:0;text-transform:none;padding:13px 14px;border-radius:14px;border:1px solid rgba(28,20,22,.16);background:#fff;color:var(--ink);width:100%}
+.form textarea{resize:vertical;min-height:90px}
+.form .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.form .cc{font-size:.72rem;color:var(--muted);text-align:right;margin-top:-6px;letter-spacing:0;text-transform:none;font-weight:400}
+.dfoot{padding:20px 26px 26px;border-top:1px solid rgba(28,20,22,.08);background:var(--ivory)}
+.tot{display:flex;justify-content:space-between;font-size:1.05rem;margin-bottom:4px}
+.tot b{font-family:var(--serif);font-size:1.6rem;font-weight:400}
+.dnote{font-size:.78rem;color:var(--muted);margin-bottom:14px}
+.dfoot .btn{width:100%;justify-content:center;margin-top:8px}
+.btn.wa{background:#1f8f52;color:#fff}.btn.wa::before{background:var(--noir)}
+.btn.ig{border:1px solid var(--ink)}.btn.ig::before{background:var(--ink)}.btn.ig:hover{color:var(--ivory)}
+.err{color:var(--crimson);font-size:.82rem;min-height:1em}
+
+/* toast */
+.toast{position:fixed;left:50%;bottom:26px;z-index:120;transform:translate(-50%,140%);background:var(--noir);color:var(--ivory);padding:12px 14px 12px 12px;border-radius:99px;display:flex;align-items:center;gap:12px;box-shadow:0 20px 40px rgba(0,0,0,.25);transition:transform .6s var(--ease);font-size:.9rem;max-width:92vw}
+.toast.on{transform:translate(-50%,0)}
+.toast img{width:40px;height:40px;border-radius:50%;object-fit:cover;background:var(--cream)}
+.toast button{color:var(--gold2);text-decoration:underline;margin-left:6px}
+
+/* cursor */
+.cursor{position:fixed;left:0;top:0;width:86px;height:86px;margin:-43px 0 0 -43px;border-radius:50%;background:var(--crimson);color:#fff;display:grid;place-items:center;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;pointer-events:none;z-index:200;transform:scale(0);transition:transform .35s var(--ease)}
+.cursor.on{transform:scale(1)}
+
+/* reveal */
+.js .rv{opacity:0;transform:translateY(40px)}
+.rv.in{opacity:1!important;transform:none!important;transition:opacity 1.1s var(--ease),transform 1.1s var(--ease)}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width:1080px){
+  .grid4{grid-template-columns:repeat(3,1fr)}
+  .occ-row{grid-template-columns:repeat(3,1fr)}
+  .care{grid-template-columns:repeat(2,1fr)}
+  .gstage{grid-template-columns:repeat(3,1fr)}
+}
+@media (max-width:860px){
+  .nav ul{display:none}.menubtn{display:block}
+  .bagbtn span.t{display:none}
+  .hero .grid{grid-template-columns:1fr;padding-top:110px;padding-bottom:70px;gap:0}
+  .hero .stage{height:52vh;order:2;margin-top:10px}
+  .hero .tag{right:2%;bottom:2%}
+  .hero .tag2{display:none}
+  .scrollcue{display:none}
+  .hero .lede{margin:20px 0 26px}
+  .grid4{grid-template-columns:repeat(2,1fr);gap:26px 12px}
+  .card h3{font-size:1.05rem}
+  .card .meta{flex-direction:column;gap:4px;padding-top:12px}
+  .card .quick{opacity:1;transform:none;width:40px;height:40px;right:10px;bottom:10px}
+  .filters{top:58px}
+  .occ-row{grid-template-columns:repeat(2,1fr);gap:12px}
+  .gstage{grid-template-columns:repeat(2,1fr);gap:12px}
+  .pcard{padding:16px 14px 14px;border-radius:20px}
+  .pcard .pi,.pcard img{height:auto;max-height:170px}
+  .pcard .pi{height:170px}
+  .pcard h3{font-size:1.1rem}
+  .pcard .pw{display:none}
+  .pcard .pb{flex-direction:column;align-items:flex-start;gap:10px}
+  .pcard .padd{width:100%;text-align:center}
+  .steps{grid-template-columns:1fr;margin-top:60px}
+  .fcols{grid-template-columns:1fr 1fr}
+  .fcols>div:first-child{grid-column:1/-1}
+  .modal{grid-template-columns:1fr;top:auto;bottom:0;left:0;width:100vw;max-height:94svh;border-radius:28px 28px 0 0;transform:translateY(100%);overflow:auto}
+  .modal.on{transform:none}
+  .modal .mimg{height:46svh}
+  .modal .mbody{padding:28px 22px 28px;overflow:visible}
+  .hscroll{overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:10px;scrollbar-width:none}
+  .hscroll::-webkit-scrollbar{display:none}
+  .scard{scroll-snap-align:center;width:80vw}
+  .scard h3{font-size:1.6rem}
+  .sig .pinwrap{min-height:0;padding:100px 0 80px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
+
+/* ================= PASTEL THEME ================= */
+:root{--noir:#2b2326;--crimson:#c06c7b;--rose:#d4899a;--gold:#c9a98a;--gold2:#b8927a;--ivory:#fffdfb;--cream:#f7efec;--blush:#fbecea;--blush2:#f1d6d6;--ink:#2b2326;--muted:#8a7c7f;--lilac:#ece4f4;--mint:#e6efe4;--peach:#fcebe1}
+body{background:var(--ivory)}
+#loader{background:var(--ivory);color:var(--ink)}
+#loader small{color:var(--crimson)}
+#loader .bar{background:rgba(43,35,38,.08)}
+.nav,.nav.solid{color:var(--ink)}
+.mmenu{background:var(--blush);color:var(--ink)}
+.mmenu p{color:var(--crimson)}
+.hero{background:radial-gradient(70% 60% at 20% 20%,#fde8ea 0%,transparent 60%),radial-gradient(60% 60% at 85% 30%,#efe6f7 0%,transparent 60%),radial-gradient(70% 60% at 60% 100%,#fbeee3 0%,transparent 60%),#fffdfb;color:var(--ink)}
+.hero .ghost{-webkit-text-stroke:1px rgba(192,108,123,.16)}
+.hero .lede{color:var(--muted)}
+.hero .kicker{color:var(--crimson)}
+.hero .kicker::before,.hero .kicker::after{background:var(--rose)}
+.btn.line{border-color:rgba(43,35,38,.35)}.btn.line::before{background:var(--ink)}.btn.line:hover{color:var(--ivory)}
+.btn.fill::before{background:var(--ink)}.btn.fill:hover{color:#fff}
+.scrollcue{color:var(--muted)}
+.scrollcue i{background:linear-gradient(var(--rose),transparent)}
+.marquee{background:var(--blush);color:var(--ink)}
+.marquee span::after{color:var(--crimson)}
+.occ{background:var(--ivory)}
+.occ-card.dk{color:var(--ink)}
+.sig{background:linear-gradient(180deg,#fdf4f3,#f6eef8);color:var(--ink)}
+.sig .head p,.scard p{color:var(--muted)}
+.sig .head .kicker{color:var(--crimson)}
+.sig .head h2 em{color:var(--crimson)}
+.scard .ph,.scard.light .ph{background:radial-gradient(circle at 50% 45%,#ffffff,#f4e6e6 75%)}
+.scard .ph img{filter:drop-shadow(0 26px 30px rgba(150,90,100,.22))}
+.scard .ph .no{color:var(--crimson)}
+.scard .ph .pp{background:rgba(255,255,255,.75)}
+.shop{background:var(--ivory)}
+.filters{background:linear-gradient(var(--ivory) 80%,rgba(255,253,251,0))}
+.card .ph{background:var(--cream)}
+.green{background:linear-gradient(180deg,#eef4ea,#e3ece0);color:var(--ink)}
+.green .head .kicker{color:#5f7a55}
+.green .head h2 em{color:#6f8b63}
+.green .head p{color:var(--muted)}
+.pcard{background:rgba(255,255,255,.7);border-color:rgba(95,122,85,.15)}
+.pcard:hover{border-color:rgba(95,122,85,.45)}
+.pcard img{filter:drop-shadow(0 20px 20px rgba(60,80,50,.18))}
+.pcard .ps{color:var(--muted)}
+.pcard .pw{color:#5f7a55}
+.pcard .pp small{color:var(--muted)}
+.pcard .padd{background:#5f7a55;color:#fff}
+.pcard .padd:hover{background:var(--ink)}
+.pcard .sz{background:#e6efe1;color:#5f7a55}
+.care div{border-color:rgba(95,122,85,.2);background:rgba(255,255,255,.5)}
+.care p{color:var(--muted)}
+.care svg{color:#5f7a55}
+.promise{background:linear-gradient(180deg,var(--blush),#f8eef6)}
+.step .n{color:var(--blush2)}
+.insta{background:var(--ivory)}
+footer{background:linear-gradient(180deg,#f8eef6,#fbecea);color:var(--ink)}
+.fcols h5{color:var(--crimson)}
+.fcols a,.fcols p{color:var(--muted)}
+.fcols a:hover{color:var(--ink)}
+.fcols .fcta,.fcta{color:var(--ink)}
+.fbig{background:linear-gradient(180deg,#d4899a,rgba(212,137,154,.15));-webkit-background-clip:text;background-clip:text}
+.fbot{border-color:rgba(43,35,38,.1);color:var(--muted)}
+.veil{background:rgba(80,60,65,.25)}
+.toast{background:var(--ink)}
+.cursor{background:var(--crimson)}
+</style>
+</head>
+<body>
+
+<div id="loader" aria-hidden="true">
+  <div class="lw"><span style="animation-delay:.05s">M</span><span style="animation-delay:.1s">A</span><span style="animation-delay:.15s">L</span><span style="animation-delay:.2s">I</span><span style="animation-delay:.25s">Z</span><span style="animation-delay:.3s">I</span><span style="animation-delay:.35s">A</span></div>
+  <small class="kicker">Flowers</small>
+  <div class="bar"><i></i></div>
+</div>
+
+<div class="cursor" id="cursor">View</div>
+
+<!-- NAV -->
+<header class="nav" id="nav">
+  <a href="#top" class="brand" aria-label="Malizia home">
+    <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="20" cy="20" r="18.5" opacity=".5"/><path d="M20 8c3 4 3 8 0 12-3-4-3-8 0-12zM20 32c-3-4-3-8 0-12 3 4 3 8 0 12zM8 20c4-3 8-3 12 0-4 3-8 3-12 0zM32 20c-4 3-8 3-12 0 4-3 8-3 12 0z"/><circle cx="20" cy="20" r="1.6" fill="currentColor"/></svg>
+    MALIZIA
+  </a>
+  <ul>
+    <li><a href="#shop">Shop</a></li>
+    <li><a href="#occasions">Occasions</a></li>
+    <li><a href="#signature">Signature</a></li>
+    <li><a href="#plants">Plants</a></li>
+    <li><a href="#how">How to order</a></li>
+  </ul>
+  <div class="right">
+    <button class="bagbtn" id="bagBtn" aria-label="Open bag"><span class="t">Bag</span><b id="bagCount">0</b></button>
+    <button class="menubtn" id="menuBtn" aria-label="Menu"><i></i><i></i></button>
+  </div>
+</header>
+<nav class="mmenu" id="mmenu">
+  <a href="#shop">The <em>Shop</em></a>
+  <a href="#occasions">Shop by <em>moment</em></a>
+  <a href="#signature">Signature</a>
+  <a href="#plants">The Green <em>Room</em></a>
+  <a href="#how">How to order</a>
+  <p class="kicker">@maliziaflowers</p>
+</nav>
+
+<main id="top">
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="ghost" aria-hidden="true">Malizia</div>
+  <canvas id="petals"></canvas>
+  <div class="grid">
+    <div class="htext">
+      <div class="kicker">Malizia Flowers · Hand-tied to order</div>
+      <h1><span class="ln"><span>Flowers with</span></span><span class="ln"><span>a little</span></span><span class="ln"><span><em>mischief.</em></span></span></h1>
+      <p class="lede">Velvet roses, signature black boxes and living plants — composed by hand, wrapped in blush, sent with your words on a card.</p>
+      <div class="btns">
+        <a href="#shop" class="btn fill">Shop the collection <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 8h12M9 3l5 5-5 5"/></svg></a>
+        <a href="#plants" class="btn line">Shop plants</a>
+      </div>
+    </div>
+  </div>
+  <div class="scrollcue">Scroll<i></i></div>
+</section>
+
+<div class="marquee" aria-hidden="true"><div class="track" id="mq"></div></div>
+
+<!-- OCCASIONS -->
+<section class="occ" id="occasions">
+  <div class="wrap">
+    <div class="head rv">
+      <div><span class="kicker">Shop by moment</span><h2>Whatever you <em>mean</em>,<br>say it in bloom.</h2></div>
+      <p>Pick the moment and we’ll show you the arrangements made for it.</p>
+    </div>
+    <div class="occ-row" id="occRow"></div>
+  </div>
+</section>
+
+<!-- SIGNATURE -->
+<section class="sig" id="signature">
+  <div class="pinwrap" id="sigPin">
+    <div class="head">
+      <div><span class="kicker">The signature edit</span><h2>Made to make<br>them <em>gasp.</em></h2></div>
+      <p>Our grandest pieces — the ones people photograph before they say thank you.</p>
+    </div>
+    <div class="hscroll" id="hscroll"></div>
+  </div>
+</section>
+
+<!-- SHOP -->
+<section class="shop" id="shop">
+  <div class="wrap">
+    <div class="head rv">
+      <div><span class="kicker">The full collection</span><h2>Every bloom, <em>every</em> price.</h2></div>
+      <p id="shopCount">24 arrangements and plants, all hand-made by Malizia.</p>
+    </div>
+    <div class="filters">
+      <div class="chips" id="cats"></div>
+      <select class="sortsel" id="sort" aria-label="Sort">
+        <option value="feat">Featured</option>
+        <option value="low">Price: low to high</option>
+        <option value="high">Price: high to low</option>
+      </select>
+    </div>
+    <div class="occnote" id="occnote"></div>
+    <div class="grid4" id="grid"></div>
+    <div class="empty" id="empty">Nothing here yet — try another filter.</div>
+  </div>
+</section>
+
+<!-- GREEN ROOM -->
+<section class="green" id="plants">
+  <div class="wrap">
+    <div class="head rv">
+      <div><span class="kicker">The Green Room</span><h2>Gifts that keep<br><em>growing.</em></h2></div>
+      <p>All 7 living plants — for homes, desks and new beginnings. Each comes with simple care notes.</p>
+    </div>
+    <div class="gstage" id="gstage"></div>
+    <div class="care rv">
+      <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 3c4 5 6 8 6 11a6 6 0 0 1-12 0c0-3 2-6 6-11z"/></svg><b>Easy-going</b><p>Sansevieria — water every 2–4 weeks, never overwater.</p></div>
+      <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2"/></svg><b>Weekly ritual</b><p>Anthurium — water once a week for glossy leaves and blooms.</p></div>
+      <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 21V9M12 9c0-3 2-6 6-6 0 4-2 6-6 6zM12 13c0-3-2-5-6-5 0 4 2 5 6 5z"/></svg><b>Orchid rule</b><p>Every 7–10 days, or when the roots turn silvery. Let it drain.</p></div>
+      <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 20h16M7 20l1-6h8l1 6M12 14V8M12 8c-2-3-5-3-6-2 1 2 3 3 6 2zM12 8c2-3 5-3 6-2-1 2-3 3-6 2z"/></svg><b>Bonsai feel</b><p>Water when the top layer of soil begins to dry.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROMISE / HOW -->
+<section class="promise" id="how">
+  <div class="wrap">
+    <p class="manifesto" id="manifesto">Every Malizia piece is cut, composed and wrapped by hand — never pulled from a shelf. We choose the roses that open just right, the ribbon that falls just so, and we leave a little <em>mischief</em> in every bouquet.</p>
+    <div class="def"><b><em>ma·lì·zia</em></b><span>(Italian) — a touch of playful mischief; a knowing charm.</span></div>
+    <div class="steps">
+      <div class="step rv"><div class="n">01</div><h4>Choose your blooms</h4><p>Browse the collection, pick a size, and add it to your bag. Mix bouquets and plants freely.</p></div>
+      <div class="step rv"><div class="n">02</div><h4>Write the card</h4><p>Add the recipient, the delivery date and time you prefer, and the message you want them to read.</p></div>
+      <div class="step rv"><div class="n">03</div><h4>Send it in one tap</h4><p>Your full order goes straight to Malizia on WhatsApp or Instagram — we confirm delivery and payment with you there.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- INSTAGRAM -->
+<section class="insta" id="insta">
+  <div class="wrap">
+    <div class="head rv">
+      <div><span class="kicker">Follow the petals</span><h2><a href="https://www.instagram.com/maliziaflowers/" target="_blank" rel="noopener">@maliziaflowers</a></h2></div>
+      <p>New arrangements, behind-the-wrap moments and seasonal drops — first on Instagram.</p>
+    </div>
+  </div>
+  <div class="igrow" id="igrow"></div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="fcols">
+      <div><p class="fcta">Someone deserves flowers today. <em style="color:var(--crimson)">Probably.</em></p><a href="#shop" class="btn fill" style="margin-top:22px;display:inline-flex">Send something</a></div>
+      <div><h5>Shop</h5><a href="#shop" data-cat="roses">Roses</a><a href="#shop" data-cat="mixed">Mixed bouquets</a><a href="#shop" data-cat="gifts">Boxes & baskets</a><a href="#plants">Plants</a></div>
+      <div><h5>Moments</h5><a href="#shop" data-occ="love">Love & romance</a><a href="#shop" data-occ="birthday">Birthdays</a><a href="#shop" data-occ="baby">New baby</a><a href="#shop" data-occ="thanks">Thank you</a></div>
+      <div><h5>Say hello</h5><a href="https://www.instagram.com/maliziaflowers/" target="_blank" rel="noopener">Instagram ↗</a><a href="https://ig.me/m/maliziaflowers" target="_blank" rel="noopener">Message us ↗</a><a href="#how">How to order</a></div>
+    </div>
+    <div class="fbig">Malizia</div>
+    <div class="fbot"><span>© <span id="yr"></span> Malizia Flowers. All arrangements hand-made to order.</span><span>Prices in USD · Delivery fee confirmed when you order</span></div>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div class="veil" id="veil"></div>
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+  <button class="x" id="mClose" aria-label="Close"><svg width="16" height="16" viewBox="0 0 16 16" stroke="currentColor" stroke-width="1.6"><path d="M3 3l10 10M13 3L3 13"/></svg></button>
+  <div class="mimg"><img id="mImg" alt=""></div>
+  <div class="mbody">
+    <span class="kicker" id="mKick"></span>
+    <h3 id="mTitle"></h3>
+    <div class="mp" id="mPrice"></div>
+    <p class="md" id="mDesc"></p>
+    <div id="mVarsWrap"><div class="vlabel" id="mVarLabel">Size</div><div class="vars" id="mVars"></div></div>
+    <div class="carebox" id="mCare"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3c4 5 6 8 6 11a6 6 0 0 1-12 0c0-3 2-6 6-11z"/></svg><span></span></div>
+    <div class="mrow">
+      <div class="qty"><button id="qm" aria-label="Less">−</button><span id="qv">1</span><button id="qp" aria-label="More">+</button></div>
+      <button class="btn fill" id="mAdd">Add to bag</button>
+    </div>
+    <div class="perks"><span>Hand-tied to order</span><span>Free card message</span><span>Pick your delivery date</span></div>
+  </div>
+</div>
+
+<!-- BAG -->
+<aside class="drawer" id="drawer" aria-label="Your bag">
+  <div class="dhead"><h3>Your bag <sup id="dCount"></sup></h3><button class="x" id="dClose" aria-label="Close bag" style="width:40px;height:40px;display:grid;place-items:center"><svg width="16" height="16" viewBox="0 0 16 16" stroke="currentColor" stroke-width="1.6"><path d="M3 3l10 10M13 3L3 13"/></svg></button></div>
+  <div class="dbody">
+    <div id="lines"></div>
+    <form class="form" id="oform" onsubmit="return false">
+      <h4>Delivery & card</h4>
+      <label>Your name<input id="fFrom" autocomplete="name" placeholder="Who is it from?"></label>
+      <div class="two">
+        <label>Recipient<input id="fTo" placeholder="Their name"></label>
+        <label>Their phone<input id="fPhone" type="tel" autocomplete="off" placeholder="+…"></label>
+      </div>
+      <label>Delivery address<input id="fAddr" placeholder="Area, street, building, floor"></label>
+      <div class="two">
+        <label>Date<input id="fDate" type="date"></label>
+        <label>Time<select id="fTime"><option>Morning (9–12)</option><option>Afternoon (12–4)</option><option>Evening (4–8)</option><option>Pick up from the shop</option></select></label>
+      </div>
+      <label>Card message<textarea id="fMsg" maxlength="250" placeholder="Write something they’ll keep…"></textarea></label>
+      <div class="cc"><span id="fCC">0</span>/250</div>
+    </form>
+  </div>
+  <div class="dfoot" id="dfoot">
+    <div class="tot"><span>Subtotal</span><b id="sub">$0</b></div>
+    <div class="dnote">Delivery fee and payment are confirmed by Malizia when you send your order.</div>
+    <div class="err" id="err"></div>
+    <button class="btn wa" id="sendWA"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.9 11.9 0 0 0 4.6 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3z"/></svg>Send order on WhatsApp</button>
+    <button class="btn ig" id="sendIG">Copy order & open Instagram DM</button>
+  </div>
+</aside>
+
+<div class="toast" id="toast"><img id="tImg" alt=""><span id="tTxt"></span><button id="tView">View bag</button></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+/* ===================== CONFIG ===================== */
+// Put Malizia's WhatsApp number here in international format, digits only (e.g. "9613123456").
+// Left blank, the button opens WhatsApp and lets the customer pick the chat.
+const WHATSAPP_NUMBER = "";
+const IG = "maliziaflowers";
+
+/* ===================== CATALOG (from Malizia's price lists) ===================== */
+const P = [
+ {id:"obsession",name:"Obsession",cat:["roses","gifts"],occ:["love","luxury"],sub:"Red roses · signature black box",desc:"A crowned dome of red roses rising from the black Malizia box, finished with a long champagne satin ribbon. Our most photographed gift.",img:"b11",cut:"b11-cut",v:[{l:"One size",p:250}],badge:"Signature"},
+ {id:"crimson-heart",name:"The Crimson Heart",cat:["roses","gifts"],occ:["love","luxury"],sub:"Red roses shaped into a heart",desc:"Red roses set tightly into a heart and tied with a ribbon — the most direct way to say it.",img:"b10",cut:"b10-cut",v:[{l:"Small",p:100},{l:"Medium",p:150},{l:"Large",p:250}],vl:"Size",badge:"Bestseller"},
+ {id:"romantic-crimson",name:"Romantic Crimson Bouquet",cat:["roses"],occ:["love"],sub:"Deep red roses · blush-edged wrap",desc:"Velvet-red roses gathered round and wrapped in soft white paper with a blush edge. Choose how many.",img:"b01",v:[{l:"15 roses",p:30,img:"b02",cut:"b02-cut"},{l:"30 roses",p:60,img:"b01",cut:"b01-cut"},{l:"100 roses",p:200,img:"b03",cut:"b03-cut"}],vl:"Roses",def:1},
+ {id:"classic-red",name:"Classic Red Rose Bouquet",cat:["roses"],occ:["love","luxury"],sub:"Red roses · noir wrap",desc:"A dense crown of red roses in a black wrap with a red satin ribbon — dramatic, timeless, unmistakable.",img:"b05",v:[{l:"50 roses",p:100,img:"b05",cut:"b05-cut"},{l:"100 roses",p:200,img:"b06",cut:"b06-cut"}],vl:"Roses"},
+ {id:"crimson-cloud",name:"Crimson Cloud",cat:["roses"],occ:["love","birthday"],sub:"Red roses · baby’s breath",desc:"Red roses floating in a cloud of baby’s breath, wrapped in white with a blush edge.",img:"b04",cut:"b04-cut",v:[{l:"One size",p:80}]},
+ {id:"pink-heaven",name:"Pink Heaven",cat:["roses"],occ:["love","luxury","birthday"],sub:"A sea of blush roses",desc:"An abundance of soft blush-pink roses in a pink-edged wrap. Romantic without saying a word.",img:"b19",v:[{l:"One size",p:200}]},
+ {id:"white-roses",name:"White Roses",cat:["roses"],occ:["love","baby","thanks"],sub:"Ivory roses · blush wrap",desc:"A generous round of ivory roses in a blush-edged wrap — pure, calm and elegant.",img:"b20",cut:"b20-cut",v:[{l:"One size",p:100}]},
+ {id:"white-eucalyptus",name:"White Roses with Eucalyptus",cat:["roses"],occ:["thanks","baby"],sub:"Ivory-green roses · eucalyptus",desc:"Fresh ivory-green roses threaded with silver eucalyptus in a crystal-clear wrap.",img:"b18",v:[{l:"One size",p:100}]},
+ {id:"sweeter",name:"The Sweeter the Better",cat:["mixed"],occ:["birthday","luxury"],sub:"A grand round of sunny & lilac blooms",desc:"Our grandest mixed piece — a huge round of yellow, blush and lilac blooms wrapped in pink and tied with lilac ribbon.",img:"b14",cut:"b14-cut",v:[{l:"One size",p:400}],badge:"Grand"},
+ {id:"dreamy",name:"Dreamy Fairytale",cat:["mixed"],occ:["birthday","love"],sub:"Coral roses · burgundy chrysanthemums",desc:"Coral roses with burgundy and pink chrysanthemums in a blush wrap. Price depends on the size you choose — we’ll confirm with you.",img:"b15",v:[{l:"Starting size",p:75,from:true}]},
+ {id:"sweet-blooms",name:"Sweet Blooms",cat:["mixed"],occ:["birthday","thanks"],sub:"Lilies · roses · eucalyptus",desc:"White and pink lilies with pastel roses and eucalyptus in a peach wrap. Price depends on the size you choose — we’ll confirm with you.",img:"b09",cut:"b09-cut",v:[{l:"Starting size",p:50,from:true}]},
+ {id:"joy",name:"Joy",cat:["mixed"],occ:["birthday","thanks"],sub:"Chrysanthemums · lilies · roses",desc:"Pink and lilac chrysanthemums, lilies, spray roses and greenery in a peach wrap — happiness in a hand-tie.",img:"b07",v:[{l:"One size",p:50}]},
+ {id:"blushing-love",name:"Blushing Love",cat:["mixed"],occ:["love","birthday"],sub:"Pastel roses · chrysanthemums",desc:"White, blush and lilac blooms gathered into a soft round in a lilac wrap.",img:"b12",v:[{l:"One size",p:50}]},
+ {id:"soft-petals",name:"Soft Petals",cat:["mixed"],occ:["birthday","baby"],sub:"Pastel blooms · lilac wrap",desc:"A gentle mix of pastel roses and chrysanthemums with greenery, wrapped in lilac.",img:"b13",v:[{l:"One size",p:50}]},
+ {id:"purple-heaven",name:"Purple Heaven — Mini",cat:["mixed"],occ:["birthday","thanks"],sub:"Pink roses · eucalyptus · lilac wrap",desc:"A petite hand-tie of pink roses, chrysanthemums and eucalyptus in a lilac-edged wrap. The perfect little hello.",img:"b08",v:[{l:"Mini",p:25}],badge:"Under $30"},
+ {id:"blush-basket",name:"Malizia Blush Basket",cat:["gifts","mixed"],occ:["birthday","baby"],sub:"Roses & lisianthus in a quilted basket",desc:"Pink and lilac roses with lisianthus and eucalyptus in a quilted blush basket, tied with a pink bow and a Malizia card.",img:"b16",v:[{l:"One size",p:50}]},
+ {id:"baby-boy",name:"Baby Boy Bloom",cat:["gifts","mixed"],occ:["baby"],sub:"White blooms · blue delphinium",desc:"White blooms and blue delphinium rising from a white Malizia box — to welcome the newest little one.",img:"b17",v:[{l:"One size",p:100}],badge:"New baby"},
+ /* plants */
+ {id:"sansevieria",name:"Sansevieria",cat:["plants"],occ:["home","thanks"],sub:"Snake plant · marble pot",desc:"A sleek, low-maintenance plant with elegant upright leaves, perfect for adding greenery and modern elegance to any space.",care:"Water every 2–4 weeks. Avoid overwatering.",img:"p01",cut:"p01-cut",v:[{l:"One size",p:50}]},
+ {id:"orchid",name:"Phalaenopsis Orchid",cat:["plants"],occ:["home","thanks"],sub:"White orchid · wrapped pot",desc:"A timeless choice that brings beauty and sophistication to any interior.",care:"Water every 7–10 days, or when the roots turn silvery. Let excess water drain — never leave roots sitting in water.",img:"p02",cut:"p02-cut",v:[{l:"One size",p:45}]},
+ {id:"anthurium",name:"Anthurium",cat:["plants"],occ:["home","thanks","love"],sub:"Heart-shaped red blooms",desc:"A beautiful tropical plant with glossy green leaves and vibrant, heart-shaped blooms.",care:"Water once a week.",img:"p03",cut:"p03-cut",v:[{l:"One size",p:60}]},
+ {id:"guzmania",name:"Guzmania",cat:["plants"],occ:["home","birthday"],sub:"Tropical bromeliad",desc:"A stunning tropical statement piece that brings a fresh, exotic touch to any interior.",care:"Keep the soil lightly moist, watering every 1–2 weeks.",img:"p04",cut:"p04-cut",v:[{l:"One size",p:35}]},
+ {id:"bonsai",name:"Bonsai",cat:["plants"],occ:["home","thanks"],sub:"Ficus bonsai on river stones",desc:"A beautifully shaped miniature tree that brings calm, balance and timeless elegance to any space.",care:"Water when the top layer of soil begins to dry.",img:"p08",cut:"p08-cut",v:[{l:"Mini",p:20,img:"p05"},{l:"Small",p:30,img:"p06"},{l:"Medium",p:40,img:"p07"},{l:"Large",p:50,img:"p08"}],vl:"Size",def:0},
+ {id:"dracaena",name:"Dracaena Marginata",cat:["plants"],occ:["home"],sub:"Dragon tree",desc:"A dragon tree with a slender, textured stem that branches into a crown of narrow, spiky leaves with subtle reddish edges.",care:"Water when the top of the soil feels dry.",careGeneric:true,img:"p09",cut:"p09-cut",v:[{l:"One size",p:50}]},
+ {id:"bamboo",name:"Spiral Lucky Bamboo",cat:["plants"],occ:["home","thanks"],sub:"Five spiral stems · blue glass vase",desc:"Five spiral lucky bamboo stems standing in a blue glass vase — a symbol of good fortune.",care:"Keep the stems in fresh water.",careGeneric:true,img:"p10",cut:"p10-cut",v:[{l:"50 cm stems",p:50,img:"p10",note:"Blue glass vase"},{l:"80 cm stems",p:60,img:"p11",note:"Oval blue vase"}],vl:"Height"}
+];
+const byId = Object.fromEntries(P.map(p=>[p.id,p]));
+const minP = p => Math.min(...p.v.map(v=>v.p));
+const fmt = n => "$"+n.toLocaleString("en-US");
+const priceLabel = p => { const m=minP(p); return (p.v.length>1||p.v[0].from) ? `<small>From</small>${fmt(m)}` : fmt(m); };
+const src = n => `img/${n}.webp`;
+
+const OCC = [
+ {k:"love",t:"Love & romance",s:"Roses, hearts",img:"b10-cut",c:"#f1d4d1"},
+ {k:"birthday",t:"Birthdays",s:"Joyful mixes",img:"b09-cut",c:"#fdebe1"},
+ {k:"baby",t:"New baby",s:"Soft & sweet",img:"b20-cut",c:"#e6ebef"},
+ {k:"thanks",t:"Thank you",s:"Just because",img:"b04-cut",c:"#efe4ea"},
+ {k:"luxury",t:"Go big",s:"Grand gestures",img:"b14-cut",c:"#f3ecf8"},
+ {k:"home",t:"Home & office",s:"Living plants",img:"p03-cut",c:"#dfe6d6"}
+];
+const CATS = [["all","All"],["roses","Roses"],["plants","Plants"],["mixed","Mixed bouquets"],["gifts","Boxes & baskets"]];
+
+/* ===================== STATE ===================== */
+let bag = [];
+try{ bag = JSON.parse(localStorage.getItem("malizia_bag")||"[]").filter(l=>byId[l.id]&&byId[l.id].v[l.vi]&&l.q>0); }catch(e){ bag=[]; }
+const save = ()=>{ try{localStorage.setItem("malizia_bag",JSON.stringify(bag));}catch(e){} };
+let fCat="all", fOcc=null, fSort="feat";
+
+const $ = s=>document.querySelector(s), $$ = s=>[...document.querySelectorAll(s)];
+const hasGSAP = typeof gsap!=="undefined" && typeof ScrollTrigger!=="undefined";
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+if(hasGSAP && !reduce) document.documentElement.classList.add("js");
+
+/* ===================== BUILD ===================== */
+// marquee
+(function(){const words=["Velvet red roses","Signature black boxes","Hearts made of roses","Lilies & lisianthus","Orchids & bonsai","Hand-tied to order","A card with every gift"];
+ const h=words.map(w=>`<span>${w}</span>`).join(""); $("#mq").innerHTML=h+h;})();
+
+// occasions
+$("#occRow").innerHTML = OCC.map(o=>`<button class="occ-card ${o.dk?'dk':''}" style="--c:${o.c}" data-occ="${o.k}"><img src="${src(o.img)}" alt="" loading="lazy"><b>${o.t}</b><small>${o.s}</small></button>`).join("");
+
+// signature
+const SIG=[["white-roses","b20-cut"],["sweet-blooms","b09-cut"],["sweeter","b14-cut"],["crimson-cloud","b04-cut"],["crimson-heart","b10-cut"],["obsession","b11-cut"]];
+$("#hscroll").innerHTML = SIG.map(([id,c,l],i)=>{const p=byId[id];return `<article class="scard ${l?'light':''}" data-open="${id}" data-cursor><div class="ph"><span class="no">No. 0${i+1}</span><span class="pp">${p.v.length>1?'From ':''}${fmt(id==="classic-red"?200:minP(p))}</span><img src="${src(c)}" alt="${p.name}" loading="lazy"></div><h3>${id==="classic-red"?"100 Red Roses, Noir":p.name}</h3><p>${p.desc}</p></article>`}).join("");
+
+// shop chips
+$("#cats").innerHTML = CATS.map(([k,t])=>`<button class="chip ${k==='all'?'on':''}" data-cat="${k}">${t}</button>`).join("");
+
+function cardHTML(p){
+  const alt = p.v.length>1 && p.v[1].img ? p.v[p.v.length-1].img : null;
+  const first = p.v[p.def??0].img || p.img;
+  return `<article class="card rv" data-id="${p.id}" data-cursor tabindex="0" aria-label="${p.name}">
+   <div class="ph"><img src="${src(first)}" alt="${p.name}" loading="lazy">${alt&&alt!==first?`<img class="alt" src="${src(alt)}" alt="" loading="lazy">`:""}
+   ${p.badge?`<span class="badge ${p.badge==='Signature'||p.badge==='Bestseller'?'red':''}">${p.badge}</span>`:""}
+   <button class="quick" data-quick="${p.id}" aria-label="Add ${p.name} to bag"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 2v12M2 8h12"/></svg></button></div>
+   <div class="meta"><div><h3>${p.name}</h3><div class="sub">${p.sub}</div></div><div class="price">${priceLabel(p)}</div></div></article>`;
+}
+function renderGrid(){
+  let list=[...P];
+  if(fCat!=="all") list=list.filter(p=>p.cat.includes(fCat));
+  if(fOcc) list=list.filter(p=>p.occ.includes(fOcc));
+  if(fSort==="feat"){const F=["sweeter","pink-heaven","white-roses","sweet-blooms","blushing-love","soft-petals","dreamy","blush-basket","joy","purple-heaven","baby-boy","white-eucalyptus"];const r=id=>{const i=F.indexOf(id);return i<0?99:i};list.sort((a,b)=>r(a.id)-r(b.id));}
+  if(fSort==="low") list.sort((a,b)=>minP(a)-minP(b));
+  if(fSort==="high") list.sort((a,b)=>minP(b)-minP(a));
+  $("#grid").innerHTML=list.map(cardHTML).join("");
+  $("#empty").style.display=list.length?"none":"block";
+  $("#shopCount").textContent = `${list.length} ${list.length===1?"piece":"pieces"} — all hand-made by Malizia.`;
+  const on=OCC.find(o=>o.k===fOcc);
+  $("#occnote").innerHTML = on?`Showing gifts for <b>${on.t}</b> · <button id="clrOcc">Show everything</button>`:"";
+  $("#occnote").classList.toggle("show",!!on);
+  // reveal new cards
+  requestAnimationFrame(()=>$$("#grid .rv").forEach((el,i)=>setTimeout(()=>el.classList.add("in"),40*i)));
+}
+renderGrid();
+
+// green room
+const GR=P.filter(p=>p.cat.includes("plants"));
+const drop='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3c4 5 6 8 6 11a6 6 0 0 1-12 0c0-3 2-6 6-11z"/></svg>';
+$("#gstage").innerHTML = GR.map(p=>`<article class="pcard rv" data-open="${p.id}" data-cursor>${p.v.length>1?`<span class="sz">${p.v.length} ${p.vl==="Height"?"heights":"sizes"}</span>`:""}<div class="pi"><img src="${src(p.cut||p.img)}" alt="${p.name}" loading="lazy"></div><h3>${p.name}</h3><div class="ps">${p.sub}</div><div class="pw">${drop}<span>${p.care}</span></div><div class="pb"><span class="pp">${p.v.length>1?"<small>From</small>":""}${fmt(minP(p))}</span><button class="padd" data-quick="${p.id}">${p.v.length>1?"Choose size":"Add to bag"}</button></div></article>`).join("");
+
+// instagram strip
+const igImgs=["b10","b07","b19","p03","b11","b15","b17","b04","p11","b09","b16","b20","b14","p08"];
+const ig = igImgs.map(n=>`<a href="https://www.instagram.com/${IG}/" target="_blank" rel="noopener" aria-label="Malizia on Instagram"><img src="${src(n)}" alt="" loading="lazy"></a>`).join("");
+$("#igrow").innerHTML = ig+ig;
+
+$("#yr").textContent=new Date().getFullYear();
+
+/* ===================== MODAL ===================== */
+let mId=null,mVi=0,mQ=1,lastFocus=null;
+function openModal(id,vi){
+  const p=byId[id]; if(!p)return; mId=id; mVi=vi??(p.def??0); mQ=1; lastFocus=document.activeElement;
+  $("#mKick").textContent = p.cat.includes("plants")?"The Green Room":(p.cat.includes("gifts")?"Boxes & baskets":(p.cat.includes("roses")?"Roses":"Mixed bouquet"));
+  $("#mTitle").textContent=p.name; $("#mDesc").textContent=p.desc;
+  const multi=p.v.length>1; $("#mVarsWrap").style.display=multi?"block":"none";
+  $("#mVarLabel").textContent=p.vl||"Size";
+  $("#mVars").innerHTML=p.v.map((v,i)=>`<button data-v="${i}">${v.l}<small>${fmt(v.p)}${v.note?" · "+v.note:""}</small></button>`).join("");
+  const care=$("#mCare"); care.style.display=p.care?"flex":"none"; if(p.care) care.querySelector("span").textContent=(p.careGeneric?"Care tip: ":"Care: ")+p.care;
+  updModal();
+  $("#veil").classList.add("on"); $("#modal").classList.add("on"); document.body.classList.add("locked");
+  setTimeout(()=>$("#mClose").focus(),50);
+}
+function updModal(){
+  const p=byId[mId],v=p.v[mVi];
+  const im=$("#mImg"); const ns=src(v.img||p.img); if(!im.src.endsWith(ns)){im.style.opacity=0;setTimeout(()=>{im.src=ns;im.alt=p.name;im.style.opacity=1},180)}
+  $("#mPrice").innerHTML=(v.from?"<small>From </small>":"")+fmt(v.p*mQ)+(mQ>1?` <small>· ${mQ} × ${fmt(v.p)}</small>`:"");
+  $$("#mVars button").forEach((b,i)=>b.classList.toggle("on",i===mVi)); $("#qv").textContent=mQ;
+}
+function closeModal(){$("#modal").classList.remove("on");if(!$("#drawer").classList.contains("on")){$("#veil").classList.remove("on");document.body.classList.remove("locked")} lastFocus&&lastFocus.focus&&lastFocus.focus();}
+$("#mVars").addEventListener("click",e=>{const b=e.target.closest("button");if(b){mVi=+b.dataset.v;updModal()}});
+$("#qm").onclick=()=>{mQ=Math.max(1,mQ-1);updModal()}; $("#qp").onclick=()=>{mQ=Math.min(20,mQ+1);updModal()};
+$("#mAdd").onclick=()=>{addToBag(mId,mVi,mQ);closeModal()};
+$("#mClose").onclick=closeModal;
+
+/* ===================== BAG ===================== */
+function addToBag(id,vi,q){
+  const ex=bag.find(l=>l.id===id&&l.vi===vi); if(ex)ex.q+=q; else bag.push({id,vi,q});
+  save(); renderBag();
+  const p=byId[id],v=p.v[vi];
+  $("#tImg").src=src(v.img||p.img); $("#tTxt").textContent=`${p.name}${p.v.length>1?" · "+v.l:""} added`;
+  const t=$("#toast"); t.classList.add("on"); clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove("on"),3200);
+  const bb=$("#bagBtn"); bb.classList.remove("bump"); void bb.offsetWidth; bb.classList.add("bump");
+}
+function renderBag(){
+  const n=bag.reduce((a,l)=>a+l.q,0), sub=bag.reduce((a,l)=>a+byId[l.id].v[l.vi].p*l.q,0);
+  $("#bagCount").textContent=n; $("#dCount").textContent=n?n:"";
+  $("#sub").textContent=fmt(sub)+(bag.some(l=>byId[l.id].v[l.vi].from)?"+":"");
+  $("#dfoot").style.display=n?"block":"none"; $("#oform").style.display=n?"grid":"none";
+  $("#lines").innerHTML = n? bag.map((l,i)=>{const p=byId[l.id],v=p.v[l.vi];return `<div class="bline"><div class="th"><img src="${src(v.img||p.img)}" alt=""></div><div><b>${p.name}</b><small>${p.v.length>1?v.l:p.sub}${v.from?" · from":""}</small><div class="lq"><button data-dq="${i}" aria-label="Less">−</button>${l.q}<button data-iq="${i}" aria-label="More">+</button><button class="rm" data-rm="${i}">Remove</button></div></div><div class="lp">${fmt(v.p*l.q)}</div></div>`}).join("")
+   : `<div class="dempty"><div class="serif">Your bag is empty</div><p>But someone out there deserves flowers.</p><a href="#shop" class="btn dark" style="margin-top:22px" id="emptyShop">Start shopping</a></div>`;
+}
+$("#lines").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;
+  if(b.dataset.iq!=null)bag[+b.dataset.iq].q++;
+  if(b.dataset.dq!=null){const l=bag[+b.dataset.dq];l.q--;if(l.q<1)bag.splice(+b.dataset.dq,1)}
+  if(b.dataset.rm!=null)bag.splice(+b.dataset.rm,1);
+  save();renderBag();});
+$("#lines").addEventListener("click",e=>{if(e.target.id==="emptyShop")closeDrawer()});
+function openDrawer(){$("#drawer").classList.add("on");$("#veil").classList.add("on");document.body.classList.add("locked")}
+function closeDrawer(){$("#drawer").classList.remove("on");if(!$("#modal").classList.contains("on")){$("#veil").classList.remove("on");document.body.classList.remove("locked")}}
+$("#bagBtn").onclick=openDrawer; $("#dClose").onclick=closeDrawer; $("#tView").onclick=()=>{$("#toast").classList.remove("on");openDrawer()};
+$("#veil").onclick=()=>{closeModal();closeDrawer()};
+document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeModal();closeDrawer();document.body.classList.remove("menu-open")}});
+renderBag();
+
+// form helpers
+(function(){const d=new Date();const iso=x=>x.toISOString().slice(0,10);$("#fDate").min=iso(d);})();
+$("#fMsg").addEventListener("input",e=>$("#fCC").textContent=e.target.value.length);
+function orderText(){
+  const g=id=>$(id).value.trim();
+  const lines=bag.map(l=>{const p=byId[l.id],v=p.v[l.vi];return `• ${l.q} × ${p.name}${p.v.length>1?" ("+v.l+")":""} — ${v.from?"from ":""}${fmt(v.p*l.q)}`});
+  const sub=bag.reduce((a,l)=>a+byId[l.id].v[l.vi].p*l.q,0);
+  let t=`Hello Malizia! 🌹 I'd like to place an order:\n\n${lines.join("\n")}\n\nSubtotal: ${fmt(sub)}${bag.some(l=>byId[l.id].v[l.vi].from)?"+":""}\n`;
+  t+=`\nFrom: ${g("#fFrom")||"-"}\nTo: ${g("#fTo")||"-"}${g("#fPhone")?" ("+g("#fPhone")+")":""}\nAddress: ${g("#fAddr")||"-"}\nDelivery: ${g("#fDate")||"-"}, ${$("#fTime").value}\n`;
+  if(g("#fMsg")) t+=`\nCard message:\n“${g("#fMsg")}”\n`;
+  t+=`\nPlease confirm the delivery fee and payment. Thank you!`;
+  return t;
+}
+function validate(){const miss=[];if(!$("#fFrom").value.trim())miss.push("your name");if(!$("#fDate").value)miss.push("a delivery date");
+  $("#err").textContent=miss.length?"Please add "+miss.join(" and ")+".":"";return !miss.length;}
+$("#sendWA").addEventListener("click",()=>{if(!validate())return;const u=`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(orderText())}`;const a=document.createElement("a");a.href=u;a.target="_blank";a.rel="noopener";document.body.appendChild(a);a.click();a.remove();});
+$("#sendIG").addEventListener("click",async()=>{if(!validate())return;let ok=false;try{await navigator.clipboard.writeText(orderText());ok=true}catch(e){}
+  $("#err").style.color=ok?"#1f8f52":"var(--crimson)";$("#err").textContent=ok?"Order copied — paste it in the DM that just opened.":"Couldn’t copy automatically — open the DM and type your order.";
+  const a=document.createElement("a");a.href=`https://ig.me/m/${IG}`;a.target="_blank";a.rel="noopener";document.body.appendChild(a);a.click();a.remove();
+  setTimeout(()=>{$("#err").textContent="";$("#err").style.color=""},6000);});
+
+/* ===================== GLOBAL CLICKS ===================== */
+function applyCat(k){fCat=k;$$("#cats .chip").forEach(c=>c.classList.toggle("on",c.dataset.cat===k));renderGrid()}
+function applyOcc(k){fOcc=k;fCat="all";$$("#cats .chip").forEach(c=>c.classList.toggle("on",c.dataset.cat==="all"));renderGrid();document.getElementById("shop").scrollIntoView({behavior:"smooth"})}
+document.addEventListener("click",e=>{
+  const q=e.target.closest("[data-quick]"); if(q){e.stopPropagation();const p=byId[q.dataset.quick];if(p.v.length>1)openModal(p.id);else addToBag(p.id,0,1);return}
+  const o=e.target.closest("[data-open]"); if(o){openModal(o.dataset.open);return}
+  const c=e.target.closest(".card"); if(c){openModal(c.dataset.id);return}
+  const oc=e.target.closest("[data-occ]"); if(oc){e.preventDefault();applyOcc(oc.dataset.occ);return}
+  const ch=e.target.closest("[data-cat]"); if(ch){if(ch.tagName==="A"){e.preventDefault();fOcc=null;document.getElementById("shop").scrollIntoView({behavior:"smooth"})}applyCat(ch.dataset.cat);return}
+  if(e.target.id==="clrOcc"){fOcc=null;renderGrid();return}
+  if(e.target.closest(".mmenu a"))document.body.classList.remove("menu-open");
+});
+document.addEventListener("keydown",e=>{if(e.key==="Enter"&&e.target.classList&&e.target.classList.contains("card"))openModal(e.target.dataset.id)});
+$("#sort").addEventListener("change",e=>{fSort=e.target.value;renderGrid()});
+$("#menuBtn").onclick=()=>document.body.classList.toggle("menu-open");
+
+/* ===================== NAV / CURSOR ===================== */
+const nav=$("#nav");
+const onScroll=()=>{const dark=["hero"];let solid=scrollY>innerHeight*.85;
+  const y=scrollY+40;for(const id of dark){const s=document.getElementById(id);if(s&&y>=s.offsetTop&&y<s.offsetTop+s.offsetHeight){solid=false;break}}
+  if(document.body.classList.contains("menu-open"))solid=false; nav.classList.toggle("solid",solid);};
+addEventListener("scroll",onScroll,{passive:true}); onScroll();
+if(matchMedia("(pointer:fine)").matches&&!reduce){const cu=$("#cursor");let x=0,y=0,cx=0,cy=0;
+  addEventListener("mousemove",e=>{x=e.clientX;y=e.clientY;cu.classList.toggle("on",!!e.target.closest("[data-cursor]")&&!e.target.closest(".quick"))});
+  (function loop(){cx+=(x-cx)*.18;cy+=(y-cy)*.18;cu.style.left=cx+"px";cu.style.top=cy+"px";requestAnimationFrame(loop)})();}
+
+/* ===================== PETALS ===================== */
+(function(){const cv=$("#petals"),ctx=cv.getContext("2d");if(reduce)return;let W,H,dpr,ps=[];
+  const cols=["#f4c6cf","#f9dde2","#e8d7f1","#fbe3d6","#ffffff","#efb7c2"];
+  function size(){dpr=Math.min(2,devicePixelRatio||1);W=cv.clientWidth;H=cv.clientHeight;cv.width=W*dpr;cv.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0)}
+  function mk(init){return{x:Math.random()*W,y:init?Math.random()*H:-30,s:8+Math.random()*16,vy:.35+Math.random()*.8,vx:-.2+Math.random()*.5,r:Math.random()*6.28,vr:(-.5+Math.random())*.03,sw:Math.random()*6.28,c:cols[Math.random()*cols.length|0],a:.55+Math.random()*.4,f:Math.random()*6.28}}
+  size();addEventListener("resize",size);const N=innerWidth<700?16:30;for(let i=0;i<N;i++)ps.push(mk(true));
+  let vis=true;new IntersectionObserver(e=>vis=e[0].isIntersecting).observe(cv);
+  function draw(p){ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.r);const fl=Math.cos(p.f);ctx.scale(fl,1);ctx.globalAlpha=p.a;
+    const g=ctx.createLinearGradient(0,-p.s,0,p.s);g.addColorStop(0,p.c);g.addColorStop(1,"#f3d3d9");ctx.fillStyle=g;
+    ctx.beginPath();ctx.moveTo(0,-p.s);ctx.bezierCurveTo(p.s*.9,-p.s*.6,p.s*.7,p.s*.7,0,p.s);ctx.bezierCurveTo(-p.s*.7,p.s*.7,-p.s*.9,-p.s*.6,0,-p.s);ctx.fill();ctx.restore()}
+  (function tick(){if(vis){ctx.clearRect(0,0,W,H);for(const p of ps){p.sw+=.015;p.x+=p.vx+Math.sin(p.sw)*.6;p.y+=p.vy;p.r+=p.vr;p.f+=.03;if(p.y>H+30||p.x<-40||p.x>W+40)Object.assign(p,mk(false));draw(p)}}requestAnimationFrame(tick)})();
+})();
+
+/* ===================== MANIFESTO WORDS ===================== */
+(function(){const m=$("#manifesto");const walk=n=>{[...n.childNodes].forEach(c=>{if(c.nodeType===3){const f=document.createDocumentFragment();c.textContent.split(/(\s+)/).forEach(w=>{if(/^\s+$/.test(w)||!w)f.appendChild(document.createTextNode(w));else{const s=document.createElement("span");s.className="w";s.textContent=w;f.appendChild(s)}});c.replaceWith(f)}else walk(c)})};walk(m);
+  const ws=$$("#manifesto .w");const up=()=>{const r=m.getBoundingClientRect();const pr=Math.min(1,Math.max(0,(innerHeight*.85-r.top)/(r.height+innerHeight*.35)));const k=Math.round(pr*ws.length);ws.forEach((w,i)=>w.classList.toggle("lit",i<k))};
+  if(reduce)ws.forEach(w=>w.classList.add("lit"));else{addEventListener("scroll",up,{passive:true});up()}})();
+
+/* ===================== REVEALS ===================== */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}}),{threshold:.12,rootMargin:"0px 0px -6% 0px"});
+const watchRv=()=>$$(".rv:not(.in)").forEach(el=>io.observe(el));
+watchRv(); setTimeout(()=>{if(!('IntersectionObserver' in window))$$('.rv').forEach(e=>e.classList.add('in'))},100); new MutationObserver(watchRv).observe($("#grid"),{childList:true});
+
+/* ===================== GSAP SCENES ===================== */
+function intro(){
+  if(!hasGSAP||reduce)return;
+  gsap.from(".hero h1 .ln>span",{yPercent:110,duration:1.3,ease:"expo.out",stagger:.1});
+  gsap.from(".hero .kicker, .hero .lede, .hero .btns",{y:30,opacity:0,duration:1.2,ease:"expo.out",stagger:.1,delay:.3});
+  gsap.from(".hero .ghost",{opacity:0,scale:1.15,duration:2.4,ease:"expo.out"});
+}
+if(hasGSAP&&!reduce){
+  gsap.registerPlugin(ScrollTrigger);
+  // hero parallax / exit
+  gsap.to(".hero .htext",{yPercent:-25,opacity:0,ease:"none",scrollTrigger:{trigger:"#hero",start:"top top",end:"bottom top",scrub:true}});
+  gsap.to(".hero .ghost",{xPercent:-12,ease:"none",scrollTrigger:{trigger:"#hero",start:"top top",end:"bottom top",scrub:true}});
+
+  const mm=gsap.matchMedia();
+  // signature horizontal scroll (desktop)
+  mm.add("(min-width:861px)",()=>{
+    const hs=$("#hscroll");const dist=()=>hs.scrollWidth-innerWidth+innerWidth*.04;
+    const tw=gsap.to(hs,{x:()=>-dist(),ease:"none",scrollTrigger:{trigger:"#sigPin",start:"top top",end:()=>"+="+dist(),pin:true,scrub:1,invalidateOnRefresh:true,anticipatePin:1}});
+    gsap.utils.toArray(".scard .ph img").forEach(im=>gsap.fromTo(im,{xPercent:8},{xPercent:-8,ease:"none",scrollTrigger:{trigger:im,containerAnimation:tw,start:"left right",end:"right left",scrub:true}}));
+  });
+  // green room float in
+  gsap.utils.toArray(".occ-card").forEach((c,i)=>gsap.fromTo(c,{y:60+i%3*30},{y:0,ease:"none",scrollTrigger:{trigger:"#occRow",start:"top bottom",end:"bottom 60%",scrub:true}}));
+  // footer word
+  gsap.from(".fbig",{yPercent:40,opacity:0,ease:"none",scrollTrigger:{trigger:".fbig",start:"top bottom",end:"bottom 85%",scrub:true}});
+  addEventListener("load",()=>ScrollTrigger.refresh());
+  let rt;new ResizeObserver(()=>{clearTimeout(rt);rt=setTimeout(()=>ScrollTrigger.refresh(),200)}).observe(document.body);
+}
+
+/* ===================== LOADER ===================== */
+let started=false;
+function go(){if(started)return;started=true;$("#loader").classList.add("done");intro();setTimeout(()=>{$("#loader").style.display="none";hasGSAP&&ScrollTrigger.refresh()},1300)}
+setTimeout(go,1700);
+</script>
+</body>
+</html>
