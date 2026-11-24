@@ -508,7 +508,7 @@ footer{background:linear-gradient(180deg,#f8eef6,#fbecea);color:var(--ink)}
   <div class="scrollcue">Scroll<i></i></div>
 </section>
 
-<div class="marquee" aria-hidden="true"><div class="track" id="mq"></div></div>
+
 
 <!-- OCCASIONS -->
 <section class="occ" id="occasions">
@@ -705,9 +705,6 @@ const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
 if(hasGSAP && !reduce) document.documentElement.classList.add("js");
 
 /* ===================== BUILD ===================== */
-// marquee
-(function(){const words=["Velvet red roses","Signature black boxes","Hearts made of roses","Lilies & lisianthus","Orchids & bonsai","Hand-tied to order","A card with every gift"];
- const h=words.map(w=>`<span>${w}</span>`).join(""); $("#mq").innerHTML=h+h;})();
 
 // occasions
 $("#occRow").innerHTML = OCC.map(o=>`<button class="occ-card ${o.dk?'dk':''}" style="--c:${o.c}" data-occ="${o.k}"><img src="${src(o.img)}" alt="" loading="lazy"><b>${o.t}</b><small>${o.s}</small></button>`).join("");
