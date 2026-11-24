@@ -28,5 +28,6 @@ insert into public.products (id,name,category,variants,sort) values
 ('birthday-balloon','Happy Birthday Balloon','addons','[{"l":"Black & gold stars","p":10,"from":false},{"l":"Rose-gold dots","p":10,"from":false},{"l":"Blue harlequin","p":10,"from":false},{"l":"Purple ombré","p":10,"from":false}]'::jsonb,25),
 ('baby-balloon','New Baby Balloon','addons','[{"l":"It’s a girl","p":10,"from":false},{"l":"Welcome baby girl","p":10,"from":false},{"l":"It’s a boy","p":10,"from":false},{"l":"Baby boy","p":10,"from":false}]'::jsonb,26),
 ('baby-shape-balloon','Baby & Bottle Balloon','addons','[{"l":"Baby girl","p":30,"from":false},{"l":"Baby boy","p":30,"from":false},{"l":"Bottle · It’s a girl","p":30,"from":false},{"l":"Bottle · It’s a boy","p":30,"from":false}]'::jsonb,27),
-('love-balloon','I Love You Balloon','addons','[{"l":"Red hearts","p":10,"from":false},{"l":"Blue & gold floral","p":10,"from":false},{"l":"White with hearts","p":10,"from":false}]'::jsonb,28)
+('love-balloon','I Love You Balloon','addons','[{"l":"Red hearts","p":10,"from":false},{"l":"Blue & gold floral","p":10,"from":false},{"l":"White with hearts","p":10,"from":false}]'::jsonb,28),
+('bow-bear-balloon','Bow & Teddy Balloon','addons','[{"l":"Gold bow","p":40,"from":false},{"l":"Red bow","p":40,"from":false},{"l":"Blue bow","p":40,"from":false},{"l":"Teddy bears","p":40,"from":false}]'::jsonb,29)
 on conflict (id) do update set name=excluded.name, category=excluded.category, variants=excluded.variants, sort=excluded.sort;
