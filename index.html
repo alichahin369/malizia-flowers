@@ -789,8 +789,8 @@ addEventListener("pageshow",e=>{if(e.persisted)window.scrollTo(0,0)});
 </div>
 <div class="toast" id="toast"><img id="tImg" alt=""><span id="tTxt"></span><button id="tView">View bag</button></div>
 
-<script src="config.js?v=1795530307"></script>
-<script src="catalog.js?v=1795530307"></script>
+<script src="config.js?v=1795530404"></script>
+<script src="catalog.js?v=1795530404"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script>
@@ -855,7 +855,7 @@ function renderGrid(){
   if(fCat==="bouquets") list=list.filter(p=>(p.cat.includes("roses")||p.cat.includes("mixed"))&&!p.cat.includes("gifts"));
   else if(fCat!=="all") list=list.filter(p=>p.cat.includes(fCat));
   if(fOcc) list=list.filter(p=>p.occ.includes(fOcc));
-  if(fSort==="feat"){const F=["sweeter","pink-heaven","white-roses","sweet-blooms","blushing-love","soft-petals","dreamy","blush-basket","joy","purple-heaven","baby-boy","white-eucalyptus"];const r=id=>{const i=F.indexOf(id);return i<0?99:i};list.sort((a,b)=>r(a.id)-r(b.id));}
+  if(fSort==="feat"){const F=["malizia-white","sweeter","pink-heaven","white-roses","sweet-blooms","blushing-love","soft-petals","dreamy","blush-basket","joy","purple-heaven","baby-boy","white-eucalyptus"];const r=id=>{const i=F.indexOf(id);return i<0?99:i};list.sort((a,b)=>r(a.id)-r(b.id));}
   if(fSort==="low") list.sort((a,b)=>minP(a)-minP(b));
   if(fSort==="high") list.sort((a,b)=>minP(b)-minP(a));
   $("#grid").innerHTML=list.map(cardHTML).join("");
