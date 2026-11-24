@@ -789,8 +789,8 @@ addEventListener("pageshow",e=>{if(e.persisted)window.scrollTo(0,0)});
 </div>
 <div class="toast" id="toast"><img id="tImg" alt=""><span id="tTxt"></span><button id="tView">View bag</button></div>
 
-<script src="config.js?v=1795528166"></script>
-<script src="catalog.js?v=1795528166"></script>
+<script src="config.js?v=1795528952"></script>
+<script src="catalog.js?v=1795528952"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script>
@@ -970,6 +970,17 @@ renderBag();
 // form helpers
 (function(){const d=new Date();const iso=x=>`${x.getFullYear()}-${String(x.getMonth()+1).padStart(2,"0")}-${String(x.getDate()).padStart(2,"0")}`;$("#fDate").min=iso(d);if(!$("#fDate").value)$("#fDate").value=iso(d);})();
 $("#fMsg").addEventListener("input",e=>$("#fCC").textContent=e.target.value.length);
+async function sendOrderEmail(payload){
+  const C=window.MALIZIA_CONFIG||{};
+  const post=async(url,body,ms)=>{const ac=new AbortController();const t=setTimeout(()=>ac.abort(),ms);
+    try{const r=await fetch(url,{method:"POST",signal:ac.signal,headers:{"Content-Type":"application/json",Accept:"application/json"},body:JSON.stringify(body)});
+      const j=await r.json().catch(()=>({}));if(!r.ok||String(j.success)==="false")throw new Error(j.message||"send failed");return j}finally{clearTimeout(t)}};
+  if(C.web3formsKey){
+    const {_subject,_template,_captcha,...fields}=payload;
+    return post("https://api.web3forms.com/submit",{access_key:C.web3formsKey,subject:_subject,from_name:"Malizia Website",...fields},20000);
+  }
+  return post("https://formsubmit.co/ajax/"+(C.orderEmail||"rozete.daoud2@gmail.com"),payload,25000);
+}
 function orderText(){
   const g=id=>$(id).value.trim();
   const lines=bag.map(l=>{const p=byId[l.id],v=p.v[l.vi];return `• ${l.q} × ${p.name}${p.v.length>1?" ("+v.l+")":""} — ${v.from?"from ":""}${fmt(v.p*l.q)}`});
@@ -1005,8 +1016,7 @@ $("#placeOrder").addEventListener("click",async()=>{
       "Recipient":order.recipient_name,"Recipient phone":order.recipient_phone||"-",
       "Delivery":pickup?"Pick up from the shop":order.address,"Date":order.delivery_date,"Time":order.delivery_slot,
       "Greeting card":order.card_message||"No card"};
-    const res=await fetch("https://formsubmit.co/ajax/rozete.daoud2@gmail.com",{method:"POST",headers:{"Content-Type":"application/json",Accept:"application/json"},body:JSON.stringify(payload)});
-    if(!res.ok)throw new Error("send failed");
+    await sendOrderEmail(payload);
     const r={ref};
     const summary=orderText().replace("I'd like to place an order:",`I just placed order ${r.ref} on your website:`);
     bag=[];save();renderBag();
@@ -1019,7 +1029,7 @@ $("#placeOrder").addEventListener("click",async()=>{
       <button class="btn line" id="doneBtn" style="border-color:var(--ink)">Continue shopping</button>`;
     $("#doneBtn").onclick=()=>{closeDrawer();setTimeout(resetDone,600)};
   }catch(e){
-    $("#err").textContent=(e&&e.message&&/available/.test(e.message))?"Sorry — something in your bag just sold out. Please refresh and try again.":"We couldn’t send your order. Please check your connection and try again.";
+    $("#err").textContent=(e&&e.message&&/available/.test(e.message))?"Sorry — something in your bag just sold out. Please refresh and try again.":"We couldn’t send your order just now. Please try again in a moment"+(WHATSAPP_NUMBER?" or message us on WhatsApp.":".");
   }finally{btn.disabled=false;btn.textContent="Place order";}
 });
 function resetDone(){$("#drawer").classList.remove("isdone");$("#done").classList.add("hide");$("#lines").classList.remove("hide");renderBag();}

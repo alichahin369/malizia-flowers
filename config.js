@@ -1,7 +1,6 @@
-/* Malizia — site settings.
-   Fill these in to switch from demo mode to the live database. */
+/* Malizia — site settings */
 window.MALIZIA_CONFIG = {
-  supabaseUrl: "",       // e.g. https://xxxx.supabase.co
-  supabaseAnonKey: "",   // the project's public "anon" key (safe to publish)
+  orderEmail: "rozete.daoud2@gmail.com",
+  web3formsKey: "",      // Web3Forms access key for the order email (emailed to the shop's address)
   whatsapp: ""           // shop WhatsApp number, digits only, e.g. 9613123456
 };
