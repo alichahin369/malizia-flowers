@@ -88,6 +88,12 @@ body.menu-open .mmenu{clip-path:circle(150% at 92% 4%)}
 .hero .kicker::before,.hero .kicker::after{content:"";width:40px;height:1px;background:var(--gold)}
 .btns{display:flex;gap:12px;flex-wrap:wrap}
 .hero .btns{justify-content:center}
+.scrollcue{display:none!important}
+.sameday{display:inline-flex;align-items:center;gap:10px;margin-top:26px;padding:10px 18px;border-radius:99px;background:rgba(255,255,255,.75);border:1px solid rgba(184,137,58,.35);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);font-size:.9rem;color:var(--ink)}
+.sameday svg{width:20px;height:20px;color:var(--gold2);flex:0 0 20px}
+.sameday b{font-weight:600;color:var(--gold2)}
+.dsame{display:flex;align-items:center;gap:8px;background:var(--cream);border-radius:12px;padding:10px 12px;font-size:.85rem;margin-top:4px}
+.dsame svg{width:18px;height:18px;color:var(--gold2);flex:0 0 18px}
 .btn{white-space:nowrap;display:inline-flex;align-items:center;gap:12px;padding:16px 28px;border-radius:99px;font-size:.8rem;letter-spacing:.2em;text-transform:uppercase;font-weight:500;position:relative;overflow:hidden;isolation:isolate;transition:color .45s}
 .btn::before{content:"";position:absolute;inset:0;border-radius:inherit;transform:translateY(101%);transition:transform .55s var(--ease);z-index:-1}
 .btn:hover::before{transform:none}
@@ -499,6 +505,7 @@ footer{background:linear-gradient(180deg,#f8eef6,#fbecea);color:var(--ink)}
         <a href="#shop" class="btn fill">Shop the collection <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 8h12M9 3l5 5-5 5"/></svg></a>
         <a href="#plants" class="btn line">Shop plants</a>
       </div>
+      <div class="sameday"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 6h11v10H2zM13 9h4l4 4v3h-8z"/><circle cx="6" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg><span><b>Same-day delivery</b> — order today, delivered today</span></div>
     </div>
   </div>
   <div class="scrollcue">Scroll<i></i></div>
@@ -574,7 +581,7 @@ footer{background:linear-gradient(180deg,#f8eef6,#fbecea);color:var(--ink)}
     <div class="steps">
       <div class="step rv"><div class="n">01</div><h4>Choose your blooms</h4><p>Browse the collection, pick a size, and add it to your bag. Mix bouquets and plants freely.</p></div>
       <div class="step rv"><div class="n">02</div><h4>Write the card</h4><p>Add the recipient, the delivery date and time you prefer, and the message you want them to read.</p></div>
-      <div class="step rv"><div class="n">03</div><h4>Send it in one tap</h4><p>Your full order goes straight to Malizia on WhatsApp — we confirm delivery and payment with you there.</p></div>
+      <div class="step rv"><div class="n">03</div><h4>Delivered the same day</h4><p>Place your order and it goes straight to Malizia. Order today and we deliver today — we confirm the delivery fee and payment with you on WhatsApp.</p></div>
     </div>
   </div>
 </section>
@@ -600,7 +607,7 @@ footer{background:linear-gradient(180deg,#f8eef6,#fbecea);color:var(--ink)}
       <div><h5>Say hello</h5><a href="https://www.instagram.com/maliziaflowers/" target="_blank" rel="noopener">Instagram ↗</a><a href="https://ig.me/m/maliziaflowers" target="_blank" rel="noopener">Message us ↗</a><a href="#how">How to order</a></div>
     </div>
     <div class="flogo"><img src="img/logo-gold.png" alt="Malizia — Since 1993"></div>
-    <div class="fbot"><span>© <span id="yr"></span> Malizia Flowers · Since 1993. All arrangements hand-made to order.</span><span>Prices in USD · Delivery fee confirmed when you order</span></div>
+    <div class="fbot"><span>© <span id="yr"></span> Malizia Flowers · Since 1993. All arrangements hand-made to order.</span><span>Same-day delivery · Prices in USD · Delivery fee confirmed when you order</span></div>
   </div>
 </footer>
 
@@ -620,7 +627,7 @@ footer{background:linear-gradient(180deg,#f8eef6,#fbecea);color:var(--ink)}
       <div class="qty"><button id="qm" aria-label="Less">−</button><span id="qv">1</span><button id="qp" aria-label="More">+</button></div>
       <button class="btn fill" id="mAdd">Add to bag</button>
     </div>
-    <div class="perks"><span>Hand-tied to order</span><span>Free card message</span><span>Pick your delivery date</span></div>
+    <div class="perks"><span>Hand-tied to order</span><span>Free card message</span><span>Same-day delivery</span></div>
   </div>
 </div>
 
@@ -645,6 +652,7 @@ footer{background:linear-gradient(180deg,#f8eef6,#fbecea);color:var(--ink)}
         <label>Date<input id="fDate" type="date"></label>
         <label>Time<select id="fTime"><option>Morning (9–12)</option><option>Afternoon (12–4)</option><option>Evening (4–8)</option><option>Pick up from the shop</option></select></label>
       </div>
+      <div class="dsame"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 6h11v10H2zM13 9h4l4 4v3h-8z"/><circle cx="6" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg><span><b>Same-day delivery</b> — choose today’s date and we’ll deliver today.</span></div>
       <label>Card message<textarea id="fMsg" maxlength="250" placeholder="Write something they’ll keep…"></textarea></label>
       <div class="cc"><span id="fCC">0</span>/250</div>
     </form>
@@ -811,7 +819,7 @@ document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeModal();closeD
 renderBag();
 
 // form helpers
-(function(){const d=new Date();const iso=x=>x.toISOString().slice(0,10);$("#fDate").min=iso(d);})();
+(function(){const d=new Date();const iso=x=>`${x.getFullYear()}-${String(x.getMonth()+1).padStart(2,"0")}-${String(x.getDate()).padStart(2,"0")}`;$("#fDate").min=iso(d);if(!$("#fDate").value)$("#fDate").value=iso(d);})();
 $("#fMsg").addEventListener("input",e=>$("#fCC").textContent=e.target.value.length);
 function orderText(){
   const g=id=>$(id).value.trim();
