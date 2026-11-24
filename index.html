@@ -534,8 +534,10 @@ footer{background:linear-gradient(180deg,#f8eef6,#fbecea);color:var(--ink)}
 try{history.scrollRestoration="manual"}catch(e){}
 if(location.hash){try{history.replaceState(null,"",location.pathname+location.search)}catch(e){}}
 window.scrollTo(0,0);
-(function(){let n=0;const top=()=>{if(n++<8){window.scrollTo(0,0);setTimeout(top,120)}};addEventListener("DOMContentLoaded",top);addEventListener("load",()=>{n=0;top()});})();
-addEventListener("wheel",()=>{},{passive:true});
+(function(){let n=0,moved=false;const stop=()=>{moved=true};
+  ["pointerdown","wheel","touchstart","keydown"].forEach(ev=>addEventListener(ev,stop,{passive:true,capture:true}));
+  const top=()=>{if(!moved&&n++<6){window.scrollTo(0,0);setTimeout(top,100)}};
+  addEventListener("DOMContentLoaded",top);addEventListener("load",()=>{if(!moved){n=0;top()}});})();
 addEventListener("pageshow",e=>{if(e.persisted)window.scrollTo(0,0)});
 </script>
 </head>
@@ -759,9 +761,9 @@ addEventListener("pageshow",e=>{if(e.persisted)window.scrollTo(0,0)});
 </div>
 <div class="toast" id="toast"><img id="tImg" alt=""><span id="tTxt"></span><button id="tView">View bag</button></div>
 
-<script src="config.js?v=1795522704"></script>
-<script src="catalog.js?v=1795522704"></script>
-<script src="store.js?v=1795522704"></script>
+<script src="config.js?v=1795523300"></script>
+<script src="catalog.js?v=1795523300"></script>
+<script src="store.js?v=1795523300"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script>
@@ -1022,9 +1024,14 @@ $("#srchBtn").onclick=openSearch; $("#mSearch").onclick=e=>{e.preventDefault();o
 $("#sres").addEventListener("click",e=>{if(e.target.closest(".card")){$("#search").classList.remove("on")}},true);
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&$("#search").classList.contains("on"))closeSearch()});
 
-function goShop(){const el=document.getElementById("shop");const to=()=>Math.max(0,el.getBoundingClientRect().top+scrollY-70);
-  requestAnimationFrame(()=>{scrollTo({top:to(),behavior:"smooth"});setTimeout(()=>{if(Math.abs(scrollY-to())>40)scrollTo({top:to(),behavior:"smooth"})},900);setTimeout(()=>{if(Math.abs(scrollY-to())>40)scrollTo({top:to()})},1800)});}
-document.addEventListener("click",e=>{const a=e.target.closest('a[href^="#"]');if(!a||a.dataset.cat||a.id==="mSearch")return;const id=a.getAttribute("href").slice(1);if(!id)return;const t=document.getElementById(id);if(!t)return;e.preventDefault();document.body.classList.remove("menu-open");scrollTo({top:id==="top"?0:t.getBoundingClientRect().top+scrollY-(id==="occasions"||id==="plants"?0:70),behavior:"smooth"});});
+/* Scroll to a section and keep correcting while photos load / the page grows */
+let jumpId=0;
+function jumpTo(el,offset){const my=++jumpId;const to=()=>Math.max(0,Math.round(el.getBoundingClientRect().top+scrollY-offset));
+  let manual=false;const off=()=>{manual=true};addEventListener("wheel",off,{passive:true,once:true});addEventListener("touchmove",off,{passive:true,once:true});
+  requestAnimationFrame(()=>scrollTo({top:to(),behavior:"smooth"}));
+  [700,1300,2000,2800,3800].forEach((t,i,a)=>setTimeout(()=>{if(my!==jumpId||manual)return;if(Math.abs(scrollY-to())>24)scrollTo({top:to(),behavior:i===a.length-1?"auto":"smooth"})},t));}
+function goShop(){jumpTo(document.getElementById("shop"),70)}
+document.addEventListener("click",e=>{const a=e.target.closest('a[href^="#"]');if(!a||a.dataset.cat||a.id==="mSearch")return;const id=a.getAttribute("href").slice(1);if(!id)return;const t=document.getElementById(id);if(!t)return;e.preventDefault();document.body.classList.remove("menu-open");if(id==="top"){jumpId++;scrollTo({top:0,behavior:"smooth"})}else jumpTo(t,(id==="occasions"||id==="plants")?0:70);});
 /* ===================== GLOBAL CLICKS ===================== */
 function applyCat(k){fCat=k;fOcc=null;renderGrid()}
 function applyOcc(k){fOcc=k;fCat="all";renderGrid();goShop()}
