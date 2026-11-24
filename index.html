@@ -45,7 +45,7 @@ em,.it{font-style:italic;font-family:var(--serif)}
 
 /* ============ NAV ============ */
 .nav{position:fixed;top:0;left:0;right:0;z-index:60;display:flex;align-items:center;justify-content:space-between;padding:18px 4vw;color:var(--ivory);transition:background .5s,color .5s,padding .5s,backdrop-filter .5s}
-.nav.solid{background:rgba(247,242,236,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);color:var(--ink);padding:12px 4vw;box-shadow:0 1px 0 rgba(0,0,0,.06)}
+.nav.solid{background:rgba(250,246,241,.97);color:var(--ink);padding:12px 4vw;box-shadow:0 1px 0 rgba(0,0,0,.06)}
 .brand{display:flex;align-items:center;gap:10px;font-family:var(--serif);font-size:1.35rem;letter-spacing:.28em}
 .brand .bem{width:38px;height:auto}.brand .bwm{height:19px;width:auto}
 @media (max-width:860px){.brand .bem{width:32px}.brand .bwm{height:16px}}
@@ -116,7 +116,7 @@ body.menu-open .mmenu{clip-path:circle(150% at 92% 4%)}
 .btns{display:flex;gap:12px;flex-wrap:wrap}
 .hero .btns{justify-content:center}
 .scrollcue{display:none!important}
-.sameday{display:inline-flex;align-items:center;gap:10px;margin-top:20px;padding:10px 18px;border-radius:99px;background:rgba(255,255,255,.75);border:1px solid rgba(192,108,123,.3);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);font-size:.9rem;color:var(--ink)}
+.sameday{display:inline-flex;align-items:center;gap:10px;margin-top:20px;padding:10px 18px;border-radius:99px;background:rgba(255,255,255,.9);border:1px solid rgba(192,108,123,.3);font-size:.9rem;color:var(--ink)}
 .sameday svg{width:20px;height:20px;color:var(--crimson);flex:0 0 20px}
 .sameday b{font-weight:600;color:var(--crimson)}
 .dsame{display:flex;align-items:center;gap:8px;background:var(--cream);border-radius:12px;padding:10px 12px;font-size:.85rem;margin-top:4px}
@@ -205,12 +205,12 @@ section{position:relative}
 .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:34px 22px}
 .card{position:relative;cursor:pointer;opacity:1;transition:opacity .5s,transform .5s}
 .card.hide{display:none}
-.card .ph{position:relative;aspect-ratio:4/5;border-radius:22px;overflow:hidden;background:var(--cream)}
+.card .ph{position:relative;aspect-ratio:4/5;border-radius:22px;overflow:hidden;background:var(--cream);isolation:isolate;contain:paint}
 .card .ph img{width:100%;height:100%;object-fit:cover;mix-blend-mode:multiply;transition:transform 1.2s var(--ease),opacity .6s}
 .card .ph img.alt{position:absolute;inset:0;opacity:0}
 .card:hover .ph img{transform:scale(1.07)}
 .card:hover .ph img.alt{opacity:1}
-.card .badge{position:absolute;left:14px;top:14px;padding:6px 12px;border-radius:99px;background:rgba(247,242,236,.85);backdrop-filter:blur(6px);font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;font-weight:500}
+.card .badge{position:absolute;left:14px;top:14px;padding:6px 12px;border-radius:99px;background:rgba(250,246,241,.94);font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;font-weight:500}
 .card .badge.red{background:var(--crimson);color:#fff}
 .card .quick{position:absolute;right:14px;bottom:14px;width:46px;height:46px;border-radius:50%;background:var(--ink);color:var(--ivory);display:grid;place-items:center;transform:translateY(12px) scale(.8);opacity:0;transition:.45s var(--ease)}
 .card:hover .quick,.card .quick:focus{opacity:1;transform:none}
@@ -266,7 +266,7 @@ section{position:relative}
 /* ============ INSTAGRAM ============ */
 .insta{padding:120px 0 0;background:var(--ivory);overflow:hidden}
 .insta .head h2 a{border-bottom:1px solid currentColor}
-.igrow{display:flex;gap:14px;animation:mq 60s linear infinite;width:max-content}
+.igrow{display:flex;gap:14px;animation:mq 60s linear infinite;width:max-content;isolation:isolate;will-change:transform}
 .igrow a{flex:0 0 auto;width:clamp(180px,20vw,280px);aspect-ratio:1;border-radius:18px;overflow:hidden;background:var(--cream);position:relative}
 .igrow img{width:100%;height:100%;object-fit:cover;mix-blend-mode:multiply;transition:transform .8s var(--ease)}
 .igrow a:hover img{transform:scale(1.08)}
@@ -288,7 +288,7 @@ footer{background:var(--noir);color:var(--ivory);padding:110px 0 30px;margin-top
 .veil.on{opacity:1;pointer-events:auto}
 .modal{position:fixed;z-index:90;left:50%;top:50%;width:min(1040px,94vw);max-height:92svh;background:var(--ivory);border-radius:30px;overflow:hidden;display:grid;grid-template-columns:1.05fr 1fr;transform:translate(-50%,-46%) scale(.96);opacity:0;pointer-events:none;transition:.6s var(--ease)}
 .modal.on{opacity:1;pointer-events:auto;transform:translate(-50%,-50%)}
-.modal .mimg{background:var(--cream);position:relative;min-height:0}
+.modal .mimg{background:var(--cream);position:relative;min-height:0;isolation:isolate}
 .modal .mimg img{width:100%;height:100%;object-fit:cover;mix-blend-mode:multiply;transition:opacity .4s}
 .modal .mbody{padding:44px 40px 34px;overflow:auto;display:flex;flex-direction:column}
 .modal .x{position:absolute;right:16px;top:16px;z-index:3;width:44px;height:44px;border-radius:50%;background:var(--ivory);display:grid;place-items:center;box-shadow:0 4px 14px rgba(0,0,0,.1);transition:transform .4s}
@@ -789,8 +789,8 @@ addEventListener("pageshow",e=>{if(e.persisted)window.scrollTo(0,0)});
 </div>
 <div class="toast" id="toast"><img id="tImg" alt=""><span id="tTxt"></span><button id="tView">View bag</button></div>
 
-<script src="config.js?v=1795529577"></script>
-<script src="catalog.js?v=1795529577"></script>
+<script src="config.js?v=1795530307"></script>
+<script src="catalog.js?v=1795530307"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script>
@@ -1086,13 +1086,14 @@ $("#menuBtn").onclick=()=>document.body.classList.toggle("menu-open");
 
 /* ===================== NAV / CURSOR ===================== */
 const nav=$("#nav");
-const onScroll=()=>{const dark=["hero"];let solid=scrollY>innerHeight*.85;
-  const y=scrollY+40;for(const id of dark){const s=document.getElementById(id);if(s&&y>=s.offsetTop&&y<s.offsetTop+s.offsetHeight){solid=false;break}}
-  if(document.body.classList.contains("menu-open"))solid=false; nav.classList.toggle("solid",solid);};
-addEventListener("scroll",onScroll,{passive:true}); onScroll();
+let navSolid=null,navTick=false;
+const onScroll=()=>{navTick=false;let solid=scrollY>innerHeight*.85;
+  if(document.body.classList.contains("menu-open"))solid=false; if(solid!==navSolid){navSolid=solid;nav.classList.toggle("solid",solid)}};
+addEventListener("scroll",()=>{if(!navTick){navTick=true;requestAnimationFrame(onScroll)}},{passive:true}); onScroll();
 if(matchMedia("(pointer:fine)").matches&&!reduce){const cu=$("#cursor");let x=0,y=0,cx=0,cy=0;
   addEventListener("mousemove",e=>{x=e.clientX;y=e.clientY;cu.classList.toggle("on",!!e.target.closest("[data-cursor]")&&!e.target.closest(".quick"))});
-  (function loop(){cx+=(x-cx)*.18;cy+=(y-cy)*.18;cu.style.left=cx+"px";cu.style.top=cy+"px";requestAnimationFrame(loop)})();}
+  let run=false;const loop=()=>{cx+=(x-cx)*.18;cy+=(y-cy)*.18;cu.style.left=cx+"px";cu.style.top=cy+"px";if(Math.abs(x-cx)+Math.abs(y-cy)>.5)requestAnimationFrame(loop);else run=false};
+  addEventListener("mousemove",()=>{if(!run){run=true;requestAnimationFrame(loop)}},{passive:true});}
 
 /* ===================== PETALS ===================== */
 (function(){const cv=$("#petals"),ctx=cv.getContext("2d");if(reduce)return;let W,H,dpr,ps=[];
@@ -1109,8 +1110,11 @@ if(matchMedia("(pointer:fine)").matches&&!reduce){const cu=$("#cursor");let x=0,
 
 /* ===================== MANIFESTO WORDS ===================== */
 (function(){const m=$("#manifesto");const walk=n=>{[...n.childNodes].forEach(c=>{if(c.nodeType===3){const f=document.createDocumentFragment();c.textContent.split(/(\s+)/).forEach(w=>{if(/^\s+$/.test(w)||!w)f.appendChild(document.createTextNode(w));else{const s=document.createElement("span");s.className="w";s.textContent=w;f.appendChild(s)}});c.replaceWith(f)}else walk(c)})};walk(m);
-  const ws=$$("#manifesto .w");const up=()=>{const r=m.getBoundingClientRect();const pr=Math.min(1,Math.max(0,(innerHeight*.85-r.top)/(r.height+innerHeight*.35)));const k=Math.round(pr*ws.length);ws.forEach((w,i)=>w.classList.toggle("lit",i<k))};
-  if(reduce)ws.forEach(w=>w.classList.add("lit"));else{addEventListener("scroll",up,{passive:true});up()}})();
+  const ws=$$("#manifesto .w");let lastK=0,tk=false,near=true;
+  const up=()=>{tk=false;if(!near)return;const r=m.getBoundingClientRect();const pr=Math.min(1,Math.max(0,(innerHeight*.85-r.top)/(r.height+innerHeight*.35)));const k=Math.round(pr*ws.length);if(k===lastK)return;
+    const a=Math.min(k,lastK),b=Math.max(k,lastK);for(let i=a;i<b;i++)ws[i].classList.toggle("lit",i<k);lastK=k};
+  if(reduce)ws.forEach(w=>w.classList.add("lit"));else{new IntersectionObserver(e=>{near=e[0].isIntersecting;if(near)up()},{rootMargin:"300px 0px"}).observe(m);
+    addEventListener("scroll",()=>{if(!tk){tk=true;requestAnimationFrame(up)}},{passive:true});up()}})();
 
 /* ===================== REVEALS ===================== */
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}}),{threshold:.12,rootMargin:"0px 0px -6% 0px"});
@@ -1142,7 +1146,8 @@ if(hasGSAP&&!reduce){
   // footer word
   gsap.from(".fbig",{yPercent:40,opacity:0,ease:"none",scrollTrigger:{trigger:".fbig",start:"top bottom",end:"bottom 85%",scrub:true}});
   addEventListener("load",()=>ScrollTrigger.refresh());
-  let rt;new ResizeObserver(()=>{clearTimeout(rt);rt=setTimeout(()=>ScrollTrigger.refresh(),200)}).observe(document.body);
+  let rt,lw=innerWidth;addEventListener("resize",()=>{if(innerWidth===lw)return;lw=innerWidth;clearTimeout(rt);rt=setTimeout(()=>ScrollTrigger.refresh(),250)});
+  ScrollTrigger.config({ignoreMobileResize:true});
 }
 
 /* ===================== LOADER ===================== */
