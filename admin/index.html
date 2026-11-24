@@ -5,15 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <title>Malizia — Owner Dashboard</title>
+<link rel="icon" type="image/png" href="../img/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..600;1,6..96,400..600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#fbf7f5;--panel:#fff;--ink:#2b2326;--muted:#8a7c7f;--line:rgba(43,35,38,.08);
-  --rose:#c06c7b;--rose2:#d4899a;--blush:#fbecea;--blush2:#f1d6d6;--lilac:#ece4f4;--peach:#fcebe1;--mint:#e6efe4;
+  --rose:#b8893a;--rose2:#deaf55;--blush:#fbecea;--blush2:#f1d6d6;--lilac:#ece4f4;--peach:#fcebe1;--mint:#e6efe4;
   --new:#c06c7b;--prep:#b8862f;--out:#5b6fb8;--done:#4f8a5b;--cancel:#9a9194;
-  --serif:'Bodoni Moda',Georgia,serif;--sans:'Jost',system-ui,sans-serif;--r:18px;
+  --serif:'Cormorant Garamond',Garamond,Georgia,serif;--sans:'Jost',system-ui,sans-serif;--r:18px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:var(--sans);background:var(--bg);color:var(--ink);font-size:15px;line-height:1.45;-webkit-font-smoothing:antialiased}
@@ -30,7 +31,7 @@ a{color:inherit}
 .app{display:grid;grid-template-columns:240px 1fr;min-height:100vh}
 .side{position:sticky;top:0;height:100vh;background:#fff;border-right:1px solid var(--line);padding:26px 18px;display:flex;flex-direction:column;gap:6px}
 .brand{font-family:var(--serif);font-size:1.4rem;letter-spacing:.24em;padding:0 10px 4px}
-.brand small{display:block;font-family:var(--sans);font-size:.68rem;letter-spacing:.24em;text-transform:uppercase;color:var(--rose);margin-top:4px}
+.brand small{display:block;font-family:var(--sans);font-size:.68rem;letter-spacing:.24em;text-transform:uppercase;color:var(--rose);margin-top:8px}
 .navlist{margin-top:26px;display:flex;flex-direction:column;gap:4px}
 .nav{display:flex;align-items:center;gap:12px;padding:11px 12px;border-radius:12px;color:var(--muted);font-weight:500;text-align:left}
 .nav svg{width:19px;height:19px;flex:0 0 19px}
@@ -87,6 +88,7 @@ main{padding:26px 34px 60px;min-width:0}
 .row .end small{display:block;font-weight:400;color:var(--muted);font-size:.78rem}
 .bar{height:6px;border-radius:9px;background:var(--blush);overflow:hidden;margin-top:6px}
 .bar i{display:block;height:100%;background:var(--rose2);border-radius:9px}
+.bar{background:#f6ecd9!important}
 .slotlbl{font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin:14px 0 2px;font-weight:500}
 .empty{color:var(--muted);padding:26px 0;text-align:center;font-size:.9rem}
 
@@ -292,7 +294,7 @@ tr:last-child td{border-bottom:0}
 <!-- LOGIN (live mode only) -->
 <div class="login hide" id="loginView">
   <form id="loginForm">
-    <h1>MALIZIA</h1>
+    <img src="../img/logo-gold.png" alt="Malizia — Since 1993" style="width:190px;margin:0 auto 6px;display:block">
     <p>Owner dashboard</p>
     <label class="f"><input type="email" id="lEmail" placeholder="Email" autocomplete="username" required></label>
     <label class="f"><input type="password" id="lPass" placeholder="Password" autocomplete="current-password" required></label>
@@ -303,7 +305,7 @@ tr:last-child td{border-bottom:0}
 
 <div class="app hide" id="appView">
   <aside class="side">
-    <div class="brand">MALIZIA<small>Owner dashboard</small></div>
+    <div class="brand"><img src="../img/emblem-gold.png" alt="" style="width:46px;display:block;margin-bottom:12px"><img src="../img/wordmark-dark.png" alt="Malizia" style="height:17px;display:block"><small>Owner dashboard</small></div>
     <nav class="navlist" id="navlist"></nav>
     <div class="foot">
       <span id="whoami"></span>
@@ -435,7 +437,7 @@ function overview(){
   const top=Object.values(tp).sort((a,b)=>b.q-a.q).slice(0,5), maxQ=top[0]?.q||1;
   const hr=new Date().getHours(), hi=hr<12?"Good morning":hr<18?"Good afternoon":"Good evening";
   const bySlot={}; dueToday.forEach(o=>(bySlot[o.delivery_slot||"No time set"]=bySlot[o.delivery_slot||"No time set"]||[]).push(o));
-  return head(`${hi} 🌸`,new Date().toLocaleDateString("en-GB",{weekday:"long",day:"numeric",month:"long"}))+`
+  return head(`${hi}`,new Date().toLocaleDateString("en-GB",{weekday:"long",day:"numeric",month:"long"}))+`
   <div class="pipe">
     <div class="pip s-new" data-tab="orders"><div>Left to process<small>tap to prepare</small></div><b>${todo.length}</b></div>
     <div class="pip s-ready" data-tab="delivery"><div>Ready<small>waiting for driver</small></div><b>${ready.length}</b></div>
@@ -572,7 +574,7 @@ function wireFinChart(){
   const n=labels.length, W=el.clientWidth||600,H=200,max=Math.max(50,...vals)*1.15,bw=W/n;
   const nice=Math.pow(10,Math.floor(Math.log10(max)));const step=Math.ceil(max/4/nice)*nice;
   let g=""; for(let v=step;v<max;v+=step){const y=H-v/max*H;g+=`<line x1="0" x2="${W}" y1="${y}" y2="${y}" stroke="rgba(43,35,38,.07)"/><text x="0" y="${y-4}" font-size="10" fill="#8a7c7f">$${v}</text>`}
-  const bars=vals.map((v,i)=>{const h=Math.max(v?3:0,v/max*H);return `<rect x="${i*bw+bw*.18}" y="${H-h}" width="${bw*.64}" height="${h}" rx="4" fill="${i===n-1?"#c06c7b":"#f1c7cf"}"/>`}).join("");
+  const bars=vals.map((v,i)=>{const h=Math.max(v?3:0,v/max*H);return `<rect x="${i*bw+bw*.18}" y="${H-h}" width="${bw*.64}" height="${h}" rx="4" fill="${i===n-1?"#b8893a":"#efd9ae"}"/>`}).join("");
   const every=Math.max(1,Math.ceil(n/6)); const lbl=labels.map((l,i)=>(i%every===0||i===n-1)&&!(i!==n-1&&n-1-i<every/2)?`<text x="${i*bw+bw/2}" y="${H+16}" font-size="10" fill="#8a7c7f" text-anchor="middle">${fmtL(l)}</text>`:"").join("");
   el.innerHTML=`<svg viewBox="0 0 ${W} ${H+20}" preserveAspectRatio="none">${g}${bars}${lbl}<rect x="0" y="0" width="${W}" height="${H}" fill="transparent" id="hit"/></svg><div class="tip" id="tip"></div>`;
   const tip=$("#tip"); const hit=el.querySelector("#hit");

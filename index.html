@@ -3,18 +3,20 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Malizia Flowers — Pastel Edition</title>
+<title>Malizia Flowers — Since 1993</title>
+<link rel="icon" type="image/png" href="img/favicon.png">
+<meta name="theme-color" content="#fffdfb">
 <meta name="description" content="Malizia Flowers — hand-tied bouquets, signature rose boxes and living plants. Order online, send it with a card.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
   --noir:#110a0c; --noir2:#1b1013; --wine:#4a0a14; --crimson:#9b1022; --rose:#c8475a;
   --blush:#f3dfd9; --blush2:#ead0c8; --ivory:#f7f2ec; --cream:#efe8df; --gold:#c9a66b; --gold2:#e5cd9c;
   --sage:#1f2a20; --sage2:#2d3b2c; --leaf:#8fa27a;
   --ink:#1c1416; --muted:#7b6a6c;
-  --serif:'Bodoni Moda', 'Didot', Georgia, serif; --sans:'Jost', system-ui, sans-serif;
+  --serif:'Cormorant Garamond', 'Garamond', Georgia, serif; --sans:'Jost', system-ui, sans-serif;
   --ease:cubic-bezier(.2,.7,.1,1);
 }
 *{box-sizing:border-box;margin:0;padding:0}
@@ -45,7 +47,8 @@ em,.it{font-style:italic;font-family:var(--serif)}
 .nav{position:fixed;top:0;left:0;right:0;z-index:60;display:flex;align-items:center;justify-content:space-between;padding:18px 4vw;color:var(--ivory);transition:background .5s,color .5s,padding .5s,backdrop-filter .5s}
 .nav.solid{background:rgba(247,242,236,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);color:var(--ink);padding:12px 4vw;box-shadow:0 1px 0 rgba(0,0,0,.06)}
 .brand{display:flex;align-items:center;gap:10px;font-family:var(--serif);font-size:1.35rem;letter-spacing:.28em}
-.brand svg{width:30px;height:30px}
+.brand .bem{width:38px;height:auto}.brand .bwm{height:19px;width:auto}
+@media (max-width:860px){.brand .bem{width:32px}.brand .bwm{height:16px}}
 .nav ul{display:flex;gap:34px;list-style:none;font-size:.8rem;letter-spacing:.18em;text-transform:uppercase}
 .nav ul a{position:relative;padding:4px 0}
 .nav ul a::after{content:"";position:absolute;left:0;bottom:0;height:1px;width:100%;background:currentColor;transform:scaleX(0);transform-origin:right;transition:transform .5s var(--ease)}
@@ -73,8 +76,10 @@ body.menu-open .mmenu{clip-path:circle(150% at 92% 4%)}
 .hero .ghost{position:absolute;left:50%;top:50%;transform:translate(-50%,-56%);font-family:var(--serif);font-size:clamp(7rem,30vw,30rem);letter-spacing:-.02em;line-height:.8;color:transparent;-webkit-text-stroke:1px rgba(201,166,107,.18);white-space:nowrap;z-index:1;user-select:none}
 .hero .grid{position:relative;z-index:4;width:min(1000px,92vw);margin:0 auto;display:flex;justify-content:center;text-align:center;padding-top:90px}
 .hero .htext{display:flex;flex-direction:column;align-items:center}
+.hero .hemb{width:clamp(70px,9vw,104px);margin-bottom:22px}
+@media (max-width:860px){.hero .kicker{letter-spacing:.22em;font-size:.66rem}.hero .kicker::before,.hero .kicker::after{width:22px}}
 .hero .ghost{transform:translate(-50%,-50%)!important}
-.hero h1{font-family:var(--serif);font-weight:400;font-size:clamp(3.1rem,7.4vw,7.6rem);line-height:.95;letter-spacing:-.02em}
+.hero h1{font-family:var(--serif);font-weight:500;font-size:clamp(3.1rem,7.4vw,7.6rem);line-height:.95;letter-spacing:-.02em}
 .hero h1 em{color:var(--rose);font-weight:400}
 .hero h1 .ln{display:block;overflow:hidden;padding-bottom:.06em}
 .hero h1 .ln>span{display:inline-block}
@@ -241,6 +246,7 @@ footer{background:var(--noir);color:var(--ivory);padding:110px 0 30px;margin-top
 .fcols a,.fcols p{display:block;color:rgba(247,242,236,.7);margin-bottom:8px;font-size:.95rem}
 .fcols a:hover{color:var(--ivory)}
 .fcols .fcta{color:var(--ivory);margin:0;font-family:var(--serif);font-size:clamp(1.8rem,3.2vw,2.8rem);line-height:1.1;max-width:480px}
+.flogo{display:flex;justify-content:center;margin:80px 0 50px}.flogo img{width:clamp(200px,26vw,320px)}
 .fbot{display:flex;justify-content:space-between;border-top:1px solid rgba(247,242,236,.12);padding-top:24px;font-size:.8rem;color:rgba(247,242,236,.45);flex-wrap:wrap;gap:10px}
 
 /* ============ MODAL ============ */
@@ -380,16 +386,22 @@ footer{background:var(--noir);color:var(--ivory);padding:110px 0 30px;margin-top
 }
 
 /* ================= PASTEL THEME ================= */
-:root{--noir:#2b2326;--crimson:#c06c7b;--rose:#d4899a;--gold:#c9a98a;--gold2:#b8927a;--ivory:#fffdfb;--cream:#f7efec;--blush:#fbecea;--blush2:#f1d6d6;--ink:#2b2326;--muted:#8a7c7f;--lilac:#ece4f4;--mint:#e6efe4;--peach:#fcebe1}
+:root{--noir:#2b2326;--crimson:#a87b2f;--rose:#c99a48;--gold:#deaf55;--gold2:#b8893a;--ivory:#fffdfb;--cream:#f7efec;--blush:#fbecea;--blush2:#f1d6d6;--ink:#2b2326;--muted:#8a7c7f;--lilac:#ece4f4;--mint:#e6efe4;--peach:#fcebe1}
 body{background:var(--ivory)}
 #loader{background:var(--ivory);color:var(--ink)}
+#loader .lg{display:flex;flex-direction:column;align-items:center;gap:18px}
+#loader .le{width:clamp(110px,18vw,150px);opacity:0;transform:scale(.7) rotate(-30deg);animation:lgin 1.3s cubic-bezier(.2,.7,.1,1) .05s forwards}
+#loader .lwm{width:clamp(190px,30vw,280px);opacity:0;transform:translateY(14px);animation:lgup 1s cubic-bezier(.2,.7,.1,1) .45s forwards}
+#loader .lg small{position:static!important;transform:none!important;letter-spacing:.04em;font-family:var(--serif);font-style:italic;font-size:1.15rem;color:var(--gold2);opacity:0;animation:lgup 1s ease .75s forwards}
+@keyframes lgin{to{opacity:1;transform:none}}
+@keyframes lgup{to{opacity:1;transform:none}}
 #loader small{color:var(--crimson)}
 #loader .bar{background:rgba(43,35,38,.08)}
 .nav,.nav.solid{color:var(--ink)}
 .mmenu{background:var(--blush);color:var(--ink)}
 .mmenu p{color:var(--crimson)}
 .hero{background:radial-gradient(70% 60% at 20% 20%,#fde8ea 0%,transparent 60%),radial-gradient(60% 60% at 85% 30%,#efe6f7 0%,transparent 60%),radial-gradient(70% 60% at 60% 100%,#fbeee3 0%,transparent 60%),#fffdfb;color:var(--ink)}
-.hero .ghost{-webkit-text-stroke:1px rgba(192,108,123,.16)}
+.hero .ghost{-webkit-text-stroke:1px rgba(184,137,58,.2)}
 .hero .lede{color:var(--muted)}
 .hero .kicker{color:var(--crimson)}
 .hero .kicker::before,.hero .kicker::after{background:var(--rose)}
@@ -446,19 +458,14 @@ footer{background:linear-gradient(180deg,#f8eef6,#fbecea);color:var(--ink)}
 <body>
 
 <div id="loader" aria-hidden="true">
-  <div class="lw"><span style="animation-delay:.05s">M</span><span style="animation-delay:.1s">A</span><span style="animation-delay:.15s">L</span><span style="animation-delay:.2s">I</span><span style="animation-delay:.25s">Z</span><span style="animation-delay:.3s">I</span><span style="animation-delay:.35s">A</span></div>
-  <small class="kicker">Flowers</small>
-  <div class="bar"><i></i></div>
+  <div class="lg"><img src="img/emblem-gold.png" alt="" class="le"><img src="img/wordmark-dark.png" alt="" class="lwm"><small>Since 1993</small></div>
 </div>
 
 <div class="cursor" id="cursor">View</div>
 
 <!-- NAV -->
 <header class="nav" id="nav">
-  <a href="#top" class="brand" aria-label="Malizia home">
-    <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="20" cy="20" r="18.5" opacity=".5"/><path d="M20 8c3 4 3 8 0 12-3-4-3-8 0-12zM20 32c-3-4-3-8 0-12 3 4 3 8 0 12zM8 20c4-3 8-3 12 0-4 3-8 3-12 0zM32 20c-4 3-8 3-12 0 4-3 8-3 12 0z"/><circle cx="20" cy="20" r="1.6" fill="currentColor"/></svg>
-    MALIZIA
-  </a>
+  <a href="#top" class="brand" aria-label="Malizia home"><img src="img/emblem-gold.png" alt="" class="bem"><img src="img/wordmark-dark.png" alt="Malizia" class="bwm"></a>
   <ul>
     <li><a href="#shop">Shop</a></li>
     <li><a href="#occasions">Occasions</a></li>
@@ -472,6 +479,7 @@ footer{background:linear-gradient(180deg,#f8eef6,#fbecea);color:var(--ink)}
   </div>
 </header>
 <nav class="mmenu" id="mmenu">
+  <img src="img/emblem-gold.png" alt="" style="width:64px;margin-bottom:28px">
   <a href="#shop">The <em>Shop</em></a>
   <a href="#occasions">Shop by <em>moment</em></a>
   <a href="#signature">Signature</a>
@@ -487,7 +495,8 @@ footer{background:linear-gradient(180deg,#f8eef6,#fbecea);color:var(--ink)}
   <canvas id="petals"></canvas>
   <div class="grid">
     <div class="htext">
-      <div class="kicker">Malizia Flowers · Hand-tied to order</div>
+      <img src="img/emblem-gold.png" alt="" class="hemb">
+      <div class="kicker">Malizia Flowers · Since 1993</div>
       <h1><span class="ln"><span>Flowers with</span></span><span class="ln"><span>a little</span></span><span class="ln"><span><em>mischief.</em></span></span></h1>
       <p class="lede">Velvet roses, signature black boxes and living plants — composed by hand, wrapped in blush, sent with your words on a card.</p>
       <div class="btns">
@@ -594,8 +603,8 @@ footer{background:linear-gradient(180deg,#f8eef6,#fbecea);color:var(--ink)}
       <div><h5>Moments</h5><a href="#shop" data-occ="love">Love & romance</a><a href="#shop" data-occ="birthday">Birthdays</a><a href="#shop" data-occ="baby">New baby</a><a href="#shop" data-occ="thanks">Thank you</a></div>
       <div><h5>Say hello</h5><a href="https://www.instagram.com/maliziaflowers/" target="_blank" rel="noopener">Instagram ↗</a><a href="https://ig.me/m/maliziaflowers" target="_blank" rel="noopener">Message us ↗</a><a href="#how">How to order</a></div>
     </div>
-    <div class="fbig">Malizia</div>
-    <div class="fbot"><span>© <span id="yr"></span> Malizia Flowers. All arrangements hand-made to order.</span><span>Prices in USD · Delivery fee confirmed when you order</span></div>
+    <div class="flogo"><img src="img/logo-gold.png" alt="Malizia — Since 1993"></div>
+    <div class="fbot"><span>© <span id="yr"></span> Malizia Flowers · Since 1993. All arrangements hand-made to order.</span><span>Prices in USD · Delivery fee confirmed when you order</span></div>
   </div>
 </footer>
 
@@ -841,7 +850,7 @@ $("#placeOrder").addEventListener("click",async()=>{
     $("#fMsg").value="";$("#fCC").textContent="0";
     $("#lines").classList.add("hide");$("#oform").style.display="none";$("#dfoot").style.display="none";
     const d=$("#done");d.classList.remove("hide");
-    d.innerHTML=`<div class="ok">🌸</div><h4>Thank you, ${esc(order.customer_name.split(" ")[0])}!</h4><p>Your order is with Malizia.</p><p>We’ll message you on WhatsApp to confirm delivery and payment.</p>
+    d.innerHTML=`<div class="ok"><img src="img/emblem-gold.png" alt="" style="width:46px"></div><h4>Thank you, ${esc(order.customer_name.split(" ")[0])}!</h4><p>Your order is with Malizia.</p><p>We’ll message you on WhatsApp to confirm delivery and payment.</p>
       <div class="ref">ORDER ${r.ref}</div>
       ${WHATSAPP_NUMBER?`<a class="btn wa" href="https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(summary)}" target="_blank" rel="noopener">Message Malizia on WhatsApp</a>`:""}
       <button class="btn line" id="doneBtn" style="border-color:var(--ink)">Continue shopping</button>`;
@@ -893,7 +902,7 @@ if(matchMedia("(pointer:fine)").matches&&!reduce){const cu=$("#cursor");let x=0,
 
 /* ===================== PETALS ===================== */
 (function(){const cv=$("#petals"),ctx=cv.getContext("2d");if(reduce)return;let W,H,dpr,ps=[];
-  const cols=["#f4c6cf","#f9dde2","#e8d7f1","#fbe3d6","#ffffff","#efb7c2"];
+  const cols=["#f4c6cf","#f9dde2","#f3dcae","#fbe3d6","#ffffff","#e8c37f"];
   function size(){dpr=Math.min(2,devicePixelRatio||1);W=cv.clientWidth;H=cv.clientHeight;cv.width=W*dpr;cv.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0)}
   function mk(init){return{x:Math.random()*W,y:init?Math.random()*H:-30,s:8+Math.random()*16,vy:.35+Math.random()*.8,vx:-.2+Math.random()*.5,r:Math.random()*6.28,vr:(-.5+Math.random())*.03,sw:Math.random()*6.28,c:cols[Math.random()*cols.length|0],a:.55+Math.random()*.4,f:Math.random()*6.28}}
   size();addEventListener("resize",size);const N=innerWidth<700?16:30;for(let i=0;i<N;i++)ps.push(mk(true));
