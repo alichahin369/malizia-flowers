@@ -467,11 +467,9 @@ footer{background:linear-gradient(180deg,#f8eef6,#fbecea);color:var(--ink)}
 <header class="nav" id="nav">
   <a href="#top" class="brand" aria-label="Malizia home"><img src="img/emblem-gold.png" alt="" class="bem"><img src="img/wordmark-dark.png" alt="Malizia" class="bwm"></a>
   <ul>
-    <li><a href="#shop">Shop</a></li>
-    <li><a href="#occasions">Occasions</a></li>
-    <li><a href="#signature">Signature</a></li>
     <li><a href="#plants">Plants</a></li>
-    <li><a href="#how">How to order</a></li>
+    <li><a href="#shop" data-cat="bouquets">Hand Bouquets</a></li>
+    <li><a href="#occasions">Occasions</a></li>
   </ul>
   <div class="right">
     <button class="bagbtn" id="bagBtn" aria-label="Open bag"><span class="t">Bag</span><b id="bagCount">0</b></button>
@@ -480,11 +478,9 @@ footer{background:linear-gradient(180deg,#f8eef6,#fbecea);color:var(--ink)}
 </header>
 <nav class="mmenu" id="mmenu">
   <img src="img/emblem-gold.png" alt="" style="width:64px;margin-bottom:28px">
-  <a href="#shop">The <em>Shop</em></a>
-  <a href="#occasions">Shop by <em>moment</em></a>
-  <a href="#signature">Signature</a>
-  <a href="#plants">The Green <em>Room</em></a>
-  <a href="#how">How to order</a>
+  <a href="#plants">Plants</a>
+  <a href="#shop" data-cat="bouquets">Hand <em>Bouquets</em></a>
+  <a href="#occasions">Occasions</a>
   <p class="kicker">@maliziaflowers</p>
 </nav>
 
@@ -691,7 +687,7 @@ const OCC = [
  {k:"luxury",t:"Go big",s:"Grand gestures",img:"b14-cut",c:"#f3ecf8"},
  {k:"home",t:"Home & office",s:"Living plants",img:"p03-cut",c:"#dfe6d6"}
 ];
-const CATS = [["all","All"],["roses","Roses"],["plants","Plants"],["mixed","Mixed bouquets"],["gifts","Boxes & baskets"]];
+const CATS = [["all","All"],["bouquets","Hand bouquets"],["roses","Roses"],["plants","Plants"],["mixed","Mixed bouquets"],["gifts","Boxes & baskets"]];
 
 /* ===================== STATE ===================== */
 let bag = [];
@@ -727,7 +723,8 @@ function cardHTML(p){
 }
 function renderGrid(){
   let list=[...P];
-  if(fCat!=="all") list=list.filter(p=>p.cat.includes(fCat));
+  if(fCat==="bouquets") list=list.filter(p=>(p.cat.includes("roses")||p.cat.includes("mixed"))&&!p.cat.includes("gifts"));
+  else if(fCat!=="all") list=list.filter(p=>p.cat.includes(fCat));
   if(fOcc) list=list.filter(p=>p.occ.includes(fOcc));
   if(fSort==="feat"){const F=["sweeter","pink-heaven","white-roses","sweet-blooms","blushing-love","soft-petals","dreamy","blush-basket","joy","purple-heaven","baby-boy","white-eucalyptus"];const r=id=>{const i=F.indexOf(id);return i<0?99:i};list.sort((a,b)=>r(a.id)-r(b.id));}
   if(fSort==="low") list.sort((a,b)=>minP(a)-minP(b));
@@ -879,7 +876,7 @@ document.addEventListener("click",e=>{
   const o=e.target.closest("[data-open]"); if(o){openModal(o.dataset.open);return}
   const c=e.target.closest(".card"); if(c){openModal(c.dataset.id);return}
   const oc=e.target.closest("[data-occ]"); if(oc){e.preventDefault();applyOcc(oc.dataset.occ);return}
-  const ch=e.target.closest("[data-cat]"); if(ch){if(ch.tagName==="A"){e.preventDefault();fOcc=null;document.getElementById("shop").scrollIntoView({behavior:"smooth"})}applyCat(ch.dataset.cat);return}
+  const ch=e.target.closest("[data-cat]"); if(ch){if(ch.tagName==="A"){e.preventDefault();fOcc=null;document.body.classList.remove("menu-open");document.getElementById("shop").scrollIntoView({behavior:"smooth"})}applyCat(ch.dataset.cat);return}
   if(e.target.id==="clrOcc"){fOcc=null;renderGrid();return}
   if(e.target.closest(".mmenu a"))document.body.classList.remove("menu-open");
 });
