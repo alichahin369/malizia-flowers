@@ -277,9 +277,14 @@ footer{background:var(--noir);color:var(--ivory);padding:110px 0 30px;margin-top
 .vars button.on{border-color:var(--ink);background:var(--ink);color:var(--ivory)}
 .vars button.on small{color:var(--blush2)}
 .swatches{gap:10px!important}
-.modal.full .mimg{background:#f4f4f4}
+.modal.full .mimg{background:var(--fullbg,#f4f4f4)}
 .modal.full .mimg img{object-fit:contain;mix-blend-mode:normal;padding:10px 0}
-.card.full .ph{background:#f4f4f4}
+.card.full .ph{background:var(--fullbg,#f4f4f4)}
+.vars.thumbs{gap:10px}
+.vars.thumbs button.th{width:66px;height:84px;padding:4px;border-radius:14px;background:#fff;border:1px solid rgba(28,20,22,.14);overflow:hidden;transition:transform .2s}
+.vars.thumbs button.th img{width:100%;height:100%;object-fit:contain}
+.vars.thumbs button.th.on{background:#fff;border-color:var(--crimson);outline:2px solid var(--crimson);outline-offset:2px}
+.vars.thumbs button.th:hover{transform:translateY(-2px)}
 .card.full .ph img{object-fit:contain;mix-blend-mode:normal;padding:8px 0}
 .vars.swatches button.sw,.sw{width:40px;height:40px;padding:0;border-radius:50%;background:var(--c);border:1px solid rgba(28,20,22,.14);box-shadow:inset 0 -6px 10px rgba(0,0,0,.12),inset 0 4px 8px rgba(255,255,255,.35);position:relative;transition:transform .2s}
 .vars.swatches button.sw.on,.sw.on{background:var(--c);transform:scale(1.08);outline:2px solid var(--crimson);outline-offset:3px}
@@ -770,7 +775,7 @@ $("#cats").innerHTML = CATS.map(([k,t])=>`<button class="chip ${k==='all'?'on':'
 function cardHTML(p){
   const alt = p.v.length>1 && p.v[1].img ? p.v[p.v.length-1].img : null;
   const first = p.v[p.def??0].img || p.img;
-  return `<article class="card rv ${p.off?"soldout":""} ${p.kind==="color"?"full":""}" data-id="${p.id}" data-cursor tabindex="0" aria-label="${p.name}">
+  return `<article class="card rv ${p.off?"soldout":""} ${p.kind?"full":""}" style="--fullbg:${p.bg||"#f4f4f4"}" data-id="${p.id}" data-cursor tabindex="0" aria-label="${p.name}">
    <div class="ph"><img src="${src(first)}" alt="${p.name}" loading="lazy">${alt&&alt!==first?`<img class="alt" src="${src(alt)}" alt="" loading="lazy">`:""}
    ${p.off?`<span class="badge out">Sold out</span>`:p.badge?`<span class="badge ${p.badge==='Signature'||p.badge==='Bestseller'?'red':''}">${p.badge}</span>`:""}
    <button class="quick" data-quick="${p.id}" aria-label="Add ${p.name} to bag"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 2v12M2 8h12"/></svg></button></div>
@@ -816,8 +821,10 @@ function openModal(id,vi){
   const multi=p.v.length>1; $("#mVarsWrap").style.display=multi?"block":"none";
   $("#mVarLabel").textContent=p.vl||"Size";
   $("#mVars").classList.toggle("swatches",p.kind==="color");
-  $("#modal").classList.toggle("full",p.kind==="color");
-  $("#mVars").innerHTML=p.kind==="color"?p.v.map((v,i)=>`<button data-v="${i}" class="sw" style="--c:${v.sw}" aria-label="${v.l}" title="${v.l}"></button>`).join(""):p.v.map((v,i)=>`<button data-v="${i}">${v.l}<small>${fmt(v.p)}${v.note?" · "+v.note:""}</small></button>`).join("");
+  $("#mVars").classList.toggle("thumbs",p.kind==="design");
+  $("#modal").classList.toggle("full",!!p.kind);
+  $("#modal").style.setProperty("--fullbg",p.bg||"#f4f4f4");
+  $("#mVars").innerHTML=p.kind==="design"?p.v.map((v,i)=>`<button data-v="${i}" class="th" aria-label="${v.l}" title="${v.l}"><img src="${src(v.img)}" alt=""></button>`).join(""):p.kind==="color"?p.v.map((v,i)=>`<button data-v="${i}" class="sw" style="--c:${v.sw}" aria-label="${v.l}" title="${v.l}"></button>`).join(""):p.v.map((v,i)=>`<button data-v="${i}">${v.l}<small>${fmt(v.p)}${v.note?" · "+v.note:""}</small></button>`).join("");
   const care=$("#mCare"); care.style.display=p.care?"flex":"none"; if(p.care) care.querySelector("span").textContent=(p.careGeneric?"Care tip: ":"Care: ")+p.care;
   updModal();
   $("#veil").classList.add("on"); $("#modal").classList.add("on"); document.body.classList.add("locked");
@@ -829,6 +836,7 @@ function updModal(){
   $("#mPrice").innerHTML=(v.from?"<small>From </small>":"")+fmt(v.p*mQ)+(mQ>1?` <small>· ${mQ} × ${fmt(v.p)}</small>`:"");
   $$("#mVars button").forEach((b,i)=>b.classList.toggle("on",i===mVi)); $("#qv").textContent=mQ;
   if(p.kind==="color")$("#mVarLabel").innerHTML=`Colour: <b>${v.l}</b>`;
+  if(p.kind==="design")$("#mVarLabel").innerHTML=`Design: <b>${v.l}</b>`;
   $("#mAdd").disabled=!!p.off; $("#mAdd").textContent=p.off?"Sold out":"Add to bag";
 }
 function closeModal(){$("#modal").classList.remove("on");if(!$("#drawer").classList.contains("on")){$("#veil").classList.remove("on");document.body.classList.remove("locked")} lastFocus&&lastFocus.focus&&lastFocus.focus();}

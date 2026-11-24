@@ -585,7 +585,7 @@ function wireFinChart(){
 function productsView(){
   const since=addDays(today(),-29), sold={};
   ORD.filter(o=>live(o)&&localDay(o.created_at)>=since).forEach(o=>(o.items||[]).forEach(i=>sold[i.id]=(sold[i.id]||0)+(+i.q||1)));
-  const cats={roses:"Roses",mixed:"Mixed bouquets",gifts:"Boxes & baskets",plants:"Plants",addons:"Balloons (add-on)"};
+  const cats={roses:"Roses",mixed:"Mixed bouquets",gifts:"Boxes & baskets",plants:"Plants",addons:"Balloons (add-ons)"};
   const off=PROD.filter(p=>!p.available).length;
   return head("Products",`${PROD.length} products · ${off?off+" marked sold out":"all available"} · changes show on the website ${S.live?"instantly":"(demo: in this browser)"}`)+`
   <div class="panel"><div class="tablewrap"><table><thead><tr><th></th><th>Product</th><th>Prices</th><th>Sold (30d)</th><th>On website</th></tr></thead><tbody>
