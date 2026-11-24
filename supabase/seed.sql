@@ -25,5 +25,6 @@ insert into public.products (id,name,category,variants,sort) values
 ('dracaena','Dracaena Marginata','plants','[{"l":"One size","p":50,"from":false}]'::jsonb,22),
 ('bamboo','Spiral Lucky Bamboo','plants','[{"l":"50 cm stems","p":50,"from":false},{"l":"80 cm stems","p":60,"from":false}]'::jsonb,23),
 ('balloons','Balloon Bunch','addons','[{"l":"Pink","p":8,"from":false},{"l":"Blue","p":8,"from":false},{"l":"White","p":8,"from":false},{"l":"Red","p":8,"from":false},{"l":"Green","p":8,"from":false},{"l":"Gold","p":8,"from":false},{"l":"Black","p":8,"from":false},{"l":"Hot pink","p":8,"from":false},{"l":"Beige","p":8,"from":false},{"l":"Orange","p":8,"from":false}]'::jsonb,24),
-('birthday-balloon','Happy Birthday Balloon','addons','[{"l":"Black & gold stars","p":10,"from":false},{"l":"Rose-gold dots","p":10,"from":false},{"l":"Blue harlequin","p":10,"from":false},{"l":"Purple ombré","p":10,"from":false}]'::jsonb,25)
+('birthday-balloon','Happy Birthday Balloon','addons','[{"l":"Black & gold stars","p":10,"from":false},{"l":"Rose-gold dots","p":10,"from":false},{"l":"Blue harlequin","p":10,"from":false},{"l":"Purple ombré","p":10,"from":false}]'::jsonb,25),
+('baby-balloon','New Baby Balloon','addons','[{"l":"It’s a girl","p":10,"from":false},{"l":"Welcome baby girl","p":10,"from":false},{"l":"It’s a boy","p":10,"from":false},{"l":"Baby boy","p":10,"from":false}]'::jsonb,26)
 on conflict (id) do update set name=excluded.name, category=excluded.category, variants=excluded.variants, sort=excluded.sort;
