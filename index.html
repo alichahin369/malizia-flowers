@@ -736,7 +736,7 @@ const P = window.MALIZIA_CATALOG;
 const byId = Object.fromEntries(P.map(p=>[p.id,p]));
 const minP = p => Math.min(...p.v.map(v=>v.p));
 const fmt = n => "$"+n.toLocaleString("en-US");
-const priceLabel = p => { const m=minP(p); return (p.v.length>1||p.v[0].from) ? `<small>From</small>${fmt(m)}` : fmt(m); };
+const priceLabel = p => { const m=minP(p), same=p.v.every(v=>v.p===p.v[0].p); return ((!same)||p.v[0].from) ? `<small>From</small>${fmt(m)}` : fmt(m); };
 const src = n => `img/${n}.webp`;
 
 const OCC = [
