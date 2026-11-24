@@ -343,6 +343,8 @@ footer{background:var(--noir);color:var(--ivory);padding:110px 0 30px;margin-top
 .chk{display:flex!important;grid-template-columns:none!important;align-items:flex-start;gap:12px!important;text-transform:none!important;letter-spacing:0!important;font-size:.92rem!important;font-weight:400!important;background:var(--cream);border-radius:14px;padding:14px;cursor:pointer}
 .chk input{width:20px!important;height:20px;margin-top:2px;accent-color:var(--crimson);flex:0 0 20px;padding:0!important}
 .chk b{font-weight:600}
+.pay{display:grid;gap:8px}.payh{font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:500;margin-top:4px}
+.chk input[type=radio]{border-radius:50%}
 .chk small{display:block;color:var(--muted);font-size:.8rem;margin-top:2px}
 @media (max-width:860px){.upsell{grid-template-columns:1fr;top:auto;bottom:0;left:0;width:100vw;border-radius:26px 26px 0 0;transform:translateY(100%)}.upsell.on{transform:none}.upsell .uimg{height:36svh;min-height:0}.upsell .ub{padding:22px 20px 26px}.upsell h3{font-size:1.9rem}}
 .carebox{display:flex;gap:12px;padding:14px 16px;border-radius:16px;background:#e9eee3;color:#2d3b2c;font-size:.88rem;margin-bottom:22px;align-items:flex-start}
@@ -762,10 +764,14 @@ addEventListener("pageshow",e=>{if(e.persisted)window.scrollTo(0,0)});
         <label>Card message<textarea id="fMsg" maxlength="250" placeholder="Write something they’ll keep…"></textarea></label>
         <div class="cc"><span id="fCC">0</span>/250</div>
       </div>
+      <div class="pay"><div class="payh">Payment</div>
+        <label class="chk"><input type="radio" name="fPay" value="Cash on delivery" checked><span><b>Cash on delivery</b><small>Pay in cash when the flowers arrive (or at pickup).</small></span></label>
+        <label class="chk"><input type="radio" name="fPay" value="Whish Money"><span><b>Whish Money</b><small>We’ll send you our Whish details to pay before delivery.</small></span></label>
+      </div>
     </form>
         <div class="dfoot" id="dfoot">
           <div class="tot"><span>Subtotal</span><b id="sub">$0</b></div>
-          <div class="dnote">No payment now — Malizia confirms your order, delivery fee and payment on WhatsApp.</div>
+          <div class="dnote">Nothing to pay now — Malizia confirms your order and delivery fee, then you pay by cash or Whish.</div>
           <div class="err" id="err"></div>
           <button class="btn fill" id="placeOrder" style="width:100%;justify-content:center">Place order</button>
         </div>
@@ -783,8 +789,8 @@ addEventListener("pageshow",e=>{if(e.persisted)window.scrollTo(0,0)});
 </div>
 <div class="toast" id="toast"><img id="tImg" alt=""><span id="tTxt"></span><button id="tView">View bag</button></div>
 
-<script src="config.js?v=1795527926"></script>
-<script src="catalog.js?v=1795527926"></script>
+<script src="config.js?v=1795528166"></script>
+<script src="catalog.js?v=1795528166"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script>
@@ -971,7 +977,7 @@ function orderText(){
   let t=`Hello Malizia! 🌹 I'd like to place an order:\n\n${lines.join("\n")}\n\nSubtotal: ${fmt(sub)}${bag.some(l=>byId[l.id].v[l.vi].from)?"+":""}\n`;
   t+=`\nFrom: ${g("#fFrom")||"-"}${$("#fAnon").checked?" (send anonymously)":""}\nTo: ${g("#fTo")||"-"}${g("#fPhone")?" ("+g("#fPhone")+")":""}\nAddress: ${g("#fAddr")||"-"}\nDelivery: ${g("#fDate")||"-"}, ${$("#fTime").value}\n`;
   if($("#fCard").checked&&g("#fMsg")) t+=`\nGreeting card:\n“${g("#fMsg")}”\n`; else t+=`\nNo greeting card\n`;
-  t+=`\nPlease confirm the delivery fee and payment. Thank you!`;
+  t+=`\nPayment: ${(document.querySelector('input[name=fPay]:checked')||{}).value||"Cash on delivery"}\nPlease confirm the delivery fee. Thank you!`;
   return t;
 }
 function validate(){
@@ -988,14 +994,14 @@ $("#placeOrder").addEventListener("click",async()=>{
   const g=id=>$(id).value.trim(); const pickup=$("#fTime").value==="Pick up from the shop";
   const order={items:bag.map(l=>({id:l.id,vi:l.vi,q:l.q})),customer_name:g("#fFrom"),customer_phone:g("#fCustPhone"),
     recipient_name:g("#fTo")||g("#fFrom"),recipient_phone:g("#fPhone")||null,address:pickup?null:g("#fAddr"),
-    delivery_date:$("#fDate").value,delivery_slot:$("#fTime").value,card_message:$("#fCard").checked?(g("#fMsg")||null):null,anonymous:$("#fAnon").checked};
+    delivery_date:$("#fDate").value,delivery_slot:$("#fTime").value,card_message:$("#fCard").checked?(g("#fMsg")||null):null,anonymous:$("#fAnon").checked,payment:(document.querySelector('input[name=fPay]:checked')||{}).value||"Cash on delivery"};
   try{
     const ref="M"+Date.now().toString(36).toUpperCase().slice(-6);
     const sub=bag.reduce((a,l)=>a+byId[l.id].v[l.vi].p*l.q,0);
     const itemsTxt=bag.map(l=>{const p=byId[l.id],v=p.v[l.vi];return `${l.q} × ${p.name}${p.v.length>1?" ("+v.l+")":""} — ${v.from?"from ":""}${fmt(v.p*l.q)}`}).join("\n");
-    const payload={_subject:`New order ${ref}${order.anonymous?" (ANONYMOUS)":""} — ${order.customer_name} — ${fmt(sub)}`,_template:"table",_captcha:"false",
+    const payload={_subject:`New order ${ref}${order.anonymous?" (ANONYMOUS)":""} — ${order.customer_name} — ${fmt(sub)} — ${order.payment==="Whish Money"?"Whish":"Cash"}`,_template:"table",_captcha:"false",
       "Order":ref,"Anonymous":order.anonymous?"YES — do NOT tell the recipient who sent it":"No","Items":itemsTxt,"Subtotal":fmt(sub)+(bag.some(l=>byId[l.id].v[l.vi].from)?"+":""),
-      "Customer name":order.customer_name,"Customer phone":order.customer_phone,
+      "Payment":order.payment,"Customer name":order.customer_name,"Customer phone":order.customer_phone,
       "Recipient":order.recipient_name,"Recipient phone":order.recipient_phone||"-",
       "Delivery":pickup?"Pick up from the shop":order.address,"Date":order.delivery_date,"Time":order.delivery_slot,
       "Greeting card":order.card_message||"No card"};
@@ -1007,7 +1013,7 @@ $("#placeOrder").addEventListener("click",async()=>{
     $("#fMsg").value="";$("#fCC").textContent="0";
     $("#lines").classList.add("hide");$("#oform").style.display="none";$("#dfoot").style.display="none";
     const d=$("#done");d.classList.remove("hide");$("#drawer").classList.add("isdone");$(".dbody").scrollTop=0;
-    d.innerHTML=`<div class="ok"><img src="img/emblem-gold.png" alt="" style="width:46px"></div><h4>Thank you, ${esc(order.customer_name.split(" ")[0])}!</h4><p>Your order is with Malizia.</p><p>We’ll call or message you to confirm delivery and payment.</p>
+    d.innerHTML=`<div class="ok"><img src="img/emblem-gold.png" alt="" style="width:46px"></div><h4>Thank you, ${esc(order.customer_name.split(" ")[0])}!</h4><p>Your order is with Malizia.</p><p>${order.payment==="Whish Money"?"We’ll message you shortly with our Whish details to complete payment.":"We’ll call or message you to confirm delivery. Payment is cash on delivery."}</p>
       <div class="ref">ORDER ${r.ref}</div>
       ${WHATSAPP_NUMBER?`<a class="btn wa" href="https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(summary)}" target="_blank" rel="noopener">Message Malizia on WhatsApp</a>`:""}
       <button class="btn line" id="doneBtn" style="border-color:var(--ink)">Continue shopping</button>`;
