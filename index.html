@@ -529,6 +529,15 @@ footer{background:linear-gradient(180deg,#f8eef6,#fbecea);color:var(--ink)}
 .toast{background:var(--ink)}
 .cursor{background:var(--crimson)}
 </style>
+<script>
+/* Always open at the top on refresh (no restored scroll, no #section jump) */
+try{history.scrollRestoration="manual"}catch(e){}
+if(location.hash){try{history.replaceState(null,"",location.pathname+location.search)}catch(e){}}
+window.scrollTo(0,0);
+(function(){let n=0;const top=()=>{if(n++<8){window.scrollTo(0,0);setTimeout(top,120)}};addEventListener("DOMContentLoaded",top);addEventListener("load",()=>{n=0;top()});})();
+addEventListener("wheel",()=>{},{passive:true});
+addEventListener("pageshow",e=>{if(e.persisted)window.scrollTo(0,0)});
+</script>
 </head>
 <body>
 
@@ -755,9 +764,9 @@ footer{background:linear-gradient(180deg,#f8eef6,#fbecea);color:var(--ink)}
 </div>
 <div class="toast" id="toast"><img id="tImg" alt=""><span id="tTxt"></span><button id="tView">View bag</button></div>
 
-<script src="config.js?v=1795522358"></script>
-<script src="catalog.js?v=1795522358"></script>
-<script src="store.js?v=1795522358"></script>
+<script src="config.js?v=1795522481"></script>
+<script src="catalog.js?v=1795522481"></script>
+<script src="store.js?v=1795522481"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script>
@@ -1020,6 +1029,7 @@ document.addEventListener("keydown",e=>{if(e.key==="Escape"&&$("#search").classL
 
 function goShop(){const el=document.getElementById("shop");const to=()=>Math.max(0,el.getBoundingClientRect().top+scrollY-70);
   requestAnimationFrame(()=>{scrollTo({top:to(),behavior:"smooth"});setTimeout(()=>{if(Math.abs(scrollY-to())>40)scrollTo({top:to(),behavior:"smooth"})},900);setTimeout(()=>{if(Math.abs(scrollY-to())>40)scrollTo({top:to()})},1800)});}
+document.addEventListener("click",e=>{const a=e.target.closest('a[href^="#"]');if(!a||a.dataset.cat||a.id==="mSearch")return;const id=a.getAttribute("href").slice(1);if(!id)return;const t=document.getElementById(id);if(!t)return;e.preventDefault();document.body.classList.remove("menu-open");scrollTo({top:id==="top"?0:t.getBoundingClientRect().top+scrollY-(id==="occasions"||id==="plants"?0:70),behavior:"smooth"});});
 /* ===================== GLOBAL CLICKS ===================== */
 function applyCat(k){fCat=k;fOcc=null;renderGrid()}
 function applyOcc(k){fOcc=k;fCat="all";renderGrid();goShop()}
