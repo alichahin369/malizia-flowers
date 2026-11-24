@@ -23,5 +23,6 @@ insert into public.products (id,name,category,variants,sort) values
 ('guzmania','Guzmania','plants','[{"l":"One size","p":35,"from":false}]'::jsonb,20),
 ('bonsai','Bonsai','plants','[{"l":"Mini","p":20,"from":false},{"l":"Small","p":30,"from":false},{"l":"Medium","p":40,"from":false},{"l":"Large","p":50,"from":false}]'::jsonb,21),
 ('dracaena','Dracaena Marginata','plants','[{"l":"One size","p":50,"from":false}]'::jsonb,22),
-('bamboo','Spiral Lucky Bamboo','plants','[{"l":"50 cm stems","p":50,"from":false},{"l":"80 cm stems","p":60,"from":false}]'::jsonb,23)
+('bamboo','Spiral Lucky Bamboo','plants','[{"l":"50 cm stems","p":50,"from":false},{"l":"80 cm stems","p":60,"from":false}]'::jsonb,23),
+('balloons','Balloon Bunch','addons','[{"l":"Pink","p":15,"from":false},{"l":"Blue","p":15,"from":false},{"l":"White","p":15,"from":false},{"l":"Red","p":15,"from":false},{"l":"Green","p":15,"from":false},{"l":"Gold","p":15,"from":false},{"l":"Black","p":15,"from":false},{"l":"Hot pink","p":15,"from":false},{"l":"Beige","p":15,"from":false},{"l":"Orange","p":15,"from":false}]'::jsonb,24)
 on conflict (id) do update set name=excluded.name, category=excluded.category, variants=excluded.variants, sort=excluded.sort;

@@ -535,7 +535,7 @@ function finances(){
   const rev=sumT(L), paid=sumT(L.filter(o=>o.paid)), due=sumT(L.filter(o=>!o.paid)), fees=L.reduce((s,o)=>s+(+o.delivery_fee||0),0);
   const avg=L.length?rev/L.length:0;
   const pm={}; L.filter(o=>o.paid).forEach(o=>{const k=o.payment_method||"Not recorded";pm[k]=(pm[k]||0)+(+o.total||0)}); const pmMax=Math.max(1,...Object.values(pm));
-  const cat={}; const cn={roses:"Roses",mixed:"Mixed bouquets",gifts:"Boxes & baskets",plants:"Plants"};
+  const cat={}; const cn={roses:"Roses",mixed:"Mixed bouquets",gifts:"Boxes & baskets",plants:"Plants",addons:"Balloons"};
   L.forEach(o=>(o.items||[]).forEach(i=>{const c=CAT[i.id]?cn[CAT[i.id].cat[0]]:"Custom";cat[c]=(cat[c]||0)+(+i.price||0)*(+i.q||1)})); const catMax=Math.max(1,...Object.values(cat));
   const unpaidAll=ORD.filter(o=>live(o)&&!o.paid).sort((x,y)=>(x.delivery_date||"")<(y.delivery_date||"")?-1:1);
   const months=[...Array(6)].map((_,i)=>{const d=new Date();d.setDate(1);d.setMonth(d.getMonth()-i);const k=ymd(d).slice(0,7);const os=ORD.filter(o=>live(o)&&localDay(o.created_at).slice(0,7)===k);
@@ -586,7 +586,7 @@ function wireFinChart(){
 function productsView(){
   const since=addDays(today(),-29), sold={};
   ORD.filter(o=>live(o)&&localDay(o.created_at)>=since).forEach(o=>(o.items||[]).forEach(i=>sold[i.id]=(sold[i.id]||0)+(+i.q||1)));
-  const cats={roses:"Roses",mixed:"Mixed bouquets",gifts:"Boxes & baskets",plants:"Plants"};
+  const cats={roses:"Roses",mixed:"Mixed bouquets",gifts:"Boxes & baskets",plants:"Plants",addons:"Balloons (add-on)"};
   const off=PROD.filter(p=>!p.available).length;
   return head("Products",`${PROD.length} products · ${off?off+" marked sold out":"all available"} · changes show on the website ${S.live?"instantly":"(demo: in this browser)"}`)+`
   <div class="panel"><div class="tablewrap"><table><thead><tr><th></th><th>Product</th><th>Prices</th><th>Sold (30d)</th><th>On website</th></tr></thead><tbody>

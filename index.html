@@ -276,6 +276,38 @@ footer{background:var(--noir);color:var(--ivory);padding:110px 0 30px;margin-top
 .vars button small{display:block;color:var(--muted);font-size:.75rem}
 .vars button.on{border-color:var(--ink);background:var(--ink);color:var(--ivory)}
 .vars button.on small{color:var(--blush2)}
+.swatches{gap:10px!important}
+.vars.swatches button.sw,.sw{width:40px;height:40px;padding:0;border-radius:50%;background:var(--c);border:1px solid rgba(28,20,22,.14);box-shadow:inset 0 -6px 10px rgba(0,0,0,.12),inset 0 4px 8px rgba(255,255,255,.35);position:relative;transition:transform .2s}
+.vars.swatches button.sw.on,.sw.on{background:var(--c);transform:scale(1.08);outline:2px solid var(--gold2);outline-offset:3px}
+.sw:hover{transform:scale(1.08)}
+.upsell{position:fixed;z-index:92;left:50%;top:50%;width:min(720px,94vw);background:var(--ivory);border-radius:28px;overflow:hidden;display:grid;grid-template-columns:.9fr 1.1fr;transform:translate(-50%,-46%) scale(.96);opacity:0;pointer-events:none;transition:.5s var(--ease);box-shadow:0 40px 80px rgba(43,35,38,.2)}
+.upsell.on{opacity:1;pointer-events:auto;transform:translate(-50%,-50%)}
+.upsell .uimg{background:#f8f6f3;display:grid;place-items:center;overflow:hidden;min-height:0}
+.upsell .uimg img{width:100%;height:100%;max-height:420px;object-fit:cover;transition:opacity .25s}
+.upsell .ub{padding:36px 32px 30px;display:flex;flex-direction:column}
+.upsell .kicker{color:var(--gold2)}
+.upsell h3{font-family:var(--serif);font-weight:500;font-size:2.3rem;line-height:1.05;margin:10px 0 8px}
+.upsell p{color:var(--muted);margin-bottom:20px}
+.upsell .swatches{display:flex;flex-wrap:wrap;margin-bottom:10px}
+.upsell .ulbl{font-size:.85rem;margin-bottom:22px}
+.upsell .ubtns{display:flex;gap:10px;flex-wrap:wrap;margin-top:auto}
+.upsell .ubtns .btn{flex:1;justify-content:center}
+.upsell .x{position:absolute;right:14px;top:14px;width:40px;height:40px;border-radius:50%;background:var(--ivory);display:grid;place-items:center;z-index:2}
+.btn.ghost{border:1px solid rgba(28,20,22,.2)}.btn.ghost::before{background:var(--ink)}.btn.ghost:hover{color:var(--ivory)}
+.addon{margin-top:18px;background:var(--cream);border-radius:18px;padding:14px;display:grid;grid-template-columns:78px 1fr;gap:14px;align-items:center}
+.addon .th{width:78px;height:92px;border-radius:12px;overflow:hidden;background:#fff}
+.addon .th img{width:100%;height:100%;object-fit:cover;mix-blend-mode:multiply}
+.addon b{font-family:var(--serif);font-weight:500;font-size:1.15rem;display:block}
+.addon small{color:var(--muted);font-size:.8rem}
+.addon .swatches{display:flex;flex-wrap:wrap;gap:6px!important;margin:8px 0}
+.addon .sw{width:24px;height:24px}
+.addon .sw.on{outline-offset:2px}
+.addon .btn{padding:9px 16px;font-size:.72rem}
+.chk{display:flex!important;grid-template-columns:none!important;align-items:flex-start;gap:12px!important;text-transform:none!important;letter-spacing:0!important;font-size:.92rem!important;font-weight:400!important;background:var(--cream);border-radius:14px;padding:14px;cursor:pointer}
+.chk input{width:20px!important;height:20px;margin-top:2px;accent-color:var(--gold2);flex:0 0 20px;padding:0!important}
+.chk b{font-weight:600}
+.chk small{display:block;color:var(--muted);font-size:.8rem;margin-top:2px}
+@media (max-width:860px){.upsell{grid-template-columns:1fr;top:auto;bottom:0;left:0;width:100vw;border-radius:26px 26px 0 0;transform:translateY(100%)}.upsell.on{transform:none}.upsell .uimg{height:32svh}.upsell .uimg img{height:100%;width:100%;max-height:none;object-fit:contain}.upsell .ub{padding:22px 20px 26px}.upsell h3{font-size:1.9rem}}
 .carebox{display:flex;gap:12px;padding:14px 16px;border-radius:16px;background:#e9eee3;color:#2d3b2c;font-size:.88rem;margin-bottom:22px;align-items:flex-start}
 .carebox svg{flex:0 0 22px;height:22px}
 .mrow{display:flex;gap:12px;margin-top:auto;padding-top:8px}
@@ -637,6 +669,7 @@ footer{background:linear-gradient(180deg,#f8eef6,#fbecea);color:var(--ink)}
   <div class="dbody">
     <div class="done hide" id="done"></div>
     <div id="lines"></div>
+    <div id="addon"></div>
     <form class="form" id="oform" onsubmit="return false">
       <h4>Delivery & card</h4>
       <div class="two">
@@ -653,8 +686,11 @@ footer{background:linear-gradient(180deg,#f8eef6,#fbecea);color:var(--ink)}
         <label>Time<select id="fTime"><option>Morning (9–12)</option><option>Afternoon (12–4)</option><option>Evening (4–8)</option><option>Pick up from the shop</option></select></label>
       </div>
       <div class="dsame"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 6h11v10H2zM13 9h4l4 4v3h-8z"/><circle cx="6" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg><span><b>Same-day delivery</b> — choose today’s date and we’ll deliver today.</span></div>
-      <label>Card message<textarea id="fMsg" maxlength="250" placeholder="Write something they’ll keep…"></textarea></label>
-      <div class="cc"><span id="fCC">0</span>/250</div>
+      <label class="chk"><input type="checkbox" id="fCard"><span><b>Add a greeting card</b> — free<small>We’ll include a Malizia card with your message.</small></span></label>
+      <div id="cardBox" class="hide" style="display:grid;gap:6px">
+        <label>Card message<textarea id="fMsg" maxlength="250" placeholder="Write something they’ll keep…"></textarea></label>
+        <div class="cc"><span id="fCC">0</span>/250</div>
+      </div>
     </form>
   </div>
   <div class="dfoot" id="dfoot">
@@ -665,6 +701,13 @@ footer{background:linear-gradient(180deg,#f8eef6,#fbecea);color:var(--ink)}
   </div>
 </aside>
 
+<div class="upsell" id="upsell" role="dialog" aria-modal="true" aria-labelledby="uTitle">
+  <button class="x" id="uClose" aria-label="Close"><svg width="16" height="16" viewBox="0 0 16 16" stroke="currentColor" stroke-width="1.6"><path d="M3 3l10 10M13 3L3 13"/></svg></button>
+  <div class="uimg"><img id="uImg" alt="Balloon bunch"></div>
+  <div class="ub"><span class="kicker">Make it a celebration</span><h3 id="uTitle">Add balloons to your gift?</h3><p id="uTxt"></p>
+    <div class="swatches" id="uSw"></div><div class="ulbl" id="uLbl"></div>
+    <div class="ubtns"><button class="btn fill" id="uAdd">Add balloons</button><button class="btn ghost" id="uNo">No thanks</button></div></div>
+</div>
 <div class="toast" id="toast"><img id="tImg" alt=""><span id="tTxt"></span><button id="tView">View bag</button></div>
 
 <script src="config.js"></script>
@@ -695,7 +738,7 @@ const OCC = [
  {k:"luxury",t:"Go big",s:"Grand gestures",img:"b14-cut",c:"#f3ecf8"},
  {k:"home",t:"Home & office",s:"Living plants",img:"p03-cut",c:"#dfe6d6"}
 ];
-const CATS = [["all","All"],["bouquets","Hand bouquets"],["roses","Roses"],["plants","Plants"],["mixed","Mixed bouquets"],["gifts","Boxes & baskets"]];
+const CATS = [["all","All"],["bouquets","Hand bouquets"],["roses","Roses"],["plants","Plants"],["mixed","Mixed bouquets"],["gifts","Boxes & baskets"],["addons","Balloons"]];
 
 /* ===================== STATE ===================== */
 let bag = [];
@@ -764,11 +807,12 @@ $("#yr").textContent=new Date().getFullYear();
 let mId=null,mVi=0,mQ=1,lastFocus=null;
 function openModal(id,vi){
   const p=byId[id]; if(!p)return; mId=id; mVi=vi??(p.def??0); mQ=1; lastFocus=document.activeElement;
-  $("#mKick").textContent = p.cat.includes("plants")?"The Green Room":(p.cat.includes("gifts")?"Boxes & baskets":(p.cat.includes("roses")?"Roses":"Mixed bouquet"));
+  $("#mKick").textContent = p.cat.includes("addons")?"Add-on":p.cat.includes("plants")?"The Green Room":(p.cat.includes("gifts")?"Boxes & baskets":(p.cat.includes("roses")?"Roses":"Mixed bouquet"));
   $("#mTitle").textContent=p.name; $("#mDesc").textContent=p.desc;
   const multi=p.v.length>1; $("#mVarsWrap").style.display=multi?"block":"none";
   $("#mVarLabel").textContent=p.vl||"Size";
-  $("#mVars").innerHTML=p.v.map((v,i)=>`<button data-v="${i}">${v.l}<small>${fmt(v.p)}${v.note?" · "+v.note:""}</small></button>`).join("");
+  $("#mVars").classList.toggle("swatches",p.kind==="color");
+  $("#mVars").innerHTML=p.kind==="color"?p.v.map((v,i)=>`<button data-v="${i}" class="sw" style="--c:${v.sw}" aria-label="${v.l}" title="${v.l}"></button>`).join(""):p.v.map((v,i)=>`<button data-v="${i}">${v.l}<small>${fmt(v.p)}${v.note?" · "+v.note:""}</small></button>`).join("");
   const care=$("#mCare"); care.style.display=p.care?"flex":"none"; if(p.care) care.querySelector("span").textContent=(p.careGeneric?"Care tip: ":"Care: ")+p.care;
   updModal();
   $("#veil").classList.add("on"); $("#modal").classList.add("on"); document.body.classList.add("locked");
@@ -779,6 +823,7 @@ function updModal(){
   const im=$("#mImg"); const ns=src(v.img||p.img); if(!im.src.endsWith(ns)){im.style.opacity=0;setTimeout(()=>{im.src=ns;im.alt=p.name;im.style.opacity=1},180)}
   $("#mPrice").innerHTML=(v.from?"<small>From </small>":"")+fmt(v.p*mQ)+(mQ>1?` <small>· ${mQ} × ${fmt(v.p)}</small>`:"");
   $$("#mVars button").forEach((b,i)=>b.classList.toggle("on",i===mVi)); $("#qv").textContent=mQ;
+  if(p.kind==="color")$("#mVarLabel").innerHTML=`Colour: <b>${v.l}</b>`;
   $("#mAdd").disabled=!!p.off; $("#mAdd").textContent=p.off?"Sold out":"Add to bag";
 }
 function closeModal(){$("#modal").classList.remove("on");if(!$("#drawer").classList.contains("on")){$("#veil").classList.remove("on");document.body.classList.remove("locked")} lastFocus&&lastFocus.focus&&lastFocus.focus();}
@@ -796,8 +841,10 @@ function addToBag(id,vi,q){
   $("#tImg").src=src(v.img||p.img); $("#tTxt").textContent=`${p.name}${p.v.length>1?" · "+v.l:""} added`;
   const t=$("#toast"); t.classList.add("on"); clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove("on"),3200);
   const bb=$("#bagBtn"); bb.classList.remove("bump"); void bb.offsetWidth; bb.classList.add("bump");
+  if(!p.cat.includes("addons")&&!hasBalloons()&&!upsellShown){upsellShown=true;setTimeout(openUpsell,650);}
 }
 function renderBag(){
+  renderAddon();
   const n=bag.reduce((a,l)=>a+l.q,0), sub=bag.reduce((a,l)=>a+byId[l.id].v[l.vi].p*l.q,0);
   $("#bagCount").textContent=n; $("#dCount").textContent=n?n:"";
   $("#sub").textContent=fmt(sub)+(bag.some(l=>byId[l.id].v[l.vi].from)?"+":"");
@@ -805,6 +852,27 @@ function renderBag(){
   $("#lines").innerHTML = n? bag.map((l,i)=>{const p=byId[l.id],v=p.v[l.vi];return `<div class="bline"><div class="th"><img src="${src(v.img||p.img)}" alt=""></div><div><b>${p.name}</b><small>${p.v.length>1?v.l:p.sub}${v.from?" · from":""}</small><div class="lq"><button data-dq="${i}" aria-label="Less">−</button>${l.q}<button data-iq="${i}" aria-label="More">+</button><button class="rm" data-rm="${i}">Remove</button></div></div><div class="lp">${fmt(v.p*l.q)}</div></div>`}).join("")
    : `<div class="dempty"><div class="serif">Your bag is empty</div><p>But someone out there deserves flowers.</p><a href="#shop" class="btn dark" style="margin-top:22px" id="emptyShop">Start shopping</a></div>`;
 }
+/* ---------- balloons add-on ---------- */
+let upsellShown=false; try{upsellShown=sessionStorage.getItem("malizia_upsell")==="1"}catch(e){}
+const BAL=()=>byId["balloons"];
+const hasBalloons=()=>bag.some(l=>l.id==="balloons");
+let uVi=0, aVi=0;
+const swHTML=(vi,attr)=>BAL().v.map((v,i)=>`<button type="button" class="sw ${i===vi?"on":""}" style="--c:${v.sw}" ${attr}="${i}" aria-label="${v.l}" title="${v.l}"></button>`).join("");
+function drawUpsell(){const b=BAL(),v=b.v[uVi];$("#uImg").src=src(v.img);$("#uSw").innerHTML=swHTML(uVi,"data-usw");$("#uLbl").innerHTML=`Colour: <b>${v.l}</b>`;$("#uTxt").textContent=`A bunch of 3 balloons tied with ribbon — ${fmt(v.p)}. Choose a colour:`;}
+function openUpsell(){if(!BAL()||BAL().off||hasBalloons())return;try{sessionStorage.setItem("malizia_upsell","1")}catch(e){}
+  drawUpsell();$("#toast").classList.remove("on");$("#upsell").classList.add("on");$("#veil").classList.add("on");document.body.classList.add("locked");}
+function closeUpsell(){$("#upsell").classList.remove("on");if(!$("#modal").classList.contains("on")&&!$("#drawer").classList.contains("on")){$("#veil").classList.remove("on");document.body.classList.remove("locked")}}
+$("#uSw").addEventListener("click",e=>{const b=e.target.closest("[data-usw]");if(b){uVi=+b.dataset.usw;drawUpsell()}});
+$("#uAdd").onclick=()=>{closeUpsell();addToBag("balloons",uVi,1)};
+$("#uNo").onclick=closeUpsell; $("#uClose").onclick=closeUpsell;
+function renderAddon(){const el=$("#addon");if(!el)return;const b=BAL();
+  if(!b||b.off||!bag.length||hasBalloons()){el.innerHTML="";return}
+  const v=b.v[aVi];
+  el.innerHTML=`<div class="addon"><div class="th"><img src="${src(v.img)}" alt=""></div><div><small>Complete the gift</small><b>Add balloons · ${fmt(v.p)}</b><div class="swatches">${swHTML(aVi,"data-asw")}</div><button type="button" class="btn fill" data-addbal>Add ${v.l.toLowerCase()} balloons</button></div></div>`;}
+$("#addon").addEventListener("click",e=>{const s=e.target.closest("[data-asw]");if(s){aVi=+s.dataset.asw;renderAddon();return}
+  if(e.target.closest("[data-addbal]"))addToBag("balloons",aVi,1);});
+$("#fCard").addEventListener("change",e=>{$("#cardBox").classList.toggle("hide",!e.target.checked);if(e.target.checked)$("#fMsg").focus()});
+
 $("#lines").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;
   if(b.dataset.iq!=null)bag[+b.dataset.iq].q++;
   if(b.dataset.dq!=null){const l=bag[+b.dataset.dq];l.q--;if(l.q<1)bag.splice(+b.dataset.dq,1)}
@@ -814,8 +882,8 @@ $("#lines").addEventListener("click",e=>{if(e.target.id==="emptyShop")closeDrawe
 function openDrawer(){if(!$("#done").classList.contains("hide")&&bag.length)resetDone();$("#drawer").classList.add("on");$("#veil").classList.add("on");document.body.classList.add("locked")}
 function closeDrawer(){$("#drawer").classList.remove("on");if(!$("#modal").classList.contains("on")){$("#veil").classList.remove("on");document.body.classList.remove("locked")}}
 $("#bagBtn").onclick=openDrawer; $("#dClose").onclick=closeDrawer; $("#tView").onclick=()=>{$("#toast").classList.remove("on");openDrawer()};
-$("#veil").onclick=()=>{closeModal();closeDrawer()};
-document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeModal();closeDrawer();document.body.classList.remove("menu-open")}});
+$("#veil").onclick=()=>{closeUpsell();closeModal();closeDrawer()};
+document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeUpsell();closeModal();closeDrawer();document.body.classList.remove("menu-open")}});
 renderBag();
 
 // form helpers
@@ -827,7 +895,7 @@ function orderText(){
   const sub=bag.reduce((a,l)=>a+byId[l.id].v[l.vi].p*l.q,0);
   let t=`Hello Malizia! 🌹 I'd like to place an order:\n\n${lines.join("\n")}\n\nSubtotal: ${fmt(sub)}${bag.some(l=>byId[l.id].v[l.vi].from)?"+":""}\n`;
   t+=`\nFrom: ${g("#fFrom")||"-"}\nTo: ${g("#fTo")||"-"}${g("#fPhone")?" ("+g("#fPhone")+")":""}\nAddress: ${g("#fAddr")||"-"}\nDelivery: ${g("#fDate")||"-"}, ${$("#fTime").value}\n`;
-  if(g("#fMsg")) t+=`\nCard message:\n“${g("#fMsg")}”\n`;
+  if($("#fCard").checked&&g("#fMsg")) t+=`\nGreeting card:\n“${g("#fMsg")}”\n`; else t+=`\nNo greeting card\n`;
   t+=`\nPlease confirm the delivery fee and payment. Thank you!`;
   return t;
 }
@@ -837,6 +905,7 @@ function validate(){
   if(g("#fCustPhone").replace(/[^\d]/g,"").length<7)miss.push("your phone number");
   if($("#fTime").value!=="Pick up from the shop"&&!g("#fAddr"))miss.push("the delivery address");
   if(!$("#fDate").value)miss.push("a delivery date");
+  if($("#fCard").checked&&!g("#fMsg"))miss.push("your card message");
   $("#err").textContent=miss.length?"Please add "+miss.join(", ").replace(/, ([^,]*)$/," and $1")+".":"";return !miss.length;}
 $("#placeOrder").addEventListener("click",async()=>{
   if(!validate())return;
@@ -844,7 +913,7 @@ $("#placeOrder").addEventListener("click",async()=>{
   const g=id=>$(id).value.trim(); const pickup=$("#fTime").value==="Pick up from the shop";
   const order={items:bag.map(l=>({id:l.id,vi:l.vi,q:l.q})),customer_name:g("#fFrom"),customer_phone:g("#fCustPhone"),
     recipient_name:g("#fTo")||g("#fFrom"),recipient_phone:g("#fPhone")||null,address:pickup?null:g("#fAddr"),
-    delivery_date:$("#fDate").value,delivery_slot:$("#fTime").value,card_message:g("#fMsg")||null};
+    delivery_date:$("#fDate").value,delivery_slot:$("#fTime").value,card_message:$("#fCard").checked?(g("#fMsg")||null):null};
   try{
     const r=await window.MaliziaStore.placeOrder(order);
     const summary=orderText().replace("I'd like to place an order:",`I just placed order ${r.ref} on your website:`);
