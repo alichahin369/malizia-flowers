@@ -96,26 +96,27 @@ body.menu-open .mmenu{clip-path:circle(150% at 92% 4%)}
 .hero .ghost{position:absolute;left:50%;top:50%;transform:translate(-50%,-56%);font-family:var(--serif);font-size:clamp(7rem,30vw,30rem);letter-spacing:-.02em;line-height:.8;color:transparent;-webkit-text-stroke:1px rgba(201,166,107,.18);white-space:nowrap;z-index:1;user-select:none}
 .hero .grid{position:relative;z-index:4;width:min(1000px,92vw);margin:0 auto;display:flex;justify-content:center;text-align:center;padding-top:90px}
 .hero .htext{display:flex;flex-direction:column;align-items:center}
-.catbar{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:0 0 30px}
+.catbar{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:18px 0 0}
 .cb{display:flex;align-items:center;gap:12px;padding:7px 20px 7px 7px;border-radius:99px;background:rgba(255,255,255,.8);border:1px solid rgba(192,108,123,.22);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;font-weight:500;color:var(--ink);transition:transform .3s,box-shadow .3s,border-color .3s}
 .cb:hover{transform:translateY(-3px);box-shadow:0 12px 26px rgba(192,108,123,.18);border-color:var(--crimson)}
 .cb .ci{width:46px;height:46px;border-radius:50%;background:var(--blush);display:grid;place-items:center;overflow:hidden;flex:0 0 46px}
 .cb .ci img{width:84%;height:84%;object-fit:contain}
-@media (max-width:860px){.catbar{gap:8px;margin-bottom:26px;flex-wrap:nowrap;width:100%}.cb{flex:1;flex-direction:column;gap:7px;padding:10px 4px 12px;border-radius:20px;font-size:.62rem;letter-spacing:.1em;text-align:center}.cb .ci{width:52px;height:52px;flex:0 0 52px}}
-.hero .hemb{width:clamp(70px,9vw,104px);margin-bottom:24px}
+@media (max-width:860px){.catbar{gap:8px;margin-top:18px;flex-wrap:nowrap;width:100%}.cb{flex:1;flex-direction:column;gap:7px;padding:10px 4px 12px;border-radius:20px;font-size:.62rem;letter-spacing:.1em;text-align:center}.cb .ci{width:52px;height:52px;flex:0 0 52px}}
+.hero .hemb{width:clamp(64px,8vw,92px);margin-bottom:18px}
+@media (max-height:820px) and (min-width:861px){.hero h1{font-size:clamp(3rem,5.2vw,5.2rem)}.hero .grid{padding-top:78px}.hero .hemb{width:70px;margin-bottom:12px}}
 @media (max-width:860px){.hero .kicker{letter-spacing:.22em;font-size:.66rem}.hero .kicker::before,.hero .kicker::after{width:22px}}
 .hero .ghost{transform:translate(-50%,-50%)!important}
-.hero h1{font-family:var(--serif);font-weight:500;font-size:clamp(3.1rem,7.4vw,7.6rem);line-height:.95;letter-spacing:-.02em}
+.hero h1{font-family:var(--serif);font-weight:500;font-size:clamp(3.1rem,6.6vw,6.6rem);line-height:.95;letter-spacing:-.02em}
 .hero h1 em{color:var(--rose);font-weight:400}
 .hero h1 .ln{display:block;overflow:hidden;padding-bottom:.06em}
 .hero h1 .ln>span{display:inline-block}
-.hero .lede{max-width:520px;margin:28px 0 36px;color:rgba(247,242,236,.72);font-size:1.05rem;font-weight:300}
+.hero .lede{max-width:520px;margin:20px 0 26px!important;margin:28px 0 36px;color:rgba(247,242,236,.72);font-size:1.05rem;font-weight:300}
 .hero .kicker{color:var(--gold2);display:flex;align-items:center;gap:14px;margin-bottom:26px}
 .hero .kicker::before,.hero .kicker::after{content:"";width:40px;height:1px;background:var(--gold)}
 .btns{display:flex;gap:12px;flex-wrap:wrap}
 .hero .btns{justify-content:center}
 .scrollcue{display:none!important}
-.sameday{display:inline-flex;align-items:center;gap:10px;margin-top:26px;padding:10px 18px;border-radius:99px;background:rgba(255,255,255,.75);border:1px solid rgba(192,108,123,.3);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);font-size:.9rem;color:var(--ink)}
+.sameday{display:inline-flex;align-items:center;gap:10px;margin-top:20px;padding:10px 18px;border-radius:99px;background:rgba(255,255,255,.75);border:1px solid rgba(192,108,123,.3);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);font-size:.9rem;color:var(--ink)}
 .sameday svg{width:20px;height:20px;color:var(--crimson);flex:0 0 20px}
 .sameday b{font-weight:600;color:var(--crimson)}
 .dsame{display:flex;align-items:center;gap:8px;background:var(--cream);border-radius:12px;padding:10px 12px;font-size:.85rem;margin-top:4px}
@@ -574,11 +575,6 @@ footer{background:linear-gradient(180deg,#f8eef6,#fbecea);color:var(--ink)}
   <div class="grid">
     <div class="htext">
       <img src="img/emblem-gold.png" alt="" class="hemb">
-      <div class="catbar">
-        <a href="#plants" class="cb"><span class="ci"><img src="img/p03-cut.webp" alt=""></span><span>Plants</span></a>
-        <a href="#shop" class="cb" data-cat="bouquets"><span class="ci"><img src="img/b09-cut.webp" alt=""></span><span>Hand Bouquets</span></a>
-        <a href="#occasions" class="cb"><span class="ci"><img src="img/b10-cut.webp" alt=""></span><span>Occasions</span></a>
-      </div>
       <div class="kicker">Malizia Flowers · Since 1993</div>
       <h1><span class="ln"><span>Flowers with</span></span><span class="ln"><span>a little</span></span><span class="ln"><span><em>mischief.</em></span></span></h1>
       <p class="lede">Velvet roses, signature black boxes and living plants — composed by hand, wrapped in blush, sent with your words on a card.</p>
@@ -587,6 +583,11 @@ footer{background:linear-gradient(180deg,#f8eef6,#fbecea);color:var(--ink)}
         <a href="#plants" class="btn line">Shop plants</a>
       </div>
       <div class="sameday"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 6h11v10H2zM13 9h4l4 4v3h-8z"/><circle cx="6" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg><span><b>Same-day delivery</b> — order today, delivered today</span></div>
+      <div class="catbar">
+        <a href="#plants" class="cb"><span class="ci"><img src="img/p03-cut.webp" alt=""></span><span>Plants</span></a>
+        <a href="#shop" class="cb" data-cat="bouquets"><span class="ci"><img src="img/b09-cut.webp" alt=""></span><span>Hand Bouquets</span></a>
+        <a href="#occasions" class="cb"><span class="ci"><img src="img/b10-cut.webp" alt=""></span><span>Occasions</span></a>
+      </div>
     </div>
   </div>
   <div class="scrollcue">Scroll<i></i></div>
@@ -754,9 +755,9 @@ footer{background:linear-gradient(180deg,#f8eef6,#fbecea);color:var(--ink)}
 </div>
 <div class="toast" id="toast"><img id="tImg" alt=""><span id="tTxt"></span><button id="tView">View bag</button></div>
 
-<script src="config.js?v=1795522275"></script>
-<script src="catalog.js?v=1795522275"></script>
-<script src="store.js?v=1795522275"></script>
+<script src="config.js?v=1795522358"></script>
+<script src="catalog.js?v=1795522358"></script>
+<script src="store.js?v=1795522358"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script>
