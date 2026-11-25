@@ -356,6 +356,8 @@ footer{background:var(--noir);color:var(--ivory);padding:110px 0 30px;margin-top
 .mrow .btn{flex:1;justify-content:center}
 .perks{display:flex;gap:18px;margin-top:18px;font-size:.78rem;color:var(--muted);flex-wrap:wrap}
 .perks span::before{content:"✿ ";color:var(--crimson)}
+.carebox.pre{background:#fbeef0;border:1px solid rgba(192,108,123,.35);color:var(--ink)}
+.pretag{display:inline-block;margin-left:6px;padding:2px 8px;border-radius:99px;background:var(--crimson);color:#fff;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;vertical-align:middle}
 
 /* ============ BAG DRAWER ============ */
 .drawer{position:fixed;top:0;right:0;bottom:0;width:100vw;background:var(--ivory);z-index:95;transform:translateX(105%);transition:transform .7s var(--ease);display:flex;flex-direction:column}
@@ -571,6 +573,7 @@ addEventListener("pageshow",e=>{if(e.persisted)window.scrollTo(0,0)});
   <ul>
     <li><a href="#plants">Plants</a></li>
     <li><a href="#shop" data-cat="bouquets">Hand Bouquets</a></li>
+    <li><a href="#shop" data-cat="cakes">Cakes</a></li>
     <li><a href="#occasions">Occasions</a></li>
   </ul>
   <div class="right">
@@ -589,6 +592,7 @@ addEventListener("pageshow",e=>{if(e.persisted)window.scrollTo(0,0)});
   <img src="img/emblem-gold.png" alt="" style="width:64px;margin-bottom:28px">
   <a href="#plants">Plants</a>
   <a href="#shop" data-cat="bouquets">Hand <em>Bouquets</em></a>
+  <a href="#shop" data-cat="cakes">Cakes</a>
   <a href="#occasions">Occasions</a>
   <a href="#" id="mSearch">Search</a>
   <p class="kicker">@maliziaflowers</p>
@@ -701,7 +705,7 @@ addEventListener("pageshow",e=>{if(e.persisted)window.scrollTo(0,0)});
   <div class="wrap">
     <div class="fcols">
       <div><p class="fcta">Someone deserves flowers today. <em style="color:var(--crimson)">Probably.</em></p><a href="#shop" class="btn fill" style="margin-top:22px;display:inline-flex">Send something</a></div>
-      <div><h5>Shop</h5><a href="#shop" data-cat="roses">Roses</a><a href="#shop" data-cat="mixed">Mixed bouquets</a><a href="#shop" data-cat="gifts">Boxes & baskets</a><a href="#plants">Plants</a></div>
+      <div><h5>Shop</h5><a href="#shop" data-cat="roses">Roses</a><a href="#shop" data-cat="mixed">Mixed bouquets</a><a href="#shop" data-cat="gifts">Boxes & baskets</a><a href="#shop" data-cat="cakes">Cakes</a><a href="#plants">Plants</a></div>
       <div><h5>Moments</h5><a href="#shop" data-occ="love">Love & romance</a><a href="#shop" data-occ="birthday">Birthdays</a><a href="#shop" data-occ="baby">New baby</a><a href="#shop" data-occ="thanks">Thank you</a></div>
       <div><h5>Say hello</h5><a href="https://www.instagram.com/maliziaflowers/" target="_blank" rel="noopener">Instagram ↗</a><a href="https://ig.me/m/maliziaflowers" target="_blank" rel="noopener">Message us ↗</a><a href="#how">How to order</a></div>
     </div>
@@ -726,7 +730,7 @@ addEventListener("pageshow",e=>{if(e.persisted)window.scrollTo(0,0)});
       <div class="qty"><button id="qm" aria-label="Less">−</button><span id="qv">1</span><button id="qp" aria-label="More">+</button></div>
       <button class="btn fill" id="mAdd">Add to bag</button>
     </div>
-    <div class="perks"><span>Hand-tied to order</span><span>Free card message</span><span>Same-day delivery</span></div>
+    <div class="perks" id="mPerks"><span>Hand-tied to order</span><span>Free card message</span><span>Same-day delivery</span></div>
   </div>
 </div>
 
@@ -757,7 +761,7 @@ addEventListener("pageshow",e=>{if(e.persisted)window.scrollTo(0,0)});
         <label>Date<input id="fDate" type="date"></label>
         <label>Time<select id="fTime"><option>Morning (9–12)</option><option>Afternoon (12–4)</option><option>Evening (4–8)</option><option>Pick up from the shop</option></select></label>
       </div>
-      <div class="dsame"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 6h11v10H2zM13 9h4l4 4v3h-8z"/><circle cx="6" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg><span><b>Same-day delivery</b> — order today, delivered today.</span></div>
+      <div class="dsame"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 6h11v10H2zM13 9h4l4 4v3h-8z"/><circle cx="6" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg><span id="sameTxt"><b>Same-day delivery</b> — order today, delivered today.</span></div>
       <label class="chk"><input type="checkbox" id="fAnon"><span><b>Send anonymously</b><small>We won’t tell the recipient who it’s from — no name on the card or at the door. Your details stay private with Malizia.</small></span></label>
       <label class="chk"><input type="checkbox" id="fCard"><span><b>Add a greeting card</b> — free<small>We’ll include a Malizia card with your message.</small></span></label>
       <div id="cardBox" class="hide" style="display:grid;gap:6px">
@@ -789,8 +793,8 @@ addEventListener("pageshow",e=>{if(e.persisted)window.scrollTo(0,0)});
 </div>
 <div class="toast" id="toast"><img id="tImg" alt=""><span id="tTxt"></span><button id="tView">View bag</button></div>
 
-<script src="config.js?v=1795530404"></script>
-<script src="catalog.js?v=1795530404"></script>
+<script src="config.js?v=1795612509"></script>
+<script src="catalog.js?v=1795612509"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script>
@@ -816,7 +820,7 @@ const OCC = [
  {k:"luxury",t:"Go big",s:"Grand gestures",img:"b14-cut",c:"#f3ecf8"},
  {k:"home",t:"Home & office",s:"Living plants",img:"p03-cut",c:"#dfe6d6"}
 ];
-const CATS = [["all","All"],["bouquets","Hand bouquets"],["roses","Roses"],["plants","Plants"],["mixed","Mixed bouquets"],["gifts","Boxes & baskets"],["addons","Balloons"]];
+const CATS = [["all","All"],["bouquets","Hand bouquets"],["roses","Roses"],["plants","Plants"],["mixed","Mixed bouquets"],["gifts","Boxes & baskets"],["cakes","Cakes"],["addons","Balloons"]];
 
 /* ===================== STATE ===================== */
 let bag = [];
@@ -883,7 +887,7 @@ $("#yr").textContent=new Date().getFullYear();
 let mId=null,mVi=0,mQ=1,lastFocus=null;
 function openModal(id,vi){
   const p=byId[id]; if(!p)return; mId=id; mVi=vi??(p.def??0); mQ=1; lastFocus=document.activeElement;
-  $("#mKick").textContent = p.cat.includes("addons")?"Add-on":p.cat.includes("plants")?"The Green Room":(p.cat.includes("gifts")?"Boxes & baskets":(p.cat.includes("roses")?"Roses":"Mixed bouquet"));
+  $("#mKick").textContent = p.preorder?"Cakes · Pre-order only":p.cat.includes("addons")?"Add-on":p.cat.includes("plants")?"The Green Room":(p.cat.includes("gifts")?"Boxes & baskets":(p.cat.includes("roses")?"Roses":"Mixed bouquet"));
   $("#mTitle").textContent=p.name; $("#mDesc").textContent=p.desc;
   const multi=p.v.length>1; $("#mVarsWrap").style.display=multi?"block":"none";
   $("#mVarLabel").textContent=p.vl||"Size";
@@ -892,7 +896,10 @@ function openModal(id,vi){
   $("#modal").classList.toggle("full",!!p.kind);
   $("#modal").style.setProperty("--fullbg",p.bg||"#f4f4f4");
   $("#mVars").innerHTML=p.kind==="design"?p.v.map((v,i)=>`<button data-v="${i}" class="th" aria-label="${v.l}" title="${v.l}"><img src="${src(v.img)}" alt=""></button>`).join(""):p.kind==="color"?p.v.map((v,i)=>`<button data-v="${i}" class="sw" style="--c:${v.sw}" aria-label="${v.l}" title="${v.l}"></button>`).join(""):p.v.map((v,i)=>`<button data-v="${i}">${v.l}<small>${fmt(v.p)}${v.note?" · "+v.note:""}</small></button>`).join("");
-  const care=$("#mCare"); care.style.display=p.care?"flex":"none"; if(p.care) care.querySelector("span").textContent=(p.careGeneric?"Care tip: ":"Care: ")+p.care;
+  const care=$("#mCare"); care.style.display=(p.care||p.preorder)?"flex":"none"; care.classList.toggle("pre",!!p.preorder);
+  if(p.preorder) care.querySelector("span").innerHTML="<b>Pre-order only.</b> This cake is baked to order, so it isn’t available same day. Place your order ahead and we’ll confirm the delivery date with you.";
+  else if(p.care) care.querySelector("span").textContent=(p.careGeneric?"Care tip: ":"Care: ")+p.care;
+  $("#mPerks").innerHTML=p.preorder?"<span>Pre-order only</span><span>Baked to order</span><span>Free card message</span>":"<span>Hand-tied to order</span><span>Free card message</span><span>Same-day delivery</span>";
   updModal();
   $("#veil").classList.add("on"); $("#modal").classList.add("on"); document.body.classList.add("locked");
   setTimeout(()=>$("#mClose").focus(),50);
@@ -924,13 +931,15 @@ function addToBag(id,vi,q){
   if(!p.cat.includes("addons")&&!hasBalloons()&&!upsellShown){upsellShown=true;setTimeout(openUpsell,650);}
 }
 function renderBag(){
+  const pre=bag.some(l=>byId[l.id]&&byId[l.id].preorder),st=document.getElementById("sameTxt");
+  if(st)st.innerHTML=pre?"<b>Your bag includes a pre-order cake.</b> Cakes are baked to order and aren’t available same day — we’ll confirm the delivery date with you.":"<b>Same-day delivery</b> — order today, delivered today.";
   setTimeout(()=>$("#drawer").classList.toggle("isempty",!bag.length),0);
   renderAddon();
   const n=bag.reduce((a,l)=>a+l.q,0), sub=bag.reduce((a,l)=>a+byId[l.id].v[l.vi].p*l.q,0);
   $("#bagCount").textContent=n; $("#dCount").textContent=n?n:"";
   $("#sub").textContent=fmt(sub)+(bag.some(l=>byId[l.id].v[l.vi].from)?"+":"");
   $("#dfoot").style.display=n?"block":"none"; $("#oform").style.display=n?"grid":"none";
-  $("#lines").innerHTML = n? bag.map((l,i)=>{const p=byId[l.id],v=p.v[l.vi];return `<div class="bline"><div class="th"><img src="${src(v.img||p.img)}" alt=""></div><div><b>${p.name}</b><small>${p.v.length>1?v.l:p.sub}${v.from?" · from":""}</small><div class="lq"><button data-dq="${i}" aria-label="Less">−</button>${l.q}<button data-iq="${i}" aria-label="More">+</button><button class="rm" data-rm="${i}">Remove</button></div></div><div class="lp">${fmt(v.p*l.q)}</div></div>`}).join("")
+  $("#lines").innerHTML = n? bag.map((l,i)=>{const p=byId[l.id],v=p.v[l.vi];return `<div class="bline"><div class="th"><img src="${src(v.img||p.img)}" alt=""></div><div><b>${p.name}</b>${p.preorder?'<span class="pretag">Pre-order</span>':""}<small>${p.v.length>1?v.l:p.sub}${v.from?" · from":""}</small><div class="lq"><button data-dq="${i}" aria-label="Less">−</button>${l.q}<button data-iq="${i}" aria-label="More">+</button><button class="rm" data-rm="${i}">Remove</button></div></div><div class="lp">${fmt(v.p*l.q)}</div></div>`}).join("")
    : `<div class="dempty"><div class="serif">Your bag is empty</div><p>But someone out there deserves flowers.</p><a href="#shop" class="btn dark" style="margin-top:22px" id="emptyShop">Start shopping</a></div>`;
 }
 /* ---------- balloons add-on ---------- */
@@ -1009,8 +1018,8 @@ $("#placeOrder").addEventListener("click",async()=>{
   try{
     const ref="M"+Date.now().toString(36).toUpperCase().slice(-6);
     const sub=bag.reduce((a,l)=>a+byId[l.id].v[l.vi].p*l.q,0);
-    const itemsTxt=bag.map(l=>{const p=byId[l.id],v=p.v[l.vi];return `${l.q} × ${p.name}${p.v.length>1?" ("+v.l+")":""} — ${v.from?"from ":""}${fmt(v.p*l.q)}`}).join("\n");
-    const payload={_subject:`New order ${ref}${order.anonymous?" (ANONYMOUS)":""} — ${order.customer_name} — ${fmt(sub)} — ${order.payment==="Whish Money"?"Whish":"Cash"}`,_template:"table",_captcha:"false",
+    const itemsTxt=bag.map(l=>{const p=byId[l.id],v=p.v[l.vi];return `${l.q} × ${p.name}${p.preorder?" [PRE-ORDER]":""}${p.v.length>1?" ("+v.l+")":""} — ${v.from?"from ":""}${fmt(v.p*l.q)}`}).join("\n");
+    const payload={_subject:`New order ${ref}${bag.some(l=>byId[l.id].preorder)?" (PRE-ORDER CAKE)":""}${order.anonymous?" (ANONYMOUS)":""} — ${order.customer_name} — ${fmt(sub)} — ${order.payment==="Whish Money"?"Whish":"Cash"}`,_template:"table",_captcha:"false",
       "Order":ref,"Anonymous":order.anonymous?"YES — do NOT tell the recipient who sent it":"No","Items":itemsTxt,"Subtotal":fmt(sub)+(bag.some(l=>byId[l.id].v[l.vi].from)?"+":""),
       "Payment":order.payment,"Customer name":order.customer_name,"Customer phone":order.customer_phone,
       "Recipient":order.recipient_name,"Recipient phone":order.recipient_phone||"-",
@@ -1036,7 +1045,7 @@ function resetDone(){$("#drawer").classList.remove("isdone");$("#done").classLis
 function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
 
 /* ===================== SEARCH ===================== */
-const CATWORDS={roses:"roses rose red",mixed:"mixed bouquet bouquets flowers lilies chrysanthemum",gifts:"box boxes basket gift",plants:"plant plants green indoor pot",addons:"balloon balloons add-on"};
+const CATWORDS={roses:"roses rose red",mixed:"mixed bouquet bouquets flowers lilies chrysanthemum",gifts:"box boxes basket gift",plants:"plant plants green indoor pot",addons:"balloon balloons add-on",cakes:"cake cakes dessert sweet preorder pre-order bakery"};
 const OCCWORDS={love:"love romance romantic valentine anniversary heart",birthday:"birthday bday party celebration",baby:"baby newborn new born birth girl boy",thanks:"thank you thanks",luxury:"luxury grand big",home:"home office plant"};
 const norm=t=>String(t||"").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/[’']/g,"");
 const HAY=Object.fromEntries(P.map(p=>[p.id,norm([p.name,p.sub,p.desc,p.v.map(v=>v.l).join(" "),p.cat.map(c=>CATWORDS[c]||c).join(" "),(p.occ||[]).map(o=>OCCWORDS[o]||o).join(" "),p.cat.includes("roses")||p.cat.includes("mixed")?"hand bouquet hand bouquets":""].join(" "))]));
