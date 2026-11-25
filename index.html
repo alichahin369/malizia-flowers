@@ -793,8 +793,8 @@ addEventListener("pageshow",e=>{if(e.persisted)window.scrollTo(0,0)});
 </div>
 <div class="toast" id="toast"><img id="tImg" alt=""><span id="tTxt"></span><button id="tView">View bag</button></div>
 
-<script src="config.js?v=1795612509"></script>
-<script src="catalog.js?v=1795612509"></script>
+<script src="config.js?v=1795612842"></script>
+<script src="catalog.js?v=1795612842"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script>
@@ -897,7 +897,7 @@ function openModal(id,vi){
   $("#modal").style.setProperty("--fullbg",p.bg||"#f4f4f4");
   $("#mVars").innerHTML=p.kind==="design"?p.v.map((v,i)=>`<button data-v="${i}" class="th" aria-label="${v.l}" title="${v.l}"><img src="${src(v.img)}" alt=""></button>`).join(""):p.kind==="color"?p.v.map((v,i)=>`<button data-v="${i}" class="sw" style="--c:${v.sw}" aria-label="${v.l}" title="${v.l}"></button>`).join(""):p.v.map((v,i)=>`<button data-v="${i}">${v.l}<small>${fmt(v.p)}${v.note?" · "+v.note:""}</small></button>`).join("");
   const care=$("#mCare"); care.style.display=(p.care||p.preorder)?"flex":"none"; care.classList.toggle("pre",!!p.preorder);
-  if(p.preorder) care.querySelector("span").innerHTML="<b>Pre-order only.</b> This cake is baked to order, so it isn’t available same day. Place your order ahead and we’ll confirm the delivery date with you.";
+  if(p.preorder) care.querySelector("span").innerHTML="<b>Pre-order only.</b> This cake is baked to order — please order <b>at least 24 hours in advance</b>. The earliest delivery is tomorrow.";
   else if(p.care) care.querySelector("span").textContent=(p.careGeneric?"Care tip: ":"Care: ")+p.care;
   $("#mPerks").innerHTML=p.preorder?"<span>Pre-order only</span><span>Baked to order</span><span>Free card message</span>":"<span>Hand-tied to order</span><span>Free card message</span><span>Same-day delivery</span>";
   updModal();
@@ -931,8 +931,9 @@ function addToBag(id,vi,q){
   if(!p.cat.includes("addons")&&!hasBalloons()&&!upsellShown){upsellShown=true;setTimeout(openUpsell,650);}
 }
 function renderBag(){
+  if(typeof syncDate==="function")syncDate();
   const pre=bag.some(l=>byId[l.id]&&byId[l.id].preorder),st=document.getElementById("sameTxt");
-  if(st)st.innerHTML=pre?"<b>Your bag includes a pre-order cake.</b> Cakes are baked to order and aren’t available same day — we’ll confirm the delivery date with you.":"<b>Same-day delivery</b> — order today, delivered today.";
+  if(st)st.innerHTML=pre?"<b>Your bag includes a pre-order cake.</b> Cakes need at least 24 hours’ notice, so the earliest delivery date is tomorrow.":"<b>Same-day delivery</b> — order today, delivered today.";
   setTimeout(()=>$("#drawer").classList.toggle("isempty",!bag.length),0);
   renderAddon();
   const n=bag.reduce((a,l)=>a+l.q,0), sub=bag.reduce((a,l)=>a+byId[l.id].v[l.vi].p*l.q,0);
@@ -977,7 +978,10 @@ document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeUpsell();close
 renderBag();
 
 // form helpers
-(function(){const d=new Date();const iso=x=>`${x.getFullYear()}-${String(x.getMonth()+1).padStart(2,"0")}-${String(x.getDate()).padStart(2,"0")}`;$("#fDate").min=iso(d);if(!$("#fDate").value)$("#fDate").value=iso(d);})();
+function isoD(x){return `${x.getFullYear()}-${String(x.getMonth()+1).padStart(2,"0")}-${String(x.getDate()).padStart(2,"0")}`}
+function minDate(){const d=new Date();if(bag.some(l=>byId[l.id]&&byId[l.id].preorder))d.setDate(d.getDate()+1);return isoD(d)}
+function syncDate(){const f=$("#fDate");if(!f)return;const m=minDate();f.min=m;if(!f.value||f.value<m)f.value=m}
+syncDate();
 $("#fMsg").addEventListener("input",e=>$("#fCC").textContent=e.target.value.length);
 async function sendOrderEmail(payload){
   const C=window.MALIZIA_CONFIG||{};
@@ -1006,6 +1010,7 @@ function validate(){
   if(g("#fCustPhone").replace(/[^\d]/g,"").length<7)miss.push("your phone number");
   if($("#fTime").value!=="Pick up from the shop"&&!g("#fAddr"))miss.push("the delivery address");
   if(!$("#fDate").value)miss.push("a delivery date");
+  else if($("#fDate").value<minDate()){syncDate();$("#err").textContent="Cakes need at least 24 hours’ notice — the earliest delivery date is "+$("#fDate").value+".";return}
   if($("#fCard").checked&&!g("#fMsg"))miss.push("your card message");
   $("#err").textContent=miss.length?"Please add "+miss.join(", ").replace(/, ([^,]*)$/," and $1")+".":"";return !miss.length;}
 $("#placeOrder").addEventListener("click",async()=>{
